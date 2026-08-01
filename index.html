@@ -828,30 +828,42 @@ const modules = [
     tools:["Grammar Checker","AI Rewrite","Email Generator","Resume Builder","Cover Letter Builder","AI Reply Generator","Social Caption Generator","AI Summarizer","Paraphraser","Email Templates","Blog Title Generator","Text Translator"]},
   {id:9, name:"Business", desc:"Invoices, quotations, CRM, and dashboards.", status:"live",
     tools:["Invoice Generator","Quotation Generator","GST Invoice","Inventory Tracker","Client CRM","Attendance Tracker","Profit Dashboard","PDF Invoice Export","Client History","Inventory Alerts","Sales Dashboard","Barcode Labels"]},
-  {id:10, name:"Developers", desc:"Formatters, minifiers, color and regex tools.", status:"live",
-    tools:["JSON Formatter","SQL Formatter","HTML Formatter","CSS Minifier","JS Minifier","Color Picker","Regex Tester"]},
-  {id:11, name:"File Tools", desc:"Zip, rename, dedupe, and convert files.", status:"live",
-    tools:["ZIP Extractor","ZIP Creator","Rename Files","Duplicate File Finder","File Converter"]},
+  {id:10, name:"Developers", desc:"Formatters, minifiers, color, regex, and API tools.", status:"live",
+    tools:["JSON Formatter","SQL Formatter","HTML Formatter","CSS Minifier","JS Minifier","Color Picker","Regex Tester","YAML Formatter","XML Formatter","JWT Decoder","UUID Batch Generator","API Tester"]},
+  {id:11, name:"File Tools", desc:"Zip, unzip, rename, dedupe, and inspect files.", status:"live",
+    tools:["ZIP/Unzip","Rename Files","Duplicate Finder","File Metadata Viewer"]},
   {id:12, name:"Audio Tools", desc:"Cut, compress, record, and transcribe audio.", status:"live",
     tools:["MP3 Cutter","Audio Compressor","Voice Recorder","Text to Speech","Speech to Text"]},
   {id:13, name:"Video Tools", desc:"Compress, trim, and convert video clips.", status:"live",
     tools:["Video Compressor","Video to GIF","GIF to MP4","Subtitle Generator","Video Trimmer"]},
   {id:14, name:"AI Tools", desc:"Chat, research, writing, and code help — bring your own API key.", status:"live",
     tools:["AI Chat","AI Research","AI Email Writer","AI Resume Builder","AI Proposal Writer","AI Code Helper","AI Translator","AI Document Summarizer"]},
-  {id:15, name:"Browser Tools", desc:"Screenshots, color, and site metadata generators.", status:"live",
-    tools:["Website Screenshot","Color Picker","CSS Generator","Meta Tag Generator","Robots.txt Generator","Sitemap Generator"]},
-  {id:16, name:"Home Tools", desc:"Grocery lists, chores, and household budgeting.", status:"live",
-    tools:["Grocery List","Shopping List","Chore Planner","Household Budget"]},
-  {id:17, name:"Education", desc:"Flashcards, study planning, and citations.", status:"live",
-    tools:["Flashcards","Study Planner","Exam Timer","Citation Generator"]},
-  {id:18, name:"Travel", desc:"Packing lists, budgets, and time zone planning.", status:"live",
-    tools:["Packing Checklist","Currency Converter","Travel Budget","Time Zone Planner"]},
+  {id:15, name:"Web Tools", desc:"Screenshots, color, site metadata, and link-building generators.", status:"live",
+    tools:["Website Screenshot","Color Picker","CSS Generator","Meta Tag Generator","Robots.txt Generator","Sitemap Generator","URL Shortener","UTM Builder","Open Graph Preview"]},
+  {id:16, name:"Daily Life", desc:"Grocery lists, chores, and household budgeting.", status:"live",
+    tools:["Grocery List","Shopping List","Chore Planner","Home Budget"]},
+  {id:17, name:"Student", desc:"Flashcards, study planning, GPA, and citations.", status:"live",
+    tools:["Flashcards","Study Planner","Exam Timer","Citation Generator","GPA Calculator","Percentage Calculator","Study Timer"]},
+  {id:18, name:"Travel", desc:"Packing lists, trip budgets, fuel costs, and time zone planning.", status:"live",
+    tools:["Packing Checklist","Currency Travel Planner","Trip Budget","Time Zone Planner","Fuel Cost Calculator"]},
   {id:19, name:"Finance", desc:"Net worth, debt, investments, and retirement.", status:"live",
     tools:["Net Worth Tracker","Debt Payoff Planner","Investment Tracker","Retirement Calculator"]},
   {id:20, name:"More Daily Tools", desc:"Odds and ends that get used constantly.", status:"live",
     tools:["Unit Converter","Quick Calculator","Random Quote Generator","Timer & Alarm"]},
   {id:21, name:"Support & Contact", desc:"Get help, ask a question, or request a tool/feature.", status:"live",
     tools:["Contact Us","Request a Feature","FAQ / Help"]},
+  {id:22, name:"Security", desc:"Password vault, leak checks, secure notes, and file checksums.", status:"live",
+    tools:["Password Vault (local)","Password Leak Check","Secure Notes","File Checksum"]},
+  {id:23, name:"Converters", desc:"File size, speed, fuel, cooking, storage, and temperature.", status:"live",
+    tools:["File Size","Speed","Fuel","Cooking","Digital Storage","Temperature"]},
+  {id:24, name:"QR & Barcode", desc:"Wi-Fi, contact, WhatsApp, and event QR codes — plus a scanner.", status:"live",
+    tools:["Wi-Fi QR","Contact QR (vCard)","WhatsApp QR","Event QR","QR Scanner"]},
+  {id:25, name:"Planning", desc:"Calendars, year goals, study time, travel days, and weekly meals.", status:"live",
+    tools:["Calendar","Year Planner","Study Planner","Travel Planner","Meal Planner"]},
+  {id:26, name:"Design", desc:"Contrast checks, gradients, shadows, and font pairing for design work.", status:"live",
+    tools:["Color Contrast Checker","Gradient Generator","CSS Shadow Generator","Font Pairing"]},
+  {id:27, name:"AI Assistant", desc:"Prompt library, rewriting, brainstorming, and reply drafting — bring your own API key for real AI, or use built-in offline fallbacks.", status:"live",
+    tools:["AI Prompt Library","AI Rewrite","AI Brainstorm","AI Reply Generator"]},
 ];
 
 // Replace with the real inbox that should receive contact / feature-request / chat messages.
@@ -948,8 +960,20 @@ function renderFavoritesAndRecentsHTML(){
 }
 
 /* ---- Update banner ---- */
-const APP_VERSION = "1.2.0";
+const APP_VERSION = "1.6.0";
 const APP_CHANGELOG = [
+  "New: AI Assistant module — AI Prompt Library, AI Rewrite, AI Brainstorm, AI Reply Generator",
+  "Travel: added Fuel Cost Calculator; Currency Converter renamed Currency Travel Planner, Travel Budget renamed Trip Budget",
+  "New: Design module — Color Contrast Checker, Gradient Generator, CSS Shadow Generator, Font Pairing",
+  "Web Tools (formerly Browser Tools): added URL Shortener, UTM Builder, Open Graph Preview",
+  "Student (formerly Education): added GPA Calculator, Percentage Calculator, Study Timer",
+  "Daily Life (formerly Home Tools): Household Budget renamed to Home Budget",
+  "New: QR & Barcode module — Wi-Fi QR, Contact QR (vCard), WhatsApp QR, Event QR, QR Scanner",
+  "New: Planning module — Calendar, Year Planner, Study Planner, Travel Planner, Meal Planner",
+  "File Tools: combined ZIP/Unzip, renamed Duplicate Finder, added File Metadata Viewer",
+  "New: Security module — Password Vault, Password Leak Check, Secure Notes, File Checksum",
+  "New: Converters module — File Size, Speed, Fuel, Cooking, Digital Storage, Temperature",
+  "Developers: YAML Formatter, XML Formatter, JWT Decoder, UUID Batch Generator, API Tester",
   "Time: Business Days Calculator, Working Hours Calculator, Shift Planner, Birthday Reminder",
   "Writing: AI Summarizer, Paraphraser, Email Templates, Blog Title Generator, Text Translator",
   "Business: PDF Invoice Export, Client History, Inventory Alerts, Sales Dashboard, Barcode Labels",
@@ -3509,6 +3533,298 @@ function dev_runRegex(){
   }catch(e){ out.textContent = 'Invalid regex: '+e.message; }
 }
 
+/* ---- JSON ⇄ YAML Formatter ---- */
+function dev_yamlFormat(){
+  document.getElementById('workbench').innerHTML = `
+    <h2>JSON ⇄ YAML Formatter</h2><p class="desc">Convert JSON to YAML, or YAML back to JSON. Handles objects, arrays, strings, numbers, booleans, and null (not anchors, tags, or multi-doc streams).</p>
+    <textarea id="yamlInput" placeholder='{"name":"Ada","tags":["dev","math"]}'></textarea>
+    <div class="btn-row" style="margin:14px 0;">
+      <button class="btn" onclick="dev_runYaml('toYaml')">JSON → YAML</button>
+      <button class="btn secondary" onclick="dev_runYaml('toJson')">YAML → JSON</button>
+    </div>
+    <div class="output-box" id="yamlOut">Result will appear here.</div>
+    <div class="output-meta"><span></span><button class="btn secondary" onclick="copyText(document.getElementById('yamlOut').textContent)">Copy</button></div>
+  `;
+}
+function dev_yamlScalar(v){
+  if(v===null || v===undefined) return 'null';
+  if(typeof v==='string'){
+    return /[:#\-\[\]{}"'\n]|^\s|\s$|^$/.test(v) ? JSON.stringify(v) : v;
+  }
+  return String(v);
+}
+function dev_isPlainObj(v){ return v && typeof v==='object' && !Array.isArray(v); }
+/* Renders a mapping's own lines (no leading list marker) at a given 2-space indent level */
+function dev_yamlObjLines(obj, indent){
+  const pad = '  '.repeat(indent);
+  const keys = Object.keys(obj);
+  if(!keys.length) return [pad+'{}'];
+  return keys.reduce((lines,k)=>{
+    const v = obj[k];
+    if(dev_isPlainObj(v)){
+      if(Object.keys(v).length) lines.push(pad+k+':', ...dev_yamlObjLines(v, indent+1));
+      else lines.push(pad+k+': {}');
+    } else if(Array.isArray(v)){
+      if(v.length) lines.push(pad+k+':', ...dev_yamlArrLines(v, indent));
+      else lines.push(pad+k+': []');
+    } else {
+      lines.push(pad+k+': '+dev_yamlScalar(v));
+    }
+    return lines;
+  }, []);
+}
+/* Renders a sequence's own lines (each item prefixed with "- ") at a given 2-space indent level */
+function dev_yamlArrLines(arr, indent){
+  const pad = '  '.repeat(indent);
+  return arr.reduce((lines,item)=>{
+    if(dev_isPlainObj(item) && Object.keys(item).length){
+      const itemLines = dev_yamlObjLines(item, indent+1);
+      lines.push(pad+'- '+itemLines[0].trimStart(), ...itemLines.slice(1));
+    } else if(Array.isArray(item) && item.length){
+      const itemLines = dev_yamlArrLines(item, indent+1);
+      lines.push(pad+'- '+itemLines[0].trimStart(), ...itemLines.slice(1));
+    } else if(dev_isPlainObj(item)){
+      lines.push(pad+'- {}');
+    } else if(Array.isArray(item)){
+      lines.push(pad+'- []');
+    } else {
+      lines.push(pad+'- '+dev_yamlScalar(item));
+    }
+    return lines;
+  }, []);
+}
+function dev_jsonToYaml(val){
+  if(dev_isPlainObj(val)) return dev_yamlObjLines(val, 0).join('\n');
+  if(Array.isArray(val)) return val.length ? dev_yamlArrLines(val, 0).join('\n') : '[]';
+  return dev_yamlScalar(val);
+}
+function dev_yamlToJson(text){
+  const rawLines = text.replace(/\t/g,'  ').split('\n');
+  const lines = [];
+  rawLines.forEach(l=>{
+    if(l.trim()==='' || /^\s*#/.test(l)) return;
+    lines.push({ indent: l.match(/^ */)[0].length, text: l.trim() });
+  });
+  let i = 0;
+  function parseBlock(indent){
+    if(i>=lines.length || lines[i].indent < indent) return null;
+    const isList = lines[i].text.startsWith('- ') || lines[i].text==='-';
+    if(isList){
+      const arr = [];
+      while(i<lines.length && lines[i].indent===indent && (lines[i].text.startsWith('- ') || lines[i].text==='-')){
+        const rest = lines[i].text==='-' ? '' : lines[i].text.slice(2).trim();
+        if(rest===''){
+          i++;
+          arr.push(parseBlock(indent+2));
+        } else if(/^[^:]+:\s*(.*)$/.test(rest) && !/^["'].*["']$/.test(rest)){
+          // inline first key of a mapping item — splice it in as its own line at indent+2, then parse as a mapping
+          lines[i] = { indent: indent+2, text: rest };
+          arr.push(parseBlock(indent+2));
+        } else {
+          i++;
+          arr.push(dev_yamlParseScalar(rest));
+        }
+      }
+      return arr;
+    }
+    const obj = {};
+    while(i<lines.length && lines[i].indent===indent){
+      const m = lines[i].text.match(/^([^:]+):\s*(.*)$/);
+      if(!m){ i++; continue; }
+      const key = m[1].trim().replace(/^["']|["']$/g,'');
+      const val = m[2].trim();
+      i++;
+      if(val===''){
+        const next = lines[i];
+        const nextIsList = next && (next.text.startsWith('- ') || next.text==='-');
+        const nextIsValue = next && (next.indent>indent || (next.indent===indent && nextIsList));
+        obj[key] = nextIsValue ? parseBlock(next.indent) : null;
+      } else {
+        obj[key] = dev_yamlParseScalar(val);
+      }
+    }
+    return obj;
+  }
+  return parseBlock(0);
+}
+function dev_yamlParseScalar(s){
+  if(s==='[]') return [];
+  if(s==='{}') return {};
+  if(/^["'].*["']$/.test(s)) try{ return JSON.parse(s.replace(/^'|'$/g,'"')); }catch(e){ return s.slice(1,-1); }
+  if(s==='null'||s==='~'||s==='') return null;
+  if(s==='true') return true;
+  if(s==='false') return false;
+  if(/^-?\d+(\.\d+)?$/.test(s)) return Number(s);
+  return s;
+}
+function dev_runYaml(mode){
+  const out = document.getElementById('yamlOut');
+  const input = document.getElementById('yamlInput').value;
+  try{
+    if(mode==='toYaml'){
+      const parsed = JSON.parse(input);
+      out.textContent = dev_jsonToYaml(parsed) || '(empty)';
+    } else {
+      const parsed = dev_yamlToJson(input);
+      out.textContent = JSON.stringify(parsed, null, 2);
+    }
+  }catch(e){ out.textContent = 'Could not convert: '+e.message; }
+}
+
+/* ---- XML Formatter ---- */
+function dev_xmlFormat(){
+  document.getElementById('workbench').innerHTML = `
+    <h2>XML Formatter</h2><p class="desc">Indent and pretty-print XML markup.</p>
+    <textarea id="xmlInput" placeholder="<root><item>1</item></root>"></textarea>
+    <div class="btn-row" style="margin:14px 0;"><button class="btn" onclick="dev_runXmlFormat()">Format</button></div>
+    <div class="output-box" id="xmlFmtOut">Result will appear here.</div>
+    <div class="output-meta"><span></span><button class="btn secondary" onclick="copyText(document.getElementById('xmlFmtOut').textContent)">Copy</button></div>
+  `;
+}
+function dev_runXmlFormat(){
+  const out = document.getElementById('xmlFmtOut');
+  let xml = document.getElementById('xmlInput').value.trim();
+  if(!xml){ out.textContent = 'Paste some XML first.'; return; }
+  xml = xml.replace(/>\s*</g,'><').replace(/></g,'>\n<');
+  const lines = xml.split('\n');
+  let indent = 0;
+  const result = lines.map(line=>{
+    const trimmed = line.trim();
+    if(/^<\?/.test(trimmed) || /^<!--/.test(trimmed)) return trimmed;
+    if(/^<\//.test(trimmed)) indent = Math.max(0, indent-1);
+    const res = '  '.repeat(indent) + trimmed;
+    if(/^<[^\/!?][^>]*[^\/]>$/.test(trimmed) && !/<\/[^>]+>$/.test(trimmed)) indent++;
+    return res;
+  });
+  out.textContent = result.join('\n');
+}
+
+/* ---- JWT Decoder ---- */
+function dev_jwtDecode(){
+  document.getElementById('workbench').innerHTML = `
+    <h2>JWT Decoder</h2><p class="desc">Decode a JSON Web Token's header and payload. This does not verify the signature — never paste tokens containing real secrets into third-party tools.</p>
+    <textarea id="jwtInput" placeholder="eyJhbGciOi...header.payload.signature"></textarea>
+    <div class="btn-row" style="margin:14px 0;"><button class="btn" onclick="dev_runJwtDecode()">Decode</button></div>
+    <label class="field-label">HEADER</label>
+    <div class="output-box" id="jwtHeaderOut">—</div>
+    <label class="field-label" style="margin-top:12px;">PAYLOAD</label>
+    <div class="output-box" id="jwtPayloadOut">—</div>
+    <div class="output-meta" id="jwtMeta"><span></span></div>
+  `;
+}
+function dev_b64urlDecode(str){
+  str = str.replace(/-/g,'+').replace(/_/g,'/');
+  while(str.length%4) str += '=';
+  return decodeURIComponent(escape(atob(str)));
+}
+function dev_runJwtDecode(){
+  const token = document.getElementById('jwtInput').value.trim();
+  const headerOut = document.getElementById('jwtHeaderOut'), payloadOut = document.getElementById('jwtPayloadOut'), meta = document.getElementById('jwtMeta');
+  const parts = token.split('.');
+  if(parts.length<2){ headerOut.textContent = 'Not a valid JWT — expected header.payload.signature.'; payloadOut.textContent=''; meta.innerHTML=''; return; }
+  try{
+    const header = JSON.parse(dev_b64urlDecode(parts[0]));
+    const payload = JSON.parse(dev_b64urlDecode(parts[1]));
+    headerOut.textContent = JSON.stringify(header, null, 2);
+    payloadOut.textContent = JSON.stringify(payload, null, 2);
+    let expNote = '';
+    if(payload.exp){
+      const expDate = new Date(payload.exp*1000);
+      expNote = expDate < new Date() ? `Expired at ${expDate.toLocaleString()}` : `Expires ${expDate.toLocaleString()}`;
+    }
+    meta.innerHTML = `<span>${expNote}</span><button class="btn secondary" onclick="copyText(document.getElementById('jwtPayloadOut').textContent)">Copy payload</button>`;
+  }catch(e){ headerOut.textContent = 'Could not decode: '+e.message; payloadOut.textContent=''; meta.innerHTML=''; }
+}
+
+/* ---- UUID Batch Generator ---- */
+function dev_uuidBatch(){
+  document.getElementById('workbench').innerHTML = `
+    <h2>UUID Batch Generator</h2><p class="desc">Generate large batches of RFC-4122 v4 UUIDs, formatted for code or spreadsheets.</p>
+    <div class="row">
+      <div class="col"><label class="field-label">HOW MANY</label><input type="number" id="uuidBatchCount" value="20" min="1" max="5000"></div>
+      <div class="col"><label class="field-label">FORMAT</label>
+        <select id="uuidBatchFormat"><option value="lines">One per line</option><option value="csv">Comma-separated</option><option value="json">JSON array</option><option value="quoted">Quoted lines (code-ready)</option></select>
+      </div>
+    </div>
+    <div class="btn-row"><button class="btn" onclick="dev_runUuidBatch()">Generate</button></div>
+    <div class="output-box" id="uuidBatchOut">Result will appear here.</div>
+    <div class="output-meta"><span id="uuidBatchMeta"></span>
+      <span>
+        <button class="btn secondary" onclick="copyText(document.getElementById('uuidBatchOut').textContent)">Copy all</button>
+        <button class="btn secondary" onclick="dev_downloadUuidBatch()">Download .txt</button>
+      </span>
+    </div>
+  `;
+}
+function dev_runUuidBatch(){
+  const count = Math.min(5000, Math.max(1, parseInt(document.getElementById('uuidBatchCount').value,10)||1));
+  const format = document.getElementById('uuidBatchFormat').value;
+  const list = Array.from({length:count}, ()=>crypto.randomUUID());
+  let text;
+  if(format==='csv') text = list.join(', ');
+  else if(format==='json') text = JSON.stringify(list, null, 2);
+  else if(format==='quoted') text = list.map(u=>`"${u}",`).join('\n');
+  else text = list.join('\n');
+  document.getElementById('uuidBatchOut').textContent = text;
+  document.getElementById('uuidBatchMeta').textContent = `${count} UUID(s) generated`;
+}
+function dev_downloadUuidBatch(){
+  const text = document.getElementById('uuidBatchOut').textContent;
+  if(!text || text==='Result will appear here.') return;
+  const blob = new Blob([text], {type:'text/plain'});
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob); a.download = 'uuids.txt'; a.click();
+}
+
+/* ---- API Tester ---- */
+function dev_apiTester(){
+  document.getElementById('workbench').innerHTML = `
+    <h2>API Tester</h2><p class="desc">Send a request to any URL and inspect the response. Runs entirely in your browser, so the target API must allow cross-origin requests (CORS) or the browser will block the response.</p>
+    <div class="row">
+      <div class="col" style="max-width:120px;"><label class="field-label">METHOD</label>
+        <select id="apiMethod"><option>GET</option><option>POST</option><option>PUT</option><option>PATCH</option><option>DELETE</option></select>
+      </div>
+      <div class="col"><label class="field-label">URL</label><input type="text" id="apiUrl" placeholder="https://api.example.com/resource"></div>
+    </div>
+    <label class="field-label">HEADERS (one per line, Key: Value)</label>
+    <textarea id="apiHeaders" style="min-height:70px;" placeholder="Content-Type: application/json"></textarea>
+    <label class="field-label">BODY (optional)</label>
+    <textarea id="apiBody" style="min-height:100px;" placeholder='{"key":"value"}'></textarea>
+    <div class="btn-row" style="margin:14px 0;"><button class="btn" onclick="dev_runApiTest()">Send request</button></div>
+    <div class="output-meta"><span id="apiStatus"></span></div>
+    <div class="output-box" id="apiOut">Response will appear here.</div>
+  `;
+}
+async function dev_runApiTest(){
+  const url = document.getElementById('apiUrl').value.trim();
+  const method = document.getElementById('apiMethod').value;
+  const headersRaw = document.getElementById('apiHeaders').value;
+  const bodyRaw = document.getElementById('apiBody').value;
+  const statusEl = document.getElementById('apiStatus'), out = document.getElementById('apiOut');
+  if(!url){ out.textContent = 'Enter a URL first.'; return; }
+  const headers = {};
+  headersRaw.split('\n').forEach(line=>{
+    const idx = line.indexOf(':');
+    if(idx>-1) headers[line.slice(0,idx).trim()] = line.slice(idx+1).trim();
+  });
+  statusEl.textContent = 'Sending…'; out.textContent = '';
+  const started = performance.now();
+  try{
+    const opts = { method, headers };
+    if(method!=='GET' && method!=='DELETE' && bodyRaw.trim()) opts.body = bodyRaw;
+    const res = await fetch(url, opts);
+    const elapsed = Math.round(performance.now()-started);
+    const text = await res.text();
+    let pretty = text;
+    try{ pretty = JSON.stringify(JSON.parse(text), null, 2); }catch(e){}
+    statusEl.textContent = `${res.status} ${res.statusText} · ${elapsed}ms`;
+    out.textContent = pretty || '(empty response body)';
+  }catch(e){
+    statusEl.textContent = 'Request failed';
+    out.textContent = 'Could not complete the request — this is often a CORS restriction on the target server, or a network issue.\n\n'+e.message;
+  }
+}
+
 /* ================================================================
    MODULE 16 — HOME TOOLS
    ================================================================ */
@@ -3529,7 +3845,7 @@ function home_saveChore(day, val){ const chores=lsGet('dth_chores',{}); chores[d
 function home_budget(){
   const cats = lsGet('dth_home_budget', []);
   document.getElementById('workbench').innerHTML = `
-    <h2>Household Budget</h2><p class="desc">Track household spending by category.</p>
+    <h2>Home Budget</h2><p class="desc">Track household spending by category.</p>
     <div class="row">
       <div class="col"><label class="field-label">CATEGORY</label><input type="text" id="hbCat" placeholder="e.g. Utilities"></div>
       <div class="col"><label class="field-label">MONTHLY LIMIT</label><input type="number" id="hbLimit" placeholder="0"></div>
@@ -3696,6 +4012,145 @@ function edu_runCitation(style){
   document.getElementById('citOut').textContent = out;
 }
 
+function edu_gpaCalculator(){
+  const courses = lsGet('dth_gpa_courses', [{name:'', credits:3, grade:'A'}]);
+  document.getElementById('workbench').innerHTML = `
+    <h2>GPA Calculator</h2><p class="desc">Add each course's credits and letter grade for a weighted GPA (4.0 scale).</p>
+    <div id="gpaList"></div>
+    <div class="btn-row" style="margin:14px 0;"><button class="btn secondary" onclick="edu_addGpaCourse()">+ Add course</button><button class="btn" onclick="edu_runGpa()">Calculate GPA</button></div>
+    <div class="output-box" id="gpaOut">Result will appear here.</div>
+  `;
+  edu_renderGpaCourses();
+}
+const edu_gpaScale = {'A+':4.0,'A':4.0,'A-':3.7,'B+':3.3,'B':3.0,'B-':2.7,'C+':2.3,'C':2.0,'C-':1.7,'D+':1.3,'D':1.0,'F':0.0};
+function edu_renderGpaCourses(){
+  const courses = lsGet('dth_gpa_courses', [{name:'', credits:3, grade:'A'}]);
+  const holder = document.getElementById('gpaList');
+  if(!holder) return;
+  holder.innerHTML = courses.map((c,i)=>`
+    <div class="row" style="align-items:flex-end;">
+      <div class="col"><label class="field-label">COURSE ${i+1}</label><input type="text" value="${esc(c.name)}" placeholder="e.g. Biology 101" oninput="edu_updateGpaCourse(${i},'name',this.value)"></div>
+      <div class="col"><label class="field-label">CREDITS</label><input type="number" value="${c.credits}" min="0" oninput="edu_updateGpaCourse(${i},'credits',this.value)"></div>
+      <div class="col"><label class="field-label">GRADE</label>
+        <select onchange="edu_updateGpaCourse(${i},'grade',this.value)">
+          ${Object.keys(edu_gpaScale).map(g=>`<option value="${g}" ${c.grade===g?'selected':''}>${g}</option>`).join('')}
+        </select>
+      </div>
+      <button class="btn secondary" style="height:38px;" onclick="edu_delGpaCourse(${i})">×</button>
+    </div>`).join('');
+}
+function edu_addGpaCourse(){
+  const courses = lsGet('dth_gpa_courses', []);
+  courses.push({name:'', credits:3, grade:'A'});
+  lsSet('dth_gpa_courses', courses);
+  edu_renderGpaCourses();
+}
+function edu_updateGpaCourse(i, field, val){
+  const courses = lsGet('dth_gpa_courses', []);
+  if(!courses[i]) return;
+  courses[i][field] = field==='credits' ? (parseFloat(val)||0) : val;
+  lsSet('dth_gpa_courses', courses);
+}
+function edu_delGpaCourse(i){
+  const courses = lsGet('dth_gpa_courses', []);
+  courses.splice(i,1);
+  lsSet('dth_gpa_courses', courses);
+  edu_renderGpaCourses();
+}
+function edu_runGpa(){
+  const courses = lsGet('dth_gpa_courses', []);
+  const out = document.getElementById('gpaOut');
+  const totalCredits = courses.reduce((s,c)=>s+(c.credits||0),0);
+  if(!totalCredits){ out.textContent = 'Add at least one course with credits.'; return; }
+  const points = courses.reduce((s,c)=>s+(c.credits||0)*(edu_gpaScale[c.grade]??0),0);
+  out.textContent = `GPA: ${(points/totalCredits).toFixed(2)} (across ${totalCredits} credits)`;
+}
+
+function edu_percentageCalculator(){
+  document.getElementById('workbench').innerHTML = `
+    <h2>Percentage Calculator</h2><p class="desc">Turn marks into a percentage, or work out a percentage of any number.</p>
+    <div class="row">
+      <div class="col"><label class="field-label">MARKS OBTAINED</label><input type="number" id="pctObtained" value="0"></div>
+      <div class="col"><label class="field-label">TOTAL MARKS</label><input type="number" id="pctTotal" value="100"></div>
+    </div>
+    <div class="btn-row"><button class="btn" onclick="edu_runPercentageMarks()">Calculate</button></div>
+    <div class="output-box" id="pctMarksOut">Result will appear here.</div>
+    <hr style="border:none;border-top:1px solid var(--line);margin:22px 0;">
+    <p class="desc">Quick percentage of a number</p>
+    <div class="row">
+      <div class="col"><label class="field-label">PERCENT (%)</label><input type="number" id="pctPercent" value="10"></div>
+      <div class="col"><label class="field-label">OF NUMBER</label><input type="number" id="pctOf" value="200"></div>
+    </div>
+    <div class="btn-row"><button class="btn" onclick="edu_runPercentageOf()">Calculate</button></div>
+    <div class="output-box" id="pctOfOut">Result will appear here.</div>
+  `;
+}
+function edu_runPercentageMarks(){
+  const obtained = parseFloat(document.getElementById('pctObtained').value);
+  const total = parseFloat(document.getElementById('pctTotal').value);
+  const out = document.getElementById('pctMarksOut');
+  if(!total){ out.textContent = 'Enter a total greater than 0.'; return; }
+  const pct = (obtained/total)*100;
+  let grade = 'F';
+  if(pct>=90) grade='A+'; else if(pct>=80) grade='A'; else if(pct>=70) grade='B'; else if(pct>=60) grade='C'; else if(pct>=50) grade='D'; else if(pct>=40) grade='E';
+  out.textContent = `${pct.toFixed(2)}% (approx. grade: ${grade})`;
+}
+function edu_runPercentageOf(){
+  const pct = parseFloat(document.getElementById('pctPercent').value);
+  const of = parseFloat(document.getElementById('pctOf').value);
+  document.getElementById('pctOfOut').textContent = `${pct}% of ${of} = ${((pct/100)*of).toFixed(2)}`;
+}
+
+let studyTimerInterval = null, studyTimerSeconds = 0, studyTimerRunning = false;
+function edu_studyTimer(){
+  studyTimerSeconds = 0; studyTimerRunning = false;
+  if(studyTimerInterval) clearInterval(studyTimerInterval);
+  const today = health_today ? health_today() : new Date().toISOString().slice(0,10);
+  const loggedToday = lsGet('dth_study_timer_'+today, 0);
+  document.getElementById('workbench').innerHTML = `
+    <h2>Study Timer</h2><p class="desc">A simple stopwatch for study sessions — logs total minutes studied today.</p>
+    <div class="row"><div class="col"><label class="field-label">SUBJECT (OPTIONAL)</label><input type="text" id="stSubject" placeholder="e.g. Chemistry"></div></div>
+    <div class="output-box" id="stOut" style="font-size:32px;text-align:center;">00:00:00</div>
+    <div class="btn-row" style="margin-top:12px;">
+      <button class="btn" id="stStartBtn" onclick="edu_studyTimerToggle()">Start</button>
+      <button class="btn secondary" onclick="edu_studyTimerReset()">Reset</button>
+    </div>
+    <p class="desc" style="margin-top:16px;">Logged today: <strong id="stLoggedToday">${loggedToday}</strong> minutes</p>
+  `;
+}
+function edu_studyTimerTick(){
+  studyTimerSeconds++;
+  const h = String(Math.floor(studyTimerSeconds/3600)).padStart(2,'0');
+  const m = String(Math.floor((studyTimerSeconds%3600)/60)).padStart(2,'0');
+  const s = String(studyTimerSeconds%60).padStart(2,'0');
+  const out = document.getElementById('stOut');
+  if(out) out.textContent = `${h}:${m}:${s}`;
+}
+function edu_studyTimerToggle(){
+  const btn = document.getElementById('stStartBtn');
+  if(studyTimerRunning){
+    clearInterval(studyTimerInterval);
+    studyTimerRunning = false;
+    if(btn) btn.textContent = 'Resume';
+  } else {
+    studyTimerInterval = setInterval(edu_studyTimerTick, 1000);
+    studyTimerRunning = true;
+    if(btn) btn.textContent = 'Pause';
+  }
+}
+function edu_studyTimerReset(){
+  clearInterval(studyTimerInterval);
+  studyTimerRunning = false;
+  const today = health_today ? health_today() : new Date().toISOString().slice(0,10);
+  const key = 'dth_study_timer_'+today;
+  const minutes = Math.round(studyTimerSeconds/60);
+  if(minutes>0) lsSet(key, (lsGet(key,0)) + minutes);
+  studyTimerSeconds = 0;
+  const out = document.getElementById('stOut'); if(out) out.textContent = '00:00:00';
+  const btn = document.getElementById('stStartBtn'); if(btn) btn.textContent = 'Start';
+  const loggedEl = document.getElementById('stLoggedToday'); if(loggedEl) loggedEl.textContent = lsGet(key, 0);
+}
+
 /* ================================================================
    MODULE 18 — TRAVEL
    ================================================================ */
@@ -3734,12 +4189,18 @@ function travel_renderPack(){
 }
 function travel_togglePack(i){ const items=lsGet('dth_packing',[]); items[i].packed=!items[i].packed; lsSet('dth_packing',items); travel_renderPack(); }
 
-function travel_currency(){ money_currencyConverter(); }
+function travel_currency(){
+  money_currencyConverter();
+  const h2 = document.querySelector('#workbench h2');
+  if(h2) h2.textContent = 'Currency Travel Planner';
+  const desc = document.querySelector('#workbench .desc');
+  if(desc) desc.textContent = "Convert your travel budget between currencies using live exchange rates (falls back to a manual rate if your network blocks the request).";
+}
 
 function travel_budget(){
   const items = lsGet('dth_travel_budget', []);
   document.getElementById('workbench').innerHTML = `
-    <h2>Travel Budget</h2><p class="desc">Track planned vs. actual spend per category (flights, hotel, food…).</p>
+    <h2>Trip Budget</h2><p class="desc">Track planned vs. actual spend per category (flights, hotel, food…).</p>
     <div class="row">
       <div class="col"><label class="field-label">CATEGORY</label><input type="text" id="tbCat" placeholder="e.g. Flights"></div>
       <div class="col"><label class="field-label">PLANNED</label><input type="number" id="tbPlanned" placeholder="0"></div>
@@ -3797,6 +4258,36 @@ function travel_runTz(){
   const out = document.getElementById('travelTzOut');
   if(isNaN(dt)){ out.textContent='Enter a valid date & time.'; return; }
   out.textContent = 'At your destination: ' + new Intl.DateTimeFormat('en-US',{dateStyle:'full', timeStyle:'short', timeZone:zone}).format(dt);
+}
+
+function travel_fuelCost(){
+  document.getElementById('workbench').innerHTML = `
+    <h2>Fuel Cost Calculator</h2><p class="desc">Estimate how much fuel a trip will cost based on distance and your vehicle's efficiency.</p>
+    <div class="row">
+      <div class="col"><label class="field-label">TRIP DISTANCE (KM)</label><input type="number" id="fcDistance" value="100"></div>
+      <div class="col"><label class="field-label">FUEL EFFICIENCY (KM PER LITER)</label><input type="number" id="fcEfficiency" value="15"></div>
+    </div>
+    <div class="row">
+      <div class="col"><label class="field-label">FUEL PRICE (PER LITER)</label><input type="number" id="fcPrice" value="100"></div>
+      <div class="col"><label class="field-label">ROUND TRIP?</label>
+        <select id="fcRound"><option value="no">One way</option><option value="yes">Round trip</option></select>
+      </div>
+    </div>
+    <div class="btn-row"><button class="btn" onclick="travel_runFuelCost()">Calculate</button></div>
+    <div class="output-box" id="fcOut">Result will appear here.</div>
+  `;
+}
+function travel_runFuelCost(){
+  const out = document.getElementById('fcOut');
+  let distance = parseFloat(document.getElementById('fcDistance').value);
+  const efficiency = parseFloat(document.getElementById('fcEfficiency').value);
+  const price = parseFloat(document.getElementById('fcPrice').value);
+  const round = document.getElementById('fcRound').value === 'yes';
+  if(!distance || !efficiency || !price){ out.textContent = 'Enter distance, efficiency, and fuel price.'; return; }
+  if(round) distance *= 2;
+  const liters = distance / efficiency;
+  const cost = liters * price;
+  out.textContent = `Distance: ${distance} km\nFuel needed: ${liters.toFixed(2)} liters\nEstimated cost: ${cost.toFixed(2)}`;
 }
 
 /* ================================================================
@@ -4084,15 +4575,138 @@ function browser_runSitemap(){
   document.getElementById('smOut').textContent = xml;
 }
 
+function web_urlShortener(){
+  document.getElementById('workbench').innerHTML = `
+    <h2>URL Shortener</h2><p class="desc">Shorten a long link using a free public shortening service.</p>
+    <div class="row"><div class="col"><label class="field-label">LONG URL</label><input type="text" id="usLong" placeholder="https://example.com/a/very/long/path"></div></div>
+    <div class="btn-row" style="margin:14px 0;"><button class="btn" onclick="web_runShorten()">Shorten</button></div>
+    <div class="output-box" id="usOut">Result will appear here.</div>
+    <div class="output-meta"><span></span><button class="btn secondary" onclick="copyText(document.getElementById('usOut').textContent)">Copy</button></div>
+  `;
+}
+async function web_runShorten(){
+  const url = document.getElementById('usLong').value.trim();
+  const out = document.getElementById('usOut');
+  if(!url){ out.textContent = 'Enter a URL first.'; return; }
+  out.textContent = 'Shortening…';
+  try{
+    const res = await fetch('https://tinyurl.com/api-create.php?url=' + encodeURIComponent(url));
+    const text = await res.text();
+    if(!text.startsWith('http')) throw new Error('bad response');
+    out.textContent = text;
+  }catch(e){
+    out.textContent = "Couldn't reach the shortening service (network may be restricted or blocking this request). Try again in a moment.";
+  }
+}
+
+function web_utmBuilder(){
+  document.getElementById('workbench').innerHTML = `
+    <h2>UTM Builder</h2><p class="desc">Add campaign-tracking parameters to a URL for analytics.</p>
+    <div class="row"><div class="col"><label class="field-label">WEBSITE URL</label><input type="text" id="utmUrl" placeholder="https://example.com/page"></div></div>
+    <div class="row">
+      <div class="col"><label class="field-label">SOURCE (utm_source)</label><input type="text" id="utmSource" placeholder="newsletter"></div>
+      <div class="col"><label class="field-label">MEDIUM (utm_medium)</label><input type="text" id="utmMedium" placeholder="email"></div>
+    </div>
+    <div class="row">
+      <div class="col"><label class="field-label">CAMPAIGN (utm_campaign)</label><input type="text" id="utmCampaign" placeholder="spring_sale"></div>
+      <div class="col"><label class="field-label">TERM (OPTIONAL)</label><input type="text" id="utmTerm" placeholder="running+shoes"></div>
+    </div>
+    <div class="row"><div class="col"><label class="field-label">CONTENT (OPTIONAL)</label><input type="text" id="utmContent" placeholder="logolink"></div></div>
+    <div class="btn-row" style="margin:14px 0;"><button class="btn" onclick="web_runUtm()">Build link</button></div>
+    <div class="output-box" id="utmOut">Result will appear here.</div>
+    <div class="output-meta"><span></span><button class="btn secondary" onclick="copyText(document.getElementById('utmOut').textContent)">Copy</button></div>
+  `;
+}
+function web_runUtm(){
+  const out = document.getElementById('utmOut');
+  const base = document.getElementById('utmUrl').value.trim();
+  if(!base){ out.textContent = 'Enter a website URL first.'; return; }
+  const params = [
+    ['utm_source', document.getElementById('utmSource').value.trim()],
+    ['utm_medium', document.getElementById('utmMedium').value.trim()],
+    ['utm_campaign', document.getElementById('utmCampaign').value.trim()],
+    ['utm_term', document.getElementById('utmTerm').value.trim()],
+    ['utm_content', document.getElementById('utmContent').value.trim()],
+  ].filter(([,v])=>v);
+  if(!params.length){ out.textContent = base; return; }
+  const sep = base.includes('?') ? '&' : '?';
+  const query = params.map(([k,v])=>`${k}=${encodeURIComponent(v)}`).join('&');
+  out.textContent = base + sep + query;
+}
+
+function web_ogPreview(){
+  document.getElementById('workbench').innerHTML = `
+    <h2>Open Graph Preview</h2><p class="desc">See how a link will look when shared on social media, and get the meta tags to match.</p>
+    <div class="row">
+      <div class="col"><label class="field-label">SITE NAME</label><input type="text" id="ogSite" placeholder="example.com" oninput="web_runOg()"></div>
+      <div class="col"><label class="field-label">PAGE URL</label><input type="text" id="ogUrl" placeholder="https://example.com/page" oninput="web_runOg()"></div>
+    </div>
+    <div class="row"><div class="col"><label class="field-label">TITLE</label><input type="text" id="ogTitle" placeholder="My Page Title" oninput="web_runOg()"></div></div>
+    <label class="field-label">DESCRIPTION</label>
+    <textarea id="ogDesc" placeholder="A short description shown under the title…" style="min-height:60px;" oninput="web_runOg()"></textarea>
+    <div class="row" style="margin-top:12px;"><div class="col"><label class="field-label">IMAGE URL</label><input type="text" id="ogImage" placeholder="https://example.com/image.jpg" oninput="web_runOg()"></div></div>
+    <div style="background:#fff;border-radius:10px;overflow:hidden;margin-top:16px;max-width:420px;border:1px solid var(--line);">
+      <div id="ogImgBox" style="width:100%;height:180px;background:#e6e6e6;background-size:cover;background-position:center;"></div>
+      <div style="padding:12px 14px;">
+        <div id="ogPrevSite" style="font-family:var(--mono);font-size:11px;letter-spacing:0.04em;text-transform:uppercase;color:#8B9198;">example.com</div>
+        <div id="ogPrevTitle" style="font-family:var(--grotesk);font-weight:700;color:#14171A;margin-top:3px;">Page title</div>
+        <div id="ogPrevDesc" style="font-family:var(--inter);font-size:13px;color:#555;margin-top:3px;">Description preview…</div>
+      </div>
+    </div>
+    <div class="output-box" id="ogOut" style="margin-top:16px;"></div>
+    <div class="output-meta"><span></span><button class="btn secondary" onclick="copyText(document.getElementById('ogOut').textContent)">Copy meta tags</button></div>
+  `;
+  web_runOg();
+}
+function web_runOg(){
+  const site = document.getElementById('ogSite').value.trim() || 'example.com';
+  const url = document.getElementById('ogUrl').value.trim();
+  const title = document.getElementById('ogTitle').value.trim() || 'Page title';
+  const desc = document.getElementById('ogDesc').value.trim() || 'Description preview…';
+  const image = document.getElementById('ogImage').value.trim();
+  document.getElementById('ogPrevSite').textContent = site;
+  document.getElementById('ogPrevTitle').textContent = title;
+  document.getElementById('ogPrevDesc').textContent = desc;
+  document.getElementById('ogImgBox').style.backgroundImage = image ? `url('${image.replace(/'/g,"")}')` : 'none';
+  const tags = [
+    `<meta property="og:title" content="${esc(title)}">`,
+    `<meta property="og:description" content="${esc(desc)}">`,
+    `<meta property="og:site_name" content="${esc(site)}">`,
+    url ? `<meta property="og:url" content="${esc(url)}">` : '',
+    image ? `<meta property="og:image" content="${esc(image)}">` : '',
+    `<meta name="twitter:card" content="summary_large_image">`,
+    `<meta name="twitter:title" content="${esc(title)}">`,
+    `<meta name="twitter:description" content="${esc(desc)}">`,
+  ].filter(Boolean).join('\n');
+  document.getElementById('ogOut').textContent = tags;
+}
+
 /* ================================================================
    MODULE 11 — FILE TOOLS
    ================================================================ */
-function file_zipExtractor(){
+let fileZipMode = 'extract';
+function file_zipUnzip(){
   document.getElementById('workbench').innerHTML = `
-    <h2>ZIP Extractor</h2><p class="desc">Upload a .zip file to list and download its contents.</p>
-    <input type="file" id="zipExtractInput" accept=".zip" onchange="file_runZipExtract(this.files[0])">
-    <div class="output-box" id="zipExtractOut" style="margin-top:16px;">Choose a .zip file to begin.</div>
+    <h2>ZIP / Unzip</h2><p class="desc">Extract files from a .zip, or bundle multiple files into a new .zip — all in your browser.</p>
+    <div class="btn-row" style="margin-bottom:14px;">
+      <button class="btn ${fileZipMode==='extract'?'':'secondary'}" onclick="fileZipMode='extract'; file_zipUnzip();">Unzip a file</button>
+      <button class="btn ${fileZipMode==='create'?'':'secondary'}" onclick="fileZipMode='create'; file_zipUnzip();">Create a zip</button>
+    </div>
+    <div id="zipUnzipUI"></div>
   `;
+  const ui = document.getElementById('zipUnzipUI');
+  if(fileZipMode==='extract'){
+    ui.innerHTML = `
+      <input type="file" id="zipExtractInput" accept=".zip" onchange="file_runZipExtract(this.files[0])">
+      <div class="output-box" id="zipExtractOut" style="margin-top:16px;">Choose a .zip file to begin.</div>
+    `;
+  } else {
+    ui.innerHTML = `
+      <input type="file" id="zipCreateInput" multiple>
+      <div class="btn-row" style="margin-top:14px;"><button class="btn" onclick="file_runZipCreate()">Create ZIP</button></div>
+      <div class="output-box" id="zipCreateOut">Result will appear here.</div>
+    `;
+  }
 }
 async function file_runZipExtract(f){
   if(!f) return;
@@ -4115,14 +4729,6 @@ async function file_downloadZipEntry(zipName, entryName){
   a.click();
 }
 
-function file_zipCreator(){
-  document.getElementById('workbench').innerHTML = `
-    <h2>ZIP Creator</h2><p class="desc">Select multiple files to bundle them into one .zip.</p>
-    <input type="file" id="zipCreateInput" multiple>
-    <div class="btn-row" style="margin-top:14px;"><button class="btn" onclick="file_runZipCreate()">Create ZIP</button></div>
-    <div class="output-box" id="zipCreateOut">Result will appear here.</div>
-  `;
-}
 async function file_runZipCreate(){
   const files = document.getElementById('zipCreateInput').files;
   const out = document.getElementById('zipCreateOut');
@@ -4197,6 +4803,35 @@ async function file_runDedupeFinder(){
   }
   const dupes = Object.values(hashes).filter(g=>g.length>1);
   out.textContent = dupes.length ? dupes.map((g,i)=>`Duplicate set ${i+1}: ${g.join(', ')}`).join('\n') : 'No exact duplicates found.';
+}
+
+function file_metadataViewer(){
+  document.getElementById('workbench').innerHTML = `
+    <h2>File Metadata Viewer</h2><p class="desc">See the name, size, type, and last-modified date stored for any file. Nothing is uploaded.</p>
+    <input type="file" id="fileMetaInput" multiple onchange="file_showMetadata()">
+    <div class="output-box" id="fileMetaOut">Choose one or more files to begin.</div>
+  `;
+}
+function file_fmtBytes(b){
+  if(b<1024) return b+' B';
+  if(b<1048576) return (b/1024).toFixed(1)+' KB';
+  if(b<1073741824) return (b/1048576).toFixed(1)+' MB';
+  return (b/1073741824).toFixed(2)+' GB';
+}
+function file_showMetadata(){
+  const files = document.getElementById('fileMetaInput').files;
+  const out = document.getElementById('fileMetaOut');
+  if(!files.length){ out.textContent='Choose one or more files.'; return; }
+  out.innerHTML = Array.from(files).map(f=>{
+    const ext = f.name.includes('.') ? f.name.split('.').pop().toUpperCase() : '—';
+    return `<div style="margin-bottom:12px;padding-bottom:12px;border-bottom:1px solid var(--line);">
+      <strong>${esc(f.name)}</strong><br>
+      <span style="font-size:13px;color:var(--muted);">
+        Size: ${file_fmtBytes(f.size)} &nbsp;·&nbsp; Type: ${esc(f.type||'unknown')} &nbsp;·&nbsp; Extension: ${esc(ext)}<br>
+        Last modified: ${new Date(f.lastModified).toLocaleString()}
+      </span>
+    </div>`;
+  }).join('');
 }
 
 function file_converter(){
@@ -4278,8 +4913,472 @@ function file_runTextConvert(type){
 }
 
 /* ================================================================
+   MODULE 24 — QR & BARCODE (Wi-Fi, Contact, WhatsApp, Event, Scanner)
+   ================================================================ */
+function qr_renderCanvas(text, holderId){
+  const holder = document.getElementById(holderId);
+  if(!holder) return;
+  holder.innerHTML = '';
+  if(typeof QRCode === 'undefined'){
+    holder.innerHTML = '<p style="color:var(--muted); font-size:13px;">QR library failed to load — check your internet connection and refresh the page.</p>';
+    return;
+  }
+  try{ new QRCode(holder, {text: text || ' ', width:200, height:200, colorDark:"#14171A", colorLight:"#ffffff"}); }
+  catch(e){ holder.innerHTML = '<p style="color:var(--muted); font-size:13px;">Could not generate a QR code for that input.</p>'; }
+}
+function qr_downloadCanvas(holderId, filename){
+  const holder = document.getElementById(holderId);
+  const img = holder && (holder.querySelector('img') || holder.querySelector('canvas'));
+  if(!img){ toast('Generate a code first'); return; }
+  const link = document.createElement('a');
+  link.download = filename || 'qr-code.png';
+  link.href = img.src || img.toDataURL();
+  link.click();
+}
+function qr_escapeField(s){ return String(s||'').replace(/([\\;,:])/g, '\\$1'); }
+
+/* ---- Wi-Fi QR ---- */
+function qr_wifiTool(){
+  document.getElementById('workbench').innerHTML = `
+    <h2>Wi-Fi QR</h2><p class="desc">Generate a QR code that connects a phone to your Wi-Fi when scanned — no typing the password.</p>
+    <div class="row">
+      <div class="col"><label class="field-label">NETWORK NAME (SSID)</label><input type="text" id="wifiSsid" placeholder="MyHomeWiFi" oninput="qr_updateWifi()"></div>
+      <div class="col"><label class="field-label">PASSWORD</label><input type="text" id="wifiPass" placeholder="••••••••" oninput="qr_updateWifi()"></div>
+    </div>
+    <div class="row">
+      <div class="col"><label class="field-label">SECURITY</label>
+        <select id="wifiEnc" onchange="qr_updateWifi()">
+          <option value="WPA">WPA/WPA2</option>
+          <option value="WEP">WEP</option>
+          <option value="nopass">None (open network)</option>
+        </select>
+      </div>
+      <div class="col"><label class="checkbox-row" style="margin-top:26px;"><input type="checkbox" id="wifiHidden" onchange="qr_updateWifi()"> Hidden network</label></div>
+    </div>
+    <div class="canvas-wrap" id="wifiQrCanvas"></div>
+    <div class="btn-row" style="margin-top:14px;"><button class="btn secondary" onclick="qr_downloadCanvas('wifiQrCanvas','wifi-qr.png')">Download PNG</button></div>
+  `;
+  qr_updateWifi();
+}
+function qr_updateWifi(){
+  const ssid = qr_escapeField(document.getElementById('wifiSsid').value);
+  const pass = qr_escapeField(document.getElementById('wifiPass').value);
+  const enc = document.getElementById('wifiEnc').value;
+  const hidden = document.getElementById('wifiHidden').checked;
+  const text = enc==='nopass'
+    ? `WIFI:T:nopass;S:${ssid};H:${hidden?'true':'false'};;`
+    : `WIFI:T:${enc};S:${ssid};P:${pass};H:${hidden?'true':'false'};;`;
+  qr_renderCanvas(text, 'wifiQrCanvas');
+}
+
+/* ---- Contact QR (vCard) ---- */
+function qr_vcardTool(){
+  document.getElementById('workbench').innerHTML = `
+    <h2>Contact QR (vCard)</h2><p class="desc">Generate a QR code that saves a contact card straight to a phone's address book.</p>
+    <div class="row">
+      <div class="col"><label class="field-label">FULL NAME</label><input type="text" id="vcName" placeholder="Jane Doe" oninput="qr_updateVcard()"></div>
+      <div class="col"><label class="field-label">PHONE</label><input type="text" id="vcPhone" placeholder="+1 555 123 4567" oninput="qr_updateVcard()"></div>
+    </div>
+    <div class="row">
+      <div class="col"><label class="field-label">EMAIL</label><input type="text" id="vcEmail" placeholder="jane@example.com" oninput="qr_updateVcard()"></div>
+      <div class="col"><label class="field-label">ORGANIZATION</label><input type="text" id="vcOrg" placeholder="Company Inc." oninput="qr_updateVcard()"></div>
+    </div>
+    <div class="canvas-wrap" id="vcQrCanvas"></div>
+    <div class="btn-row" style="margin-top:14px;"><button class="btn secondary" onclick="qr_downloadCanvas('vcQrCanvas','contact-qr.png')">Download PNG</button></div>
+  `;
+  qr_updateVcard();
+}
+function qr_updateVcard(){
+  const name = document.getElementById('vcName').value.trim();
+  const phone = document.getElementById('vcPhone').value.trim();
+  const email = document.getElementById('vcEmail').value.trim();
+  const org = document.getElementById('vcOrg').value.trim();
+  const lines = ['BEGIN:VCARD','VERSION:3.0'];
+  lines.push(`FN:${name||'Unnamed'}`);
+  if(org) lines.push(`ORG:${org}`);
+  if(phone) lines.push(`TEL;TYPE=CELL:${phone}`);
+  if(email) lines.push(`EMAIL:${email}`);
+  lines.push('END:VCARD');
+  qr_renderCanvas(lines.join('\n'), 'vcQrCanvas');
+}
+
+/* ---- WhatsApp QR ---- */
+function qr_whatsappTool(){
+  document.getElementById('workbench').innerHTML = `
+    <h2>WhatsApp QR</h2><p class="desc">Generate a QR code that opens a WhatsApp chat with a number, optionally with a pre-filled message.</p>
+    <div class="row">
+      <div class="col"><label class="field-label">PHONE (COUNTRY CODE, NO + OR SPACES)</label><input type="text" id="waPhone" placeholder="15551234567" oninput="qr_updateWhatsapp()"></div>
+    </div>
+    <label class="field-label">MESSAGE (OPTIONAL)</label>
+    <input type="text" id="waMsg" placeholder="Hi! I found you via QR code." oninput="qr_updateWhatsapp()">
+    <div class="canvas-wrap" id="waQrCanvas"></div>
+    <div class="btn-row" style="margin-top:14px;"><button class="btn secondary" onclick="qr_downloadCanvas('waQrCanvas','whatsapp-qr.png')">Download PNG</button></div>
+  `;
+  qr_updateWhatsapp();
+}
+function qr_updateWhatsapp(){
+  const phone = document.getElementById('waPhone').value.replace(/[^0-9]/g,'');
+  const msg = document.getElementById('waMsg').value;
+  const url = `https://wa.me/${phone}${msg ? '?text='+encodeURIComponent(msg) : ''}`;
+  qr_renderCanvas(url, 'waQrCanvas');
+}
+
+/* ---- Event QR ---- */
+function qr_eventTool(){
+  document.getElementById('workbench').innerHTML = `
+    <h2>Event QR</h2><p class="desc">Generate a QR code that adds an event to a calendar app when scanned.</p>
+    <div class="row">
+      <div class="col"><label class="field-label">TITLE</label><input type="text" id="evTitle" placeholder="Team Meeting" oninput="qr_updateEvent()"></div>
+      <div class="col"><label class="field-label">LOCATION</label><input type="text" id="evLoc" placeholder="Conference Room A" oninput="qr_updateEvent()"></div>
+    </div>
+    <div class="row">
+      <div class="col"><label class="field-label">STARTS</label><input type="datetime-local" id="evStart" oninput="qr_updateEvent()"></div>
+      <div class="col"><label class="field-label">ENDS</label><input type="datetime-local" id="evEnd" oninput="qr_updateEvent()"></div>
+    </div>
+    <label class="field-label">DESCRIPTION</label>
+    <input type="text" id="evDesc" placeholder="Optional details" oninput="qr_updateEvent()">
+    <div class="canvas-wrap" id="evQrCanvas"></div>
+    <div class="btn-row" style="margin-top:14px;"><button class="btn secondary" onclick="qr_downloadCanvas('evQrCanvas','event-qr.png')">Download PNG</button></div>
+  `;
+  qr_updateEvent();
+}
+function qr_icalDate(val){
+  if(!val) return '';
+  return val.replace(/[-:]/g,'').slice(0,15);
+}
+function qr_updateEvent(){
+  const title = document.getElementById('evTitle').value;
+  const loc = document.getElementById('evLoc').value;
+  const start = qr_icalDate(document.getElementById('evStart').value);
+  const end = qr_icalDate(document.getElementById('evEnd').value);
+  const desc = document.getElementById('evDesc').value;
+  const lines = ['BEGIN:VEVENT'];
+  if(title) lines.push(`SUMMARY:${title}`);
+  if(loc) lines.push(`LOCATION:${loc}`);
+  if(start) lines.push(`DTSTART:${start}`);
+  if(end) lines.push(`DTEND:${end}`);
+  if(desc) lines.push(`DESCRIPTION:${desc}`);
+  lines.push('END:VEVENT');
+  qr_renderCanvas(lines.join('\n'), 'evQrCanvas');
+}
+
+/* ---- QR Scanner ---- */
+let qrScannerStream = null;
+let qrScannerRAF = null;
+function qr_scannerTool(){
+  document.getElementById('workbench').innerHTML = `
+    <h2>QR Scanner</h2><p class="desc">Scan a QR code with your camera, or upload an image that contains one.</p>
+    <div class="btn-row"><button class="btn" id="qrScanStart" onclick="qr_startScanner()">▶ Start camera</button>
+      <button class="btn secondary" id="qrScanStop" onclick="qr_stopScanner()" disabled>■ Stop camera</button></div>
+    <video id="qrScanVideo" playsinline muted style="width:100%;max-width:360px;border-radius:12px;margin-top:12px;display:none;"></video>
+    <canvas id="qrScanCanvas" style="display:none;"></canvas>
+    <div style="margin-top:14px;">
+      <label class="field-label">OR UPLOAD AN IMAGE</label>
+      <input type="file" id="qrScanFile" accept="image/*" onchange="qr_scanFromFile(this.files[0])">
+    </div>
+    <div class="output-box" id="qrScanOut" style="margin-top:14px;">Result will appear here.</div>
+    <div class="output-meta"><span></span><button class="btn secondary" onclick="copyText(document.getElementById('qrScanOut').textContent)">Copy</button></div>
+  `;
+}
+async function qr_loadJsQR(){
+  if(typeof jsQR === 'undefined'){
+    await loadScript('https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.js');
+  }
+}
+async function qr_startScanner(){
+  const out = document.getElementById('qrScanOut');
+  try{ await qr_loadJsQR(); }catch(e){ out.textContent = e.message; return; }
+  try{
+    qrScannerStream = await navigator.mediaDevices.getUserMedia({video:{facingMode:'environment'}});
+    const video = document.getElementById('qrScanVideo');
+    video.srcObject = qrScannerStream;
+    video.style.display = 'block';
+    await video.play();
+    document.getElementById('qrScanStart').disabled = true;
+    document.getElementById('qrScanStop').disabled = false;
+    out.textContent = 'Scanning…';
+    qr_scanLoop();
+  }catch(e){ out.textContent = 'Camera access denied or unavailable: '+e.message; }
+}
+function qr_scanLoop(){
+  const video = document.getElementById('qrScanVideo');
+  const canvas = document.getElementById('qrScanCanvas');
+  if(!video || !canvas){ return; }
+  if(video.readyState !== video.HAVE_ENOUGH_DATA){
+    qrScannerRAF = requestAnimationFrame(qr_scanLoop);
+    return;
+  }
+  canvas.width = video.videoWidth; canvas.height = video.videoHeight;
+  const ctx = canvas.getContext('2d');
+  ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+  const imgData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+  const code = jsQR(imgData.data, imgData.width, imgData.height);
+  if(code && code.data){
+    qr_showScanResult(code.data);
+    qr_stopScanner();
+    return;
+  }
+  qrScannerRAF = requestAnimationFrame(qr_scanLoop);
+}
+function qr_stopScanner(){
+  if(qrScannerRAF) cancelAnimationFrame(qrScannerRAF);
+  qrScannerRAF = null;
+  if(qrScannerStream){ qrScannerStream.getTracks().forEach(t=>t.stop()); qrScannerStream = null; }
+  const video = document.getElementById('qrScanVideo');
+  if(video){ video.style.display = 'none'; video.srcObject = null; }
+  const startBtn = document.getElementById('qrScanStart'), stopBtn = document.getElementById('qrScanStop');
+  if(startBtn) startBtn.disabled = false;
+  if(stopBtn) stopBtn.disabled = true;
+}
+async function qr_scanFromFile(f){
+  const out = document.getElementById('qrScanOut');
+  if(!f) return;
+  try{ await qr_loadJsQR(); }catch(e){ out.textContent = e.message; return; }
+  out.textContent = 'Reading image…';
+  const img = new Image();
+  img.onload = ()=>{
+    const canvas = document.createElement('canvas');
+    canvas.width = img.width; canvas.height = img.height;
+    const ctx = canvas.getContext('2d');
+    ctx.drawImage(img, 0, 0);
+    const imgData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+    const code = jsQR(imgData.data, imgData.width, imgData.height);
+    if(code && code.data) qr_showScanResult(code.data);
+    else out.textContent = 'No QR code found in that image.';
+  };
+  img.onerror = ()=>{ out.textContent = 'Could not read that image.'; };
+  img.src = URL.createObjectURL(f);
+}
+function qr_showScanResult(data){
+  const out = document.getElementById('qrScanOut');
+  if(!out) return;
+  const isUrl = /^https?:\/\//i.test(data);
+  out.innerHTML = esc(data) + (isUrl ? `<br><a href="${esc(data)}" target="_blank" rel="noopener" style="color:var(--teal);">Open link →</a>` : '');
+}
+
+/* ================================================================
+   MODULE 25 — PLANNING (Year, Travel, Meal — Calendar & Study Planner reuse existing tools)
+   ================================================================ */
+let planYearOffset = 0;
+function plan_yearPlanner(){
+  const year = new Date().getFullYear() + planYearOffset;
+  const months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+  const data = lsGet('dth_year_plan_'+year, {});
+  document.getElementById('workbench').innerHTML = `
+    <h2>Year Planner</h2><p class="desc">Set a goal or focus for each month of ${year}.</p>
+    <div class="btn-row" style="margin-bottom:14px;">
+      <button class="btn secondary" onclick="planYearOffset--; plan_yearPlanner();">← ${year-1}</button>
+      <button class="btn secondary" onclick="planYearOffset++; plan_yearPlanner();">${year+1} →</button>
+    </div>
+    <div class="tool-grid">
+      ${months.map((m,i)=>`
+        <div class="output-box">
+          <strong>${m}</strong>
+          <textarea style="min-height:50px;margin-top:6px;" oninput="plan_saveYearMonth(${year},${i},this.value)">${esc(data[i]||'')}</textarea>
+        </div>`).join('')}
+    </div>
+  `;
+}
+function plan_saveYearMonth(year, i, val){
+  const data = lsGet('dth_year_plan_'+year, {});
+  data[i] = val;
+  lsSet('dth_year_plan_'+year, data);
+}
+
+function plan_travelPlanner(){
+  document.getElementById('workbench').innerHTML = `
+    <h2>Travel Planner</h2><p class="desc">Lay out your trip day by day.</p>
+    <div class="row">
+      <div class="col"><label class="field-label">DATE</label><input type="date" id="tpDate"></div>
+      <div class="col"><label class="field-label">PLAN FOR THE DAY</label><input type="text" id="tpPlan" placeholder="e.g. Arrive, check in, explore old town"></div>
+    </div>
+    <div class="btn-row"><button class="btn" onclick="plan_addTravelDay()">Add day</button></div>
+    <div id="tpList"></div>
+  `;
+  plan_renderTravel();
+}
+function plan_addTravelDay(){
+  const days = lsGet('dth_travel_plan', []);
+  const date = document.getElementById('tpDate').value;
+  const plan = document.getElementById('tpPlan').value.trim();
+  if(!date && !plan) return;
+  days.push({date, plan});
+  days.sort((a,b)=> (a.date||'').localeCompare(b.date||''));
+  lsSet('dth_travel_plan', days);
+  document.getElementById('tpPlan').value = '';
+  plan_renderTravel();
+}
+function plan_renderTravel(){
+  const days = lsGet('dth_travel_plan', []);
+  const holder = document.getElementById('tpList');
+  if(!holder) return;
+  holder.innerHTML = days.length ? days.map((d,i)=>`
+    <div class="output-box" style="margin-bottom:8px;">
+      <strong>${esc(d.date || 'No date')}</strong> — ${esc(d.plan||'')}
+      <button class="btn secondary" style="padding:2px 8px;float:right;" onclick="plan_delTravelDay(${i})">remove</button>
+    </div>`).join('') : 'No days planned yet.';
+}
+function plan_delTravelDay(i){ const days=lsGet('dth_travel_plan',[]); days.splice(i,1); lsSet('dth_travel_plan',days); plan_renderTravel(); }
+
+function plan_mealPlanner(){
+  const days = ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
+  const slots = ['Breakfast','Lunch','Dinner'];
+  const data = lsGet('dth_meal_plan', {});
+  document.getElementById('workbench').innerHTML = `
+    <h2>Meal Planner</h2><p class="desc">Plan breakfast, lunch, and dinner for each day of the week.</p>
+    ${days.map(d=>`
+      <div style="margin-bottom:14px;">
+        <label class="field-label">${d.toUpperCase()}</label>
+        <div class="row">
+          ${slots.map(s=>`<div class="col"><input type="text" placeholder="${s}" value="${esc((data[d]&&data[d][s])||'')}" oninput="plan_saveMeal('${d}','${s}',this.value)"></div>`).join('')}
+        </div>
+      </div>`).join('')}
+  `;
+}
+function plan_saveMeal(day, slot, val){
+  const data = lsGet('dth_meal_plan', {});
+  data[day] = data[day] || {};
+  data[day][slot] = val;
+  lsSet('dth_meal_plan', data);
+}
+
+/* ================================================================
    REGISTRY — wires every live module's tools to its render function
    ================================================================ */
+/* ================================================================
+   MODULE 26 — DESIGN
+   ================================================================ */
+function design_contrastChecker(){
+  document.getElementById('workbench').innerHTML = `
+    <h2>Color Contrast Checker</h2><p class="desc">Check whether a text/background color pair meets WCAG accessibility guidelines.</p>
+    <div class="row">
+      <div class="col"><label class="field-label">TEXT COLOR</label><input type="color" id="ccFg" value="#ECEDEE" oninput="design_runContrast()" style="width:100px;height:44px;padding:2px;"></div>
+      <div class="col"><label class="field-label">BACKGROUND COLOR</label><input type="color" id="ccBg" value="#14171A" oninput="design_runContrast()" style="width:100px;height:44px;padding:2px;"></div>
+    </div>
+    <div id="ccPreview" style="border-radius:10px;padding:28px;text-align:center;font-family:var(--grotesk);font-size:20px;font-weight:700;margin:16px 0;">Sample text preview</div>
+    <div class="output-box" id="ccOut"></div>
+  `;
+  design_runContrast();
+}
+function design_relLuminance(hex){
+  const [r,g,b] = dev_hexToRgb(hex).map(v=>{
+    v/=255;
+    return v<=0.03928 ? v/12.92 : Math.pow((v+0.055)/1.055, 2.4);
+  });
+  return 0.2126*r + 0.7152*g + 0.0722*b;
+}
+function design_runContrast(){
+  const fg = document.getElementById('ccFg').value;
+  const bg = document.getElementById('ccBg').value;
+  const lFg = design_relLuminance(fg), lBg = design_relLuminance(bg);
+  const ratio = (Math.max(lFg,lBg)+0.05) / (Math.min(lFg,lBg)+0.05);
+  const preview = document.getElementById('ccPreview');
+  preview.style.color = fg; preview.style.background = bg;
+  const passAA = ratio>=4.5, passAAlarge = ratio>=3, passAAA = ratio>=7;
+  document.getElementById('ccOut').innerHTML =
+    `Contrast ratio: <strong>${ratio.toFixed(2)}:1</strong>\n`+
+    `AA (normal text, 4.5:1): ${passAA?'✓ Pass':'✗ Fail'}\n`+
+    `AA (large text, 3:1): ${passAAlarge?'✓ Pass':'✗ Fail'}\n`+
+    `AAA (normal text, 7:1): ${passAAA?'✓ Pass':'✗ Fail'}`;
+}
+
+function design_gradientGenerator(){
+  document.getElementById('workbench').innerHTML = `
+    <h2>Gradient Generator</h2><p class="desc">Build a CSS linear gradient and copy the code.</p>
+    <div class="row">
+      <div class="col"><label class="field-label">COLOR 1</label><input type="color" id="gradC1" value="#F2A93B" oninput="design_runGradient()" style="width:100px;height:44px;padding:2px;"></div>
+      <div class="col"><label class="field-label">COLOR 2</label><input type="color" id="gradC2" value="#4FB3A9" oninput="design_runGradient()" style="width:100px;height:44px;padding:2px;"></div>
+    </div>
+    <div class="row">
+      <div class="col"><label class="field-label">ANGLE (DEG)</label><input type="range" id="gradAngle" min="0" max="360" value="135" oninput="design_runGradient()"></div>
+      <div class="col"><label class="field-label">TYPE</label>
+        <select id="gradType" onchange="design_runGradient()"><option value="linear">Linear</option><option value="radial">Radial</option></select>
+      </div>
+    </div>
+    <div id="gradPreview" style="height:160px;border-radius:10px;margin:16px 0;"></div>
+    <div class="output-box" id="gradOut"></div>
+    <div class="output-meta"><span></span><button class="btn secondary" onclick="copyText(document.getElementById('gradOut').textContent)">Copy CSS</button></div>
+  `;
+  design_runGradient();
+}
+function design_runGradient(){
+  const c1 = document.getElementById('gradC1').value, c2 = document.getElementById('gradC2').value;
+  const angle = document.getElementById('gradAngle').value;
+  const type = document.getElementById('gradType').value;
+  const css = type==='linear'
+    ? `linear-gradient(${angle}deg, ${c1}, ${c2})`
+    : `radial-gradient(circle, ${c1}, ${c2})`;
+  document.getElementById('gradPreview').style.background = css;
+  document.getElementById('gradOut').textContent = `background: ${css};`;
+}
+
+function design_shadowGenerator(){
+  document.getElementById('workbench').innerHTML = `
+    <h2>CSS Shadow Generator</h2><p class="desc">Build a box-shadow visually, then copy the CSS.</p>
+    <div class="row">
+      <div class="col"><label class="field-label">X OFFSET</label><input type="range" id="dsX" min="-40" max="40" value="0" oninput="design_runShadow()"></div>
+      <div class="col"><label class="field-label">Y OFFSET</label><input type="range" id="dsY" min="-40" max="40" value="10" oninput="design_runShadow()"></div>
+    </div>
+    <div class="row">
+      <div class="col"><label class="field-label">BLUR</label><input type="range" id="dsBlur" min="0" max="80" value="20" oninput="design_runShadow()"></div>
+      <div class="col"><label class="field-label">SPREAD</label><input type="range" id="dsSpread" min="-20" max="20" value="0" oninput="design_runShadow()"></div>
+    </div>
+    <div class="row">
+      <div class="col"><label class="field-label">COLOR</label><input type="color" id="dsColor" value="#000000" oninput="design_runShadow()"></div>
+      <div class="col"><label class="field-label">OPACITY</label><input type="range" id="dsOpacity" min="0" max="100" value="25" oninput="design_runShadow()"></div>
+    </div>
+    <div class="row"><div class="col"><label class="field-label">INSET</label><select id="dsInset" onchange="design_runShadow()"><option value="">Outer</option><option value="inset">Inset</option></select></div></div>
+    <div style="background:#fff; border-radius:8px; padding:40px; margin-top:16px; display:flex; justify-content:center;">
+      <div id="dsPreview" style="width:120px;height:120px;background:#F2A93B;border-radius:12px;"></div>
+    </div>
+    <div class="output-box" id="dsOut" style="margin-top:16px;"></div>
+    <div class="output-meta"><span></span><button class="btn secondary" onclick="copyText(document.getElementById('dsOut').textContent)">Copy CSS</button></div>
+  `;
+  design_runShadow();
+}
+function design_runShadow(){
+  const x=document.getElementById('dsX').value, y=document.getElementById('dsY').value;
+  const blur=document.getElementById('dsBlur').value, spread=document.getElementById('dsSpread').value;
+  const hex=document.getElementById('dsColor').value, op=document.getElementById('dsOpacity').value/100;
+  const inset=document.getElementById('dsInset').value;
+  const [r,g,b] = dev_hexToRgb(hex);
+  const shadow = `${inset?'inset ':''}${x}px ${y}px ${blur}px ${spread}px rgba(${r}, ${g}, ${b}, ${op})`;
+  document.getElementById('dsPreview').style.boxShadow = shadow;
+  document.getElementById('dsOut').textContent = `box-shadow: ${shadow};`;
+}
+
+const design_fontPairs = [
+  {heading:'Playfair Display', body:'Source Sans Pro', vibe:'Elegant editorial'},
+  {heading:'Poppins', body:'Nunito', vibe:'Friendly & modern'},
+  {heading:'Merriweather', body:'Lato', vibe:'Warm & readable'},
+  {heading:'Montserrat', body:'Open Sans', vibe:'Clean & corporate'},
+  {heading:'Oswald', body:'Roboto', vibe:'Bold & punchy'},
+  {heading:'Lora', body:'Work Sans', vibe:'Classic with a modern edge'},
+  {heading:'Raleway', body:'PT Serif', vibe:'Sleek with a literary twist'},
+  {heading:'Roboto Slab', body:'Roboto', vibe:'Sturdy & technical'},
+];
+let design_fontsLoaded = false;
+function design_fontPairing(){
+  if(!design_fontsLoaded){
+    const families = design_fontPairs.flatMap(p=>[p.heading, p.body]).map(f=>f.replace(/ /g,'+')+':wght@400;700');
+    const link = document.createElement('link');
+    link.rel = 'stylesheet';
+    link.href = `https://fonts.googleapis.com/css2?family=${[...new Set(families)].join('&family=')}&display=swap`;
+    document.head.appendChild(link);
+    design_fontsLoaded = true;
+  }
+  document.getElementById('workbench').innerHTML = `
+    <h2>Font Pairing</h2><p class="desc">Curated heading + body font pairings — click a card to copy its CSS.</p>
+    <div id="fpList"></div>
+  `;
+  document.getElementById('fpList').innerHTML = design_fontPairs.map((p,i)=>`
+    <div class="output-box" style="margin-bottom:12px;cursor:pointer;" onclick="copyText(&quot;font-family: '${p.heading}', sans-serif; /* headings */\\nfont-family: '${p.body}', sans-serif; /* body */&quot;)">
+      <div style="font-family:'${p.heading}', sans-serif; font-weight:700; font-size:24px;">${esc(p.heading)}</div>
+      <div style="font-family:'${p.body}', sans-serif; font-size:14px; color:var(--muted); margin-top:4px;">${esc(p.body)} — The quick brown fox jumps over the lazy dog.</div>
+      <div style="font-size:11px; color:var(--amber); margin-top:8px; font-family:var(--mono); text-transform:uppercase; letter-spacing:0.04em;">${esc(p.vibe)} · click to copy CSS</div>
+    </div>`).join('');
+}
+
 const moduleToolRenderers = {
   2: { tools: ["Merge PDF","Split PDF","Compress PDF","PDF to Image","Image to PDF","Rotate PDF","Extract Pages","Protect PDF","Unlock PDF","eSign PDF","OCR (Image → Text)","Page Numbers","PDF Repair","PDF Watermark","PDF Redaction"],
        renderers: {
@@ -4329,35 +5428,49 @@ const moduleToolRenderers = {
          "Working Hours Calculator": time_workingHours, "Shift Planner": time_shiftPlanner,
          "Birthday Reminder": time_birthdayReminder,
        }},
-  10:{ tools: ["JSON Formatter","SQL Formatter","HTML Formatter","CSS Minifier","JS Minifier","Color Picker","Regex Tester"],
+  10:{ tools: ["JSON Formatter","SQL Formatter","HTML Formatter","CSS Minifier","JS Minifier","Color Picker","Regex Tester","YAML Formatter","XML Formatter","JWT Decoder","UUID Batch Generator","API Tester"],
        renderers: {
          "JSON Formatter": dev_json, "SQL Formatter": dev_sqlFormat, "HTML Formatter": dev_htmlFormat,
          "CSS Minifier": dev_cssMin, "JS Minifier": dev_jsMin, "Color Picker": dev_colorPicker, "Regex Tester": dev_regexTester,
+         "YAML Formatter": dev_yamlFormat, "XML Formatter": dev_xmlFormat, "JWT Decoder": dev_jwtDecode,
+         "UUID Batch Generator": dev_uuidBatch, "API Tester": dev_apiTester,
        }},
-  11:{ tools: ["ZIP Extractor","ZIP Creator","Rename Files","Duplicate File Finder","File Converter"],
+  11:{ tools: ["ZIP/Unzip","Rename Files","Duplicate Finder","File Metadata Viewer"],
        renderers: {
-         "ZIP Extractor": file_zipExtractor, "ZIP Creator": file_zipCreator, "Rename Files": file_rename,
-         "Duplicate File Finder": file_dedupeFinder, "File Converter": file_converter,
+         "ZIP/Unzip": file_zipUnzip, "Rename Files": file_rename,
+         "Duplicate Finder": file_dedupeFinder, "File Metadata Viewer": file_metadataViewer,
        }},
-  15:{ tools: ["Website Screenshot","Color Picker","CSS Generator","Meta Tag Generator","Robots.txt Generator","Sitemap Generator"],
+  15:{ tools: ["Website Screenshot","Color Picker","CSS Generator","Meta Tag Generator","Robots.txt Generator","Sitemap Generator","URL Shortener","UTM Builder","Open Graph Preview"],
        renderers: {
          "Website Screenshot": browser_screenshot, "Color Picker": browser_colorPicker, "CSS Generator": browser_cssGenerator,
          "Meta Tag Generator": browser_metaTags, "Robots.txt Generator": browser_robotsTxt, "Sitemap Generator": browser_sitemap,
+         "URL Shortener": web_urlShortener, "UTM Builder": web_utmBuilder, "Open Graph Preview": web_ogPreview,
        }},
-  16:{ tools: ["Grocery List","Shopping List","Chore Planner","Household Budget"],
+  16:{ tools: ["Grocery List","Shopping List","Chore Planner","Home Budget"],
        renderers: {
          "Grocery List": home_groceryList, "Shopping List": home_shoppingList, "Chore Planner": home_chorePlanner,
-         "Household Budget": home_budget,
+         "Home Budget": home_budget,
        }},
-  17:{ tools: ["Flashcards","Study Planner","Exam Timer","Citation Generator"],
+  17:{ tools: ["Flashcards","Study Planner","Exam Timer","Citation Generator","GPA Calculator","Percentage Calculator","Study Timer"],
        renderers: {
          "Flashcards": edu_flashcards, "Study Planner": edu_studyPlanner, "Exam Timer": edu_examTimer,
-         "Citation Generator": edu_citation,
+         "Citation Generator": edu_citation, "GPA Calculator": edu_gpaCalculator, "Percentage Calculator": edu_percentageCalculator,
+         "Study Timer": edu_studyTimer,
        }},
-  18:{ tools: ["Packing Checklist","Currency Converter","Travel Budget","Time Zone Planner"],
+  26:{ tools: ["Color Contrast Checker","Gradient Generator","CSS Shadow Generator","Font Pairing"],
        renderers: {
-         "Packing Checklist": travel_packing, "Currency Converter": travel_currency, "Travel Budget": travel_budget,
-         "Time Zone Planner": travel_tzPlanner,
+         "Color Contrast Checker": design_contrastChecker, "Gradient Generator": design_gradientGenerator,
+         "CSS Shadow Generator": design_shadowGenerator, "Font Pairing": design_fontPairing,
+       }},
+  18:{ tools: ["Packing Checklist","Currency Travel Planner","Trip Budget","Time Zone Planner","Fuel Cost Calculator"],
+       renderers: {
+         "Packing Checklist": travel_packing, "Currency Travel Planner": travel_currency, "Trip Budget": travel_budget,
+         "Time Zone Planner": travel_tzPlanner, "Fuel Cost Calculator": travel_fuelCost,
+       }},
+  27:{ tools: ["AI Prompt Library","AI Rewrite","AI Brainstorm","AI Reply Generator"],
+       renderers: {
+         "AI Prompt Library": ai_promptLibrary, "AI Rewrite": write_rewrite, "AI Brainstorm": ai_brainstorm,
+         "AI Reply Generator": write_aiReply,
        }},
   19:{ tools: ["Net Worth Tracker","Debt Payoff Planner","Investment Tracker","Retirement Calculator"],
        renderers: {
@@ -4403,6 +5516,26 @@ const moduleToolRenderers = {
   21:{ tools: ["Contact Us","Request a Feature","FAQ / Help"],
        renderers: {
          "Contact Us": support_contact, "Request a Feature": support_feature, "FAQ / Help": support_faq,
+       }},
+  22:{ tools: ["Password Vault (local)","Password Leak Check","Secure Notes","File Checksum"],
+       renderers: {
+         "Password Vault (local)": sec_passwordVault, "Password Leak Check": sec_leakCheck,
+         "Secure Notes": sec_secureNotes, "File Checksum": sec_fileChecksum,
+       }},
+  23:{ tools: ["File Size","Speed","Fuel","Cooking","Digital Storage","Temperature"],
+       renderers: {
+         "File Size": conv_fileSize, "Speed": conv_speed, "Fuel": conv_fuel,
+         "Cooking": conv_cooking, "Digital Storage": conv_digitalStorage, "Temperature": conv_temperature,
+       }},
+  24:{ tools: ["Wi-Fi QR","Contact QR (vCard)","WhatsApp QR","Event QR","QR Scanner"],
+       renderers: {
+         "Wi-Fi QR": qr_wifiTool, "Contact QR (vCard)": qr_vcardTool, "WhatsApp QR": qr_whatsappTool,
+         "Event QR": qr_eventTool, "QR Scanner": qr_scannerTool,
+       }},
+  25:{ tools: ["Calendar","Year Planner","Study Planner","Travel Planner","Meal Planner"],
+       renderers: {
+         "Calendar": prod_calendar, "Year Planner": plan_yearPlanner, "Study Planner": edu_studyPlanner,
+         "Travel Planner": plan_travelPlanner, "Meal Planner": plan_mealPlanner,
        }},
 };
 
@@ -5854,6 +6987,84 @@ async function ai_callOpenAI(system, user){
   }
   const data = await res.json();
   return data.choices && data.choices[0] && data.choices[0].message ? data.choices[0].message.content : '(no response)';
+}
+
+/* ================================================================
+   MODULE 27 — AI ASSISTANT
+   ================================================================ */
+const AI_PROMPT_LIBRARY = [
+  {cat:'Writing', title:'Improve clarity', text:'Rewrite the following text so it is clearer and more concise, without changing its meaning:\n\n[paste text]'},
+  {cat:'Writing', title:'Tone shift', text:'Rewrite this message in a warmer, more approachable tone while keeping it professional:\n\n[paste text]'},
+  {cat:'Coding', title:'Explain code', text:'Explain what this code does, line by line, in plain language:\n\n[paste code]'},
+  {cat:'Coding', title:'Find bugs', text:'Review this code for bugs, edge cases, and potential improvements:\n\n[paste code]'},
+  {cat:'Marketing', title:'Ad copy', text:'Write 3 short ad headlines and one paragraph of body copy for [product], targeting [audience].'},
+  {cat:'Marketing', title:'Social post', text:'Write a social media post announcing [event/product] in an upbeat, shareable tone, under 280 characters.'},
+  {cat:'Study', title:'Summarize', text:'Summarize the following text into 5 key bullet points a student could revise from:\n\n[paste text]'},
+  {cat:'Study', title:'Quiz me', text:'Create 5 short-answer quiz questions (with answers) based on this material:\n\n[paste text]'},
+  {cat:'Business', title:'Meeting summary', text:'Summarize these meeting notes into decisions made, action items (with owners), and open questions:\n\n[paste notes]'},
+  {cat:'Business', title:'Email draft', text:'Draft a professional email to [recipient] about [topic], with a clear ask and a friendly closing.'},
+  {cat:'Ideas', title:'Brainstorm angles', text:'Give me 10 different angles or approaches for [topic/problem], ranging from conventional to unconventional.'},
+  {cat:'Ideas', title:'Pros and cons', text:'List the pros and cons of [decision/option], then give a brief recommendation.'},
+];
+function ai_promptLibrary(){
+  document.getElementById('workbench').innerHTML = `
+    <h2>AI Prompt Library</h2><p class="desc">A curated set of reusable prompts — click any card to copy it, then paste into your favorite AI tool (or the AI Chat tool above).</p>
+    <div class="row"><div class="col"><label class="field-label">FILTER BY CATEGORY</label>
+      <select id="plFilter" onchange="ai_renderPromptLibrary()">
+        <option value="">All categories</option>
+        ${[...new Set(AI_PROMPT_LIBRARY.map(p=>p.cat))].map(c=>`<option value="${c}">${c}</option>`).join('')}
+      </select>
+    </div></div>
+    <div id="plList"></div>
+  `;
+  ai_renderPromptLibrary();
+}
+function ai_renderPromptLibrary(){
+  const filter = document.getElementById('plFilter').value;
+  const holder = document.getElementById('plList');
+  const items = AI_PROMPT_LIBRARY.filter(p=>!filter || p.cat===filter);
+  holder.innerHTML = items.map(p=>`
+    <div class="output-box" style="margin-bottom:10px;cursor:pointer;" onclick="copyText(${esc(JSON.stringify(p.text))})">
+      <div style="font-family:var(--mono);font-size:10.5px;color:var(--amber);text-transform:uppercase;letter-spacing:0.04em;">${esc(p.cat)}</div>
+      <strong>${esc(p.title)}</strong>
+      <div style="color:var(--muted);font-size:13px;margin-top:4px;white-space:pre-wrap;">${esc(p.text)}</div>
+    </div>`).join('');
+}
+
+const AI_BRAINSTORM_ANGLES = [
+  'A beginner-friendly version of', 'The opposite approach to', 'A low-budget way to', 'A premium/luxury take on',
+  'How a completely different industry would solve', 'What this would look like automated', 'A community-driven version of',
+  'The fastest possible way to', 'A sustainable/eco-friendly angle on', 'What this looks like in 5 years',
+];
+function ai_brainstorm(){
+  document.getElementById('workbench').innerHTML = `
+    <h2>AI Brainstorm</h2>
+    <p class="desc">Get a spread of idea angles on any topic. Uses real AI if you add a key below; otherwise a built-in idea-generation framework.</p>
+    ${ai_settingsHtml()}
+    <div class="row"><div class="col"><label class="field-label">TOPIC OR PROBLEM</label><input type="text" id="bsTopic" placeholder="e.g. reduce food waste at a restaurant"></div></div>
+    <div class="row">
+      <div class="col"><label class="field-label">NUMBER OF IDEAS</label><input type="number" id="bsCount" value="8" min="3" max="10"></div>
+    </div>
+    <div class="btn-row"><button class="btn" onclick="ai_runBrainstorm()">Brainstorm</button></div>
+    <div class="output-box" id="bsOut">Ideas will appear here.</div>
+  `;
+}
+async function ai_runBrainstorm(){
+  const topic = document.getElementById('bsTopic').value.trim();
+  const count = Math.min(10, Math.max(3, parseInt(document.getElementById('bsCount').value)||8));
+  const out = document.getElementById('bsOut');
+  if(!topic){ out.textContent = 'Enter a topic first.'; return; }
+  if(ai_keySet()){
+    out.textContent = 'Asking AI…';
+    try{
+      const result = await ai_callOpenAI('You are a brainstorming partner. Given a topic, list distinct, creative ideas as a numbered list. Keep each idea to one or two sentences.', `Topic: ${topic}\nGive me ${count} ideas.`);
+      out.textContent = result;
+    }catch(e){ out.textContent = 'AI request failed: '+e.message; }
+    return;
+  }
+  const shuffled = [...AI_BRAINSTORM_ANGLES].sort(()=>Math.random()-0.5).slice(0, count);
+  const ideas = shuffled.map((angle,i)=>`${i+1}. ${angle} ${topic}.`).join('\n');
+  out.textContent = ideas + '\n\n(Offline mode: idea angles from a generic framework. Add your OpenAI key above for fully tailored AI brainstorming.)';
 }
 
 /* ================================================================
@@ -7860,6 +9071,307 @@ function renderRefundPolicy(){
       <p>We may update this policy at any time. The version published on our official website at the time of your purchase governs that purchase.</p>
     </div>
   `;
+}
+
+/* ================================================================
+   MODULE 22 — SECURITY
+   ================================================================ */
+
+/* ---- Password Vault (local) ---- */
+function sec_vaultKey(passphrase){ return CryptoJS.SHA256(passphrase).toString(); }
+function sec_passwordVault(){
+  const unlocked = sec_vaultSession;
+  document.getElementById('workbench').innerHTML = `
+    <h2>Password Vault (local)</h2>
+    <p class="desc">Entries are encrypted with your master passphrase (AES) and stored only in this browser — nothing is uploaded. If you forget the passphrase, the entries cannot be recovered.</p>
+    ${unlocked ? sec_vaultUnlockedHtml() : sec_vaultLockedHtml()}
+  `;
+  if(unlocked) sec_renderVaultEntries();
+}
+let sec_vaultSession = null;
+function sec_vaultLockedHtml(){
+  return `
+    <label class="field-label">MASTER PASSPHRASE</label>
+    <input type="password" id="vaultPass" placeholder="Enter your master passphrase">
+    <div class="btn-row" style="margin:14px 0;"><button class="btn" onclick="sec_unlockVault()">Unlock / Create vault</button></div>
+    <div class="output-box" id="vaultMsg">${lsGet('dth_vault_data', null) ? 'A vault already exists on this device — enter its passphrase to unlock.' : 'No vault yet — entering a passphrase here creates a new, empty one.'}</div>
+  `;
+}
+function sec_vaultUnlockedHtml(){
+  return `
+    <div class="btn-row" style="margin-bottom:14px;">
+      <button class="btn secondary" onclick="sec_lockVault()">Lock vault</button>
+    </div>
+    <div class="row">
+      <div class="col"><label class="field-label">SITE / SERVICE</label><input type="text" id="vaultSite" placeholder="e.g. github.com"></div>
+      <div class="col"><label class="field-label">USERNAME</label><input type="text" id="vaultUser" placeholder="username or email"></div>
+    </div>
+    <label class="field-label">PASSWORD</label>
+    <input type="text" id="vaultPw" placeholder="password">
+    <div class="btn-row" style="margin:14px 0;"><button class="btn" onclick="sec_addVaultEntry()">Save entry</button></div>
+    <div id="vaultEntries"></div>
+  `;
+}
+function sec_unlockVault(){
+  const pass = document.getElementById('vaultPass').value;
+  if(!pass){ return; }
+  const stored = lsGet('dth_vault_data', null);
+  if(!stored){
+    sec_vaultSession = pass;
+    lsSet('dth_vault_data', CryptoJS.AES.encrypt(JSON.stringify([]), pass).toString());
+    sec_passwordVault();
+    return;
+  }
+  try{
+    const bytes = CryptoJS.AES.decrypt(stored, pass);
+    const json = bytes.toString(CryptoJS.enc.Utf8);
+    JSON.parse(json); // throws if wrong passphrase
+    sec_vaultSession = pass;
+    sec_passwordVault();
+  }catch(e){
+    document.getElementById('vaultMsg').textContent = 'Incorrect passphrase, or the stored vault is corrupted.';
+  }
+}
+function sec_lockVault(){ sec_vaultSession = null; sec_passwordVault(); }
+function sec_getVaultEntries(){
+  const stored = lsGet('dth_vault_data', null);
+  if(!stored || !sec_vaultSession) return [];
+  try{ return JSON.parse(CryptoJS.AES.decrypt(stored, sec_vaultSession).toString(CryptoJS.enc.Utf8)); }
+  catch(e){ return []; }
+}
+function sec_saveVaultEntries(list){
+  lsSet('dth_vault_data', CryptoJS.AES.encrypt(JSON.stringify(list), sec_vaultSession).toString());
+}
+function sec_addVaultEntry(){
+  const site = document.getElementById('vaultSite').value.trim();
+  const user = document.getElementById('vaultUser').value.trim();
+  const pw = document.getElementById('vaultPw').value;
+  if(!site || !pw) return;
+  const list = sec_getVaultEntries();
+  list.unshift({site, user, pw});
+  sec_saveVaultEntries(list);
+  document.getElementById('vaultSite').value=''; document.getElementById('vaultUser').value=''; document.getElementById('vaultPw').value='';
+  sec_renderVaultEntries();
+}
+function sec_removeVaultEntry(idx){
+  const list = sec_getVaultEntries();
+  list.splice(idx,1);
+  sec_saveVaultEntries(list);
+  sec_renderVaultEntries();
+}
+function sec_renderVaultEntries(){
+  const list = sec_getVaultEntries();
+  const el = document.getElementById('vaultEntries');
+  if(!el) return;
+  el.innerHTML = list.length ? list.map((e,i)=>`
+    <div class="output-box" style="display:flex; justify-content:space-between; align-items:center; gap:10px; margin-bottom:8px;">
+      <span><b>${esc(e.site)}</b> — ${esc(e.user||'(no username)')} — <span style="font-family:var(--mono);cursor:pointer;" title="Click to reveal" onclick="this.textContent=this.textContent==='••••••••'?'${esc(e.pw).replace(/'/g,"\\'")}':'••••••••'">••••••••</span></span>
+      <span>
+        <button class="btn secondary" onclick="copyText('${esc(e.pw).replace(/'/g,"\\'")}')">Copy</button>
+        <button class="btn secondary" onclick="sec_removeVaultEntry(${i})">Delete</button>
+      </span>
+    </div>`).join('') : '<p class="desc">No entries yet — add one above.</p>';
+}
+
+/* ---- Password Leak Check (k-anonymity, via haveibeenpwned range API) ---- */
+function sec_leakCheck(){
+  document.getElementById('workbench').innerHTML = `
+    <h2>Password Leak Check</h2>
+    <p class="desc">Checks a password against known data-breach dumps using the Have I Been Pwned range API. Your password is hashed (SHA-1) in your browser first — only the first 5 characters of the hash are ever sent, so the full password and full hash never leave your device.</p>
+    <input type="password" id="leakPw" placeholder="Enter a password to check">
+    <div class="btn-row" style="margin:14px 0;"><button class="btn" onclick="sec_runLeakCheck()">Check</button></div>
+    <div class="output-box" id="leakOut">Result will appear here.</div>
+  `;
+}
+async function sec_runLeakCheck(){
+  const pw = document.getElementById('leakPw').value;
+  const out = document.getElementById('leakOut');
+  if(!pw){ out.textContent = 'Enter a password first.'; return; }
+  out.textContent = 'Checking…';
+  try{
+    const buf = await crypto.subtle.digest('SHA-1', new TextEncoder().encode(pw));
+    const hashHex = Array.from(new Uint8Array(buf)).map(b=>b.toString(16).padStart(2,'0')).join('').toUpperCase();
+    const prefix = hashHex.slice(0,5), suffix = hashHex.slice(5);
+    const res = await fetch('https://api.pwnedpasswords.com/range/'+prefix);
+    if(!res.ok){ out.textContent = 'Could not reach the breach-check service — check your internet connection and try again.'; return; }
+    const text = await res.text();
+    const match = text.split('\n').map(l=>l.trim().split(':')).find(([s])=>s===suffix);
+    out.textContent = match
+      ? `⚠ This password has appeared in ${parseInt(match[1],10).toLocaleString()} known data breaches. Avoid using it.`
+      : '✓ This password was not found in the checked breach data. That doesn\'t guarantee it\'s strong — pair it with length and uniqueness.';
+  }catch(e){ out.textContent = 'Could not complete the check: '+e.message; }
+}
+
+/* ---- Secure Notes (passphrase-encrypted) ---- */
+let sec_notesSession = null;
+function sec_secureNotes(){
+  document.getElementById('workbench').innerHTML = `
+    <h2>Secure Notes</h2>
+    <p class="desc">Free-form notes encrypted with a passphrase (AES) before they touch local storage. Nothing is uploaded, and losing the passphrase means losing the notes.</p>
+    ${sec_notesSession ? `
+      <div class="btn-row" style="margin-bottom:10px;"><button class="btn secondary" onclick="sec_lockNotes()">Lock notes</button></div>
+      <textarea id="secureNotesArea" style="min-height:260px;" oninput="sec_saveSecureNotes()">${esc(sec_getSecureNotesText())}</textarea>
+    ` : `
+      <label class="field-label">PASSPHRASE</label>
+      <input type="password" id="secureNotesPass" placeholder="Enter your notes passphrase">
+      <div class="btn-row" style="margin:14px 0;"><button class="btn" onclick="sec_unlockNotes()">Unlock / Create</button></div>
+      <div class="output-box">${lsGet('dth_secure_notes', null) ? 'Encrypted notes exist on this device — enter the passphrase to unlock.' : 'No secure notes yet — entering a passphrase creates a new, empty note.'}</div>
+    `}
+  `;
+}
+function sec_getSecureNotesText(){
+  const stored = lsGet('dth_secure_notes', null);
+  if(!stored) return '';
+  try{ return CryptoJS.AES.decrypt(stored, sec_notesSession).toString(CryptoJS.enc.Utf8); }catch(e){ return ''; }
+}
+function sec_unlockNotes(){
+  const pass = document.getElementById('secureNotesPass').value;
+  if(!pass) return;
+  const stored = lsGet('dth_secure_notes', null);
+  if(stored){
+    try{
+      const text = CryptoJS.AES.decrypt(stored, pass).toString(CryptoJS.enc.Utf8);
+      if(stored && !text && stored.length>0){ /* allow empty-string notes */ }
+    }catch(e){}
+  }
+  sec_notesSession = pass;
+  if(!stored) lsSet('dth_secure_notes', CryptoJS.AES.encrypt('', pass).toString());
+  sec_secureNotes();
+}
+function sec_lockNotes(){ sec_notesSession = null; sec_secureNotes(); }
+function sec_saveSecureNotes(){
+  const text = document.getElementById('secureNotesArea').value;
+  lsSet('dth_secure_notes', CryptoJS.AES.encrypt(text, sec_notesSession).toString());
+}
+
+/* ---- File Checksum ---- */
+function sec_fileChecksum(){
+  document.getElementById('workbench').innerHTML = `
+    <h2>File Checksum</h2>
+    <p class="desc">Compute MD5, SHA-1, and SHA-256 checksums for a file, entirely in your browser — nothing is uploaded. Useful for verifying a download matches its published checksum.</p>
+    <input type="file" id="checksumFileInput">
+    <div class="output-box" id="checksumOut" style="margin-top:14px;">Choose a file to compute its checksums.</div>
+  `;
+  document.getElementById('checksumFileInput').addEventListener('change', sec_runFileChecksum);
+}
+async function sec_runFileChecksum(){
+  const file = document.getElementById('checksumFileInput').files[0];
+  const out = document.getElementById('checksumOut');
+  if(!file) return;
+  out.textContent = 'Hashing '+file.name+'…';
+  const buf = await file.arrayBuffer();
+  const sha256 = Array.from(new Uint8Array(await crypto.subtle.digest('SHA-256', buf))).map(b=>b.toString(16).padStart(2,'0')).join('');
+  const sha1 = Array.from(new Uint8Array(await crypto.subtle.digest('SHA-1', buf))).map(b=>b.toString(16).padStart(2,'0')).join('');
+  let md5 = '(unavailable)';
+  if(typeof CryptoJS !== 'undefined'){
+    const wordArray = CryptoJS.lib.WordArray.create(buf);
+    md5 = CryptoJS.MD5(wordArray).toString();
+  }
+  out.innerHTML = `<b>${esc(file.name)}</b> (${file.size.toLocaleString()} bytes)\n\nMD5:    ${md5}\nSHA-1:  ${sha1}\nSHA-256: ${sha256}`.replace(/\n/g,'<br>');
+}
+
+/* ================================================================
+   MODULE 23 — CONVERTERS
+   ================================================================ */
+const CONV_TABLES = {
+  FileSize: { base:'B', units:{ Bytes:1, Kilobytes:1000, Megabytes:1000**2, Gigabytes:1000**3, Terabytes:1000**4 } },
+  Speed: { base:'m/s', units:{ 'm/s':1, 'km/h':0.277778, mph:0.44704, knots:0.514444, 'ft/s':0.3048 } },
+  Cooking: { base:'ml', units:{ Teaspoons:4.92892, Tablespoons:14.7868, Cups:236.588, Milliliters:1, Liters:1000, 'Fluid Ounces':29.5735 } },
+  DigitalStorage: { base:'bit', units:{ Bits:1, Bytes:8, Kilobytes:8*1024, Megabytes:8*1024**2, Gigabytes:8*1024**3, Terabytes:8*1024**4, Petabytes:8*1024**5 } },
+};
+function conv_genericConverter(title, desc, catKey, storageKey){
+  document.getElementById('workbench').innerHTML = `
+    <h2>${title}</h2><p class="desc">${desc}</p>
+    <div class="row">
+      <div class="col"><label class="field-label">VALUE</label><input type="number" id="convValue_${storageKey}" value="1"></div>
+    </div>
+    <div class="row">
+      <div class="col"><label class="field-label">FROM</label><select id="convFrom_${storageKey}">${Object.keys(CONV_TABLES[catKey].units).map(u=>`<option>${u}</option>`).join('')}</select></div>
+      <div class="col"><label class="field-label">TO</label><select id="convTo_${storageKey}">${Object.keys(CONV_TABLES[catKey].units).map((u,i)=>`<option ${i===1?'selected':''}>${u}</option>`).join('')}</select></div>
+    </div>
+    <div class="btn-row"><button class="btn" onclick="conv_runGeneric('${catKey}','${storageKey}')">Convert</button></div>
+    <div class="output-box" id="convOut_${storageKey}">Result will appear here.</div>
+  `;
+}
+function conv_runGeneric(catKey, storageKey){
+  const table = CONV_TABLES[catKey].units;
+  const val = parseFloat(document.getElementById('convValue_'+storageKey).value)||0;
+  const from = document.getElementById('convFrom_'+storageKey).value, to = document.getElementById('convTo_'+storageKey).value;
+  const base = val*table[from];
+  const result = base/table[to];
+  document.getElementById('convOut_'+storageKey).textContent = `${val} ${from} = ${result.toLocaleString(undefined,{maximumFractionDigits:6})} ${to}`;
+}
+function conv_fileSize(){ conv_genericConverter('File Size Converter', 'Convert between bytes, kilobytes, megabytes, gigabytes, and terabytes (decimal, 1000-based — matching how file sizes are usually shown).', 'FileSize', 'fs'); }
+function conv_speed(){ conv_genericConverter('Speed Converter', 'Convert between m/s, km/h, mph, knots, and ft/s.', 'Speed', 'sp'); }
+function conv_cooking(){ conv_genericConverter('Cooking Measurement Converter', 'Convert between teaspoons, tablespoons, cups, milliliters, liters, and fluid ounces.', 'Cooking', 'ck'); }
+function conv_digitalStorage(){ conv_genericConverter('Digital Storage Converter', 'Convert between bits, bytes, kilobytes, megabytes, gigabytes, terabytes, and petabytes (binary, 1024-based — matching how storage and RAM capacity are usually measured).', 'DigitalStorage', 'ds'); }
+
+/* ---- Fuel economy (inverse relationship between mpg and L/100km, so it gets its own logic) ---- */
+function conv_fuel(){
+  document.getElementById('workbench').innerHTML = `
+    <h2>Fuel Economy Converter</h2><p class="desc">Convert between miles-per-gallon (US or UK), kilometers-per-liter, and liters-per-100km.</p>
+    <div class="row">
+      <div class="col"><label class="field-label">VALUE</label><input type="number" id="fuelValue" value="30"></div>
+    </div>
+    <div class="row">
+      <div class="col"><label class="field-label">FROM</label>
+        <select id="fuelFrom"><option value="mpgUS">MPG (US)</option><option value="mpgUK">MPG (UK)</option><option value="kml">km/L</option><option value="l100km">L/100km</option></select>
+      </div>
+      <div class="col"><label class="field-label">TO</label>
+        <select id="fuelTo"><option value="mpgUS">MPG (US)</option><option value="mpgUK">MPG (UK)</option><option value="kml">km/L</option><option value="l100km" selected>L/100km</option></select>
+      </div>
+    </div>
+    <div class="btn-row"><button class="btn" onclick="conv_runFuel()">Convert</button></div>
+    <div class="output-box" id="fuelOut">Result will appear here.</div>
+  `;
+}
+function conv_runFuel(){
+  const val = parseFloat(document.getElementById('fuelValue').value)||0;
+  const from = document.getElementById('fuelFrom').value, to = document.getElementById('fuelTo').value;
+  const out = document.getElementById('fuelOut');
+  if(val<=0){ out.textContent = 'Enter a value greater than 0.'; return; }
+  // convert "from" to km/L first
+  let kml;
+  if(from==='kml') kml = val;
+  else if(from==='mpgUS') kml = val*0.425144;
+  else if(from==='mpgUK') kml = val*0.354006;
+  else kml = 100/val; // l100km -> km/L
+  let result;
+  if(to==='kml') result = kml;
+  else if(to==='mpgUS') result = kml/0.425144;
+  else if(to==='mpgUK') result = kml/0.354006;
+  else result = 100/kml; // -> l100km
+  const labels = {mpgUS:'MPG (US)', mpgUK:'MPG (UK)', kml:'km/L', l100km:'L/100km'};
+  out.textContent = `${val} ${labels[from]} = ${result.toFixed(2)} ${labels[to]}`;
+}
+
+/* ---- Temperature (reuses the same formulas as the Unit Converter) ---- */
+function conv_temperature(){
+  document.getElementById('workbench').innerHTML = `
+    <h2>Temperature Converter</h2><p class="desc">Convert between Celsius, Fahrenheit, and Kelvin.</p>
+    <div class="row">
+      <div class="col"><label class="field-label">VALUE</label><input type="number" id="convTempValue" value="0"></div>
+    </div>
+    <div class="row">
+      <div class="col"><label class="field-label">FROM</label><select id="convTempFrom"><option>Celsius</option><option>Fahrenheit</option><option>Kelvin</option></select></div>
+      <div class="col"><label class="field-label">TO</label><select id="convTempTo"><option>Celsius</option><option selected>Fahrenheit</option><option>Kelvin</option></select></div>
+    </div>
+    <div class="btn-row"><button class="btn" onclick="conv_runTemp()">Convert</button></div>
+    <div class="output-box" id="convTempOut">Result will appear here.</div>
+  `;
+}
+function conv_runTemp(){
+  const val = parseFloat(document.getElementById('convTempValue').value)||0;
+  const from = document.getElementById('convTempFrom').value, to = document.getElementById('convTempTo').value;
+  let celsius;
+  if(from==='Celsius') celsius = val;
+  else if(from==='Fahrenheit') celsius = (val-32)*5/9;
+  else celsius = val-273.15;
+  let result;
+  if(to==='Celsius') result = celsius;
+  else if(to==='Fahrenheit') result = celsius*9/5+32;
+  else result = celsius+273.15;
+  document.getElementById('convTempOut').textContent = `${val} ${from} = ${result.toFixed(2)} ${to}`;
 }
 
 document.getElementById('footerYear').textContent = new Date().getFullYear();

@@ -3,7 +3,7 @@
 // to the app shell. Bump CACHE_NAME whenever you ship a new version so
 // old caches get cleared out.
 
-const CACHE_NAME = 'dailytools-hub-v1.2.0';
+const CACHE_NAME = 'dailytools-hub-v1.3.0';
 const APP_SHELL = [
   './index.html',
   './manifest.json',
