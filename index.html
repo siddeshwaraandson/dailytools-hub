@@ -813,21 +813,21 @@ const modules = [
   {id:1, name:"Everyday Utilities", desc:"Passwords, QR/barcodes, text & encoding tools.", status:"live",
     tools:["Password Generator","Password Strength Checker","QR Code Generator","Barcode Generator","Text Case Converter","Word Counter","Character Counter","Remove Duplicate Lines","Random Number Generator","UUID Generator","Base64 Encode/Decode","Hash Generator (MD5/SHA256)","URL Encoder/Decoder"]},
   {id:2, name:"PDF Tools", desc:"Merge, split, compress, and edit PDFs.", status:"live",
-    tools:["Merge PDF","Split PDF","Compress PDF","PDF to Image","Image to PDF","Rotate PDF","Extract Pages","Protect PDF","Unlock PDF"]},
+    tools:["Merge PDF","Split PDF","Compress PDF","PDF to Image","Image to PDF","Rotate PDF","Extract Pages","Protect PDF","Unlock PDF","eSign PDF","OCR (Image → Text)","Page Numbers","PDF Repair","PDF Watermark","PDF Redaction"]},
   {id:3, name:"Image Tools", desc:"Resize, crop, convert, and touch up images.", status:"live",
-    tools:["Compress Image","Resize Image","Crop Image","Background Remover","Convert PNG↔JPG↔WebP","Watermark Image","Blur Faces","Screenshot Editor"]},
+    tools:["Compress Image","Resize Image","Crop Image","Background Remover","Convert PNG↔JPG↔WebP","Watermark Image","Blur Faces","Screenshot Editor","AI Upscaler","HEIC ↔ JPG","Image Metadata Viewer/Remover","Batch Resize","Color Palette Extractor"]},
   {id:4, name:"Money", desc:"Budgets, EMIs, GST, tips, and everyday math.", status:"live",
-    tools:["Expense Tracker","Income Tracker","Monthly Budget","EMI Calculator","Loan Calculator","SIP Calculator","GST Calculator","Discount Calculator","Profit Calculator","Currency Converter","Tip Calculator","Bill Splitter"]},
+    tools:["Expense Tracker","Income Tracker","Monthly Budget","EMI Calculator","Loan Calculator","SIP Calculator","GST Calculator","Discount Calculator","Profit Calculator","Currency Converter","Tip Calculator","Bill Splitter","Tax Calculator","Savings Goal Planner","Net Worth Tracker","Recurring Expense Tracker","Investment Return Calculator"]},
   {id:5, name:"Productivity", desc:"Notes, lists, planners, and habit tracking.", status:"live",
-    tools:["Notes","Checklist","To-do List","Habit Tracker","Pomodoro Timer","Daily Planner","Weekly Planner","Goal Tracker","Calendar","Reminder System"]},
+    tools:["Notes","Checklist","To-do List","Habit Tracker","Pomodoro Timer","Daily Planner","Weekly Planner","Goal Tracker","Calendar","Reminder System","Rich Text Notes","Kanban Board","Recurring Tasks","Focus Mode","Export/Import","Sync Backup"]},
   {id:6, name:"Health", desc:"BMI, water, calories, sleep, and step goals.", status:"live",
-    tools:["BMI Calculator","Water Intake Calculator","Calories Calculator","Walking Tracker","Medicine Reminder","Sleep Tracker","Step Goal Tracker"]},
+    tools:["BMI Calculator","Water Intake Calculator","Calories Calculator","Walking Tracker","Medicine Reminder","Sleep Tracker","Step Goal Tracker","Macro Calculator","Ideal Weight Calculator","Body Fat Estimate","Heart Rate Zones","Health Dashboard"]},
   {id:7, name:"Time", desc:"Ages, countdowns, world clocks, meeting planning.", status:"live",
-    tools:["Age Calculator","Date Difference","Countdown Timer","Stopwatch","World Clock","Meeting Time Planner","Time Zone Converter"]},
+    tools:["Age Calculator","Date Difference","Countdown Timer","Stopwatch","World Clock","Meeting Time Planner","Time Zone Converter","Business Days Calculator","Working Hours Calculator","Shift Planner","Birthday Reminder"]},
   {id:8, name:"Writing", desc:"Grammar, rewriting, resumes, and replies.", status:"live",
-    tools:["Grammar Checker","AI Rewrite","Email Generator","Resume Builder","Cover Letter Builder","AI Reply Generator","Social Caption Generator"]},
+    tools:["Grammar Checker","AI Rewrite","Email Generator","Resume Builder","Cover Letter Builder","AI Reply Generator","Social Caption Generator","AI Summarizer","Paraphraser","Email Templates","Blog Title Generator","Text Translator"]},
   {id:9, name:"Business", desc:"Invoices, quotations, CRM, and dashboards.", status:"live",
-    tools:["Invoice Generator","Quotation Generator","GST Invoice","Inventory Tracker","Client CRM","Attendance Tracker","Profit Dashboard"]},
+    tools:["Invoice Generator","Quotation Generator","GST Invoice","Inventory Tracker","Client CRM","Attendance Tracker","Profit Dashboard","PDF Invoice Export","Client History","Inventory Alerts","Sales Dashboard","Barcode Labels"]},
   {id:10, name:"Developers", desc:"Formatters, minifiers, color and regex tools.", status:"live",
     tools:["JSON Formatter","SQL Formatter","HTML Formatter","CSS Minifier","JS Minifier","Color Picker","Regex Tester"]},
   {id:11, name:"File Tools", desc:"Zip, rename, dedupe, and convert files.", status:"live",
@@ -948,8 +948,16 @@ function renderFavoritesAndRecentsHTML(){
 }
 
 /* ---- Update banner ---- */
-const APP_VERSION = "1.0.1";
-const APP_CHANGELOG = ["Added 6 new tools", "Faster PDF engine"];
+const APP_VERSION = "1.2.0";
+const APP_CHANGELOG = [
+  "Time: Business Days Calculator, Working Hours Calculator, Shift Planner, Birthday Reminder",
+  "Writing: AI Summarizer, Paraphraser, Email Templates, Blog Title Generator, Text Translator",
+  "Business: PDF Invoice Export, Client History, Inventory Alerts, Sales Dashboard, Barcode Labels",
+  "Image Tools: AI Upscaler, HEIC ↔ JPG, Metadata Viewer/Remover, Batch Resize, Color Palette Extractor",
+  "Money: Tax Calculator, Savings Goal Planner, Net Worth Tracker, Recurring Expense Tracker, Investment Return Calculator",
+  "Productivity: Rich Text Notes, Kanban Board, Recurring Tasks, Focus Mode, Export/Import, Sync Backup",
+  "Health: Macro Calculator, Ideal Weight Calculator, Body Fat Estimate, Heart Rate Zones, Health Dashboard",
+];
 function initUpdateBanner(){
   const lastSeen = lsGet('dth_last_seen_version', null);
   if(lastSeen === APP_VERSION) return;
@@ -1968,6 +1976,154 @@ function time_runTzc(){
   out.textContent = new Intl.DateTimeFormat('en-US',{dateStyle:'full', timeStyle:'long', timeZone:zone}).format(dt);
 }
 
+function time_businessDays(){
+  document.getElementById('workbench').innerHTML = `
+    <h2>Business Days Calculator</h2><p class="desc">Count working days (Mon–Fri) between two dates, optionally excluding holidays.</p>
+    <div class="row">
+      <div class="col"><label class="field-label">START DATE</label><input type="text" id="bdStart" placeholder="YYYY-MM-DD"></div>
+      <div class="col"><label class="field-label">END DATE</label><input type="text" id="bdEnd" placeholder="YYYY-MM-DD"></div>
+    </div>
+    <label class="field-label">HOLIDAYS TO EXCLUDE (ONE PER LINE, YYYY-MM-DD)</label>
+    <textarea id="bdHolidays" placeholder="2026-01-01&#10;2026-12-25"></textarea>
+    <div class="btn-row" style="margin-top:12px;"><button class="btn" onclick="time_runBusinessDays()">Calculate</button></div>
+    <div class="output-box" id="bdOut">Result will appear here.</div>
+  `;
+}
+function time_runBusinessDays(){
+  const a = new Date(document.getElementById('bdStart').value);
+  const b = new Date(document.getElementById('bdEnd').value);
+  const out = document.getElementById('bdOut');
+  if(isNaN(a) || isNaN(b)){ out.textContent='Enter two valid dates.'; return; }
+  const holidays = new Set(document.getElementById('bdHolidays').value.split('\n').map(s=>s.trim()).filter(Boolean));
+  const start = a<=b ? a : b, end = a<=b ? b : a;
+  let count = 0, weekends = 0, holidayHits = 0;
+  const cur = new Date(start.getFullYear(), start.getMonth(), start.getDate());
+  const last = new Date(end.getFullYear(), end.getMonth(), end.getDate());
+  while(cur<=last){
+    const day = cur.getDay();
+    const iso = cur.toISOString().slice(0,10);
+    if(day===0 || day===6) weekends++;
+    else if(holidays.has(iso)) holidayHits++;
+    else count++;
+    cur.setDate(cur.getDate()+1);
+  }
+  out.textContent = `${count} business day(s)\nWeekend days skipped: ${weekends}\nHolidays skipped: ${holidayHits}`;
+}
+
+function time_workingHours(){
+  document.getElementById('workbench').innerHTML = `
+    <h2>Working Hours Calculator</h2><p class="desc">Enter your clock-in/clock-out shifts (one per line) plus any unpaid break, and get total hours worked.</p>
+    <label class="field-label">SHIFTS (ONE PER LINE: START-END, 24H TIME, e.g. 09:00-17:30)</label>
+    <textarea id="whShifts" placeholder="09:00-13:00&#10;13:30-17:30"></textarea>
+    <label class="field-label" style="margin-top:12px;">UNPAID BREAK (MINUTES, TOTAL)</label>
+    <input type="number" id="whBreak" value="0">
+    <div class="btn-row" style="margin-top:12px;"><button class="btn" onclick="time_runWorkingHours()">Calculate</button></div>
+    <div class="output-box" id="whOut">Result will appear here.</div>
+  `;
+}
+function time_runWorkingHours(){
+  const lines = document.getElementById('whShifts').value.split('\n').map(s=>s.trim()).filter(Boolean);
+  const breakMin = parseFloat(document.getElementById('whBreak').value)||0;
+  const out = document.getElementById('whOut');
+  if(!lines.length){ out.textContent='Enter at least one shift, e.g. 09:00-17:30'; return; }
+  let totalMin = 0; const rows = [];
+  for(const line of lines){
+    const m = line.match(/^(\d{1,2}):(\d{2})\s*-\s*(\d{1,2}):(\d{2})$/);
+    if(!m){ rows.push(`${line} — could not parse, use HH:MM-HH:MM`); continue; }
+    let start = parseInt(m[1],10)*60+parseInt(m[2],10), end = parseInt(m[3],10)*60+parseInt(m[4],10);
+    if(end<start) end += 24*60; // overnight shift
+    const mins = end-start;
+    totalMin += mins;
+    rows.push(`${line} — ${(mins/60).toFixed(2)} hrs`);
+  }
+  totalMin -= breakMin;
+  out.textContent = rows.join('\n') + `\n\nTotal (minus ${breakMin} min break): ${(totalMin/60).toFixed(2)} hours`;
+}
+
+function time_shiftPlanner(){
+  document.getElementById('workbench').innerHTML = `
+    <h2>Shift Planner</h2><p class="desc">Assign shifts to your team across the week. Saved right in this browser.</p>
+    <div class="row">
+      <div class="col"><label class="field-label">EMPLOYEE</label><input type="text" id="spName" placeholder="e.g. Priya"></div>
+      <div class="col"><label class="field-label">DAY</label>
+        <select id="spDay"><option>Monday</option><option>Tuesday</option><option>Wednesday</option><option>Thursday</option><option>Friday</option><option>Saturday</option><option>Sunday</option></select>
+      </div>
+      <div class="col"><label class="field-label">SHIFT TIME</label><input type="text" id="spTime" placeholder="e.g. 09:00-17:00"></div>
+    </div>
+    <div class="btn-row"><button class="btn" onclick="time_addShift()">Add shift</button><button class="btn secondary" onclick="time_clearShifts()">Clear all</button></div>
+    <div id="spGrid" style="margin-top:14px;"></div>
+  `;
+  time_renderShifts();
+}
+function time_addShift(){
+  const name = document.getElementById('spName').value.trim();
+  const day = document.getElementById('spDay').value;
+  const time = document.getElementById('spTime').value.trim();
+  if(!name || !time) return;
+  const shifts = lsGet('dth_shifts', []);
+  shifts.push({name, day, time});
+  lsSet('dth_shifts', shifts);
+  document.getElementById('spName').value=''; document.getElementById('spTime').value='';
+  time_renderShifts();
+}
+function time_delShift(i){ const s=lsGet('dth_shifts',[]); s.splice(i,1); lsSet('dth_shifts',s); time_renderShifts(); }
+function time_clearShifts(){ lsSet('dth_shifts', []); time_renderShifts(); }
+function time_renderShifts(){
+  const holder = document.getElementById('spGrid');
+  if(!holder) return;
+  const shifts = lsGet('dth_shifts', []);
+  const days = ['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'];
+  holder.innerHTML = days.map(day=>{
+    const dayShifts = shifts.map((s,i)=>({...s, i})).filter(s=>s.day===day);
+    return `<div class="output-box" style="margin-bottom:10px;"><strong>${day}</strong><br>${
+      dayShifts.length ? dayShifts.map(s=>`${esc(s.name)}: ${esc(s.time)} <button class="btn secondary" style="padding:2px 8px;margin-left:6px;" onclick="time_delShift(${s.i})">remove</button>`).join('<br>')
+      : '<span style="color:var(--muted);">No shifts assigned.</span>'
+    }</div>`;
+  }).join('');
+}
+
+function time_birthdayReminder(){
+  document.getElementById('workbench').innerHTML = `
+    <h2>Birthday Reminder</h2><p class="desc">Save birthdays and see who's coming up next, soonest first.</p>
+    <div class="row">
+      <div class="col"><label class="field-label">NAME</label><input type="text" id="brName" placeholder="e.g. Arjun"></div>
+      <div class="col"><label class="field-label">BIRTH DATE</label><input type="text" id="brDate" placeholder="YYYY-MM-DD"></div>
+    </div>
+    <div class="btn-row"><button class="btn" onclick="time_addBirthday()">Add birthday</button></div>
+    <div id="brList" style="margin-top:14px;"></div>
+  `;
+  time_renderBirthdays();
+}
+function time_addBirthday(){
+  const name = document.getElementById('brName').value.trim();
+  const date = document.getElementById('brDate').value.trim();
+  const dob = new Date(date);
+  if(!name || isNaN(dob.getTime())) return;
+  const list = lsGet('dth_birthdays', []);
+  list.push({name, date});
+  lsSet('dth_birthdays', list);
+  document.getElementById('brName').value=''; document.getElementById('brDate').value='';
+  time_renderBirthdays();
+}
+function time_delBirthday(i){ const l=lsGet('dth_birthdays',[]); l.splice(i,1); lsSet('dth_birthdays',l); time_renderBirthdays(); }
+function time_renderBirthdays(){
+  const holder = document.getElementById('brList');
+  if(!holder) return;
+  const list = lsGet('dth_birthdays', []);
+  const now = new Date();
+  const withDays = list.map((b,i)=>{
+    const dob = new Date(b.date);
+    let next = new Date(now.getFullYear(), dob.getMonth(), dob.getDate());
+    if(next < new Date(now.getFullYear(), now.getMonth(), now.getDate())) next.setFullYear(now.getFullYear()+1);
+    const days = Math.ceil((next-now)/86400000);
+    return {...b, i, days};
+  }).sort((a,b)=>a.days-b.days);
+  holder.innerHTML = withDays.length ? withDays.map(b=>
+    `<div class="list-row"><span class="grow">${esc(b.name)} — ${esc(b.date)} ${b.days<=30? '<span class="tag-pill" style="color:var(--good); border-color:var(--good);">'+ (b.days===0? 'TODAY!' : 'in '+b.days+' day(s)') +'</span>' : '(in '+b.days+' days)'}</span>
+     <button class="btn secondary" style="padding:2px 8px;" onclick="time_delBirthday(${b.i})">remove</button></div>`).join('')
+    : '<div class="output-box">No birthdays saved yet — add one above.</div>';
+}
+
 /* ================================================================
    MODULE 6 — HEALTH
    ================================================================ */
@@ -2188,6 +2344,133 @@ function health_updateStepBar(){
   document.getElementById('stepBar').style.width = pct+'%';
   document.getElementById('stepBar').style.background = pct>=100? 'var(--good)' : 'var(--amber)';
   document.getElementById('stepOut').textContent = `${steps} / ${goal} steps (${pct.toFixed(0)}%)`;
+}
+
+function health_macro(){
+  document.getElementById('workbench').innerHTML = `
+    <h2>Macro Calculator</h2><p class="desc">Split a daily calorie target into protein, carb, and fat grams.</p>
+    <div class="row">
+      <div class="col"><label class="field-label">DAILY CALORIES</label><input type="number" id="macroCal" value="2000"></div>
+      <div class="col"><label class="field-label">GOAL</label>
+        <select id="macroGoal">
+          <option value="balanced">Balanced (30/40/30)</option>
+          <option value="highprotein">High protein (40/30/30)</option>
+          <option value="lowcarb">Low carb (30/20/50)</option>
+        </select>
+      </div>
+    </div>
+    <div class="btn-row"><button class="btn" onclick="health_runMacro()">Calculate</button></div>
+    <div class="output-box" id="macroOut">Result will appear here.</div>
+  `;
+}
+function health_runMacro(){
+  const cal = parseFloat(document.getElementById('macroCal').value)||0;
+  const goal = document.getElementById('macroGoal').value;
+  const splits = { balanced:[0.30,0.40,0.30], highprotein:[0.40,0.30,0.30], lowcarb:[0.30,0.20,0.50] };
+  const [p,c,f] = splits[goal];
+  const proteinG = (cal*p/4).toFixed(0), carbsG = (cal*c/4).toFixed(0), fatG = (cal*f/9).toFixed(0);
+  document.getElementById('macroOut').textContent = `Protein: ${proteinG} g\nCarbs: ${carbsG} g\nFat: ${fatG} g`;
+}
+
+function health_idealWeight(){
+  document.getElementById('workbench').innerHTML = `
+    <h2>Ideal Weight Calculator</h2><p class="desc">Estimated healthy weight range from height, using the Devine formula.</p>
+    <div class="row">
+      <div class="col"><label class="field-label">HEIGHT (CM)</label><input type="number" id="iwH" value="170"></div>
+      <div class="col"><label class="field-label">BIOLOGICAL SEX (FOR FORMULA)</label><select id="iwSex"><option value="m">Male</option><option value="f">Female</option></select></div>
+    </div>
+    <div class="btn-row"><button class="btn" onclick="health_runIdealWeight()">Calculate</button></div>
+    <div class="output-box" id="iwOut">Result will appear here.</div>
+  `;
+}
+function health_runIdealWeight(){
+  const h = parseFloat(document.getElementById('iwH').value);
+  const sex = document.getElementById('iwSex').value;
+  const out = document.getElementById('iwOut');
+  if(!h){ out.textContent='Enter a height.'; return; }
+  const inches = h/2.54;
+  const over5ft = Math.max(0, inches-60);
+  const base = sex==='m'? 50 + 2.3*over5ft : 45.5 + 2.3*over5ft;
+  out.textContent = `Estimated ideal weight: ~${base.toFixed(1)} kg\nHealthy range: ~${(base*0.9).toFixed(1)}–${(base*1.1).toFixed(1)} kg`;
+}
+
+function health_bodyFat(){
+  document.getElementById('workbench').innerHTML = `
+    <h2>Body Fat Estimate</h2><p class="desc">Estimated body fat % using the U.S. Navy tape-measure method.</p>
+    <div class="row">
+      <div class="col"><label class="field-label">BIOLOGICAL SEX</label><select id="bfSex" onchange="health_toggleHip()"><option value="m">Male</option><option value="f">Female</option></select></div>
+      <div class="col"><label class="field-label">HEIGHT (CM)</label><input type="number" id="bfH" value="170"></div>
+    </div>
+    <div class="row">
+      <div class="col"><label class="field-label">NECK (CM)</label><input type="number" id="bfNeck" value="38"></div>
+      <div class="col"><label class="field-label">WAIST (CM)</label><input type="number" id="bfWaist" value="85"></div>
+      <div class="col" id="bfHipCol" style="display:none;"><label class="field-label">HIP (CM)</label><input type="number" id="bfHip" value="95"></div>
+    </div>
+    <div class="btn-row"><button class="btn" onclick="health_runBodyFat()">Calculate</button></div>
+    <div class="output-box" id="bfOut">Result will appear here.</div>
+  `;
+}
+function health_toggleHip(){
+  const isF = document.getElementById('bfSex').value==='f';
+  document.getElementById('bfHipCol').style.display = isF? '' : 'none';
+}
+function health_runBodyFat(){
+  const sex = document.getElementById('bfSex').value;
+  const h = parseFloat(document.getElementById('bfH').value);
+  const neck = parseFloat(document.getElementById('bfNeck').value);
+  const waist = parseFloat(document.getElementById('bfWaist').value);
+  const hipEl = document.getElementById('bfHip');
+  const hip = hipEl ? (parseFloat(hipEl.value)||0) : 0;
+  const out = document.getElementById('bfOut');
+  if(!h||!neck||!waist){ out.textContent='Fill in the measurements.'; return; }
+  let bf;
+  if(sex==='m'){
+    bf = 495/(1.0324 - 0.19077*Math.log10(waist-neck) + 0.15456*Math.log10(h)) - 450;
+  } else {
+    bf = 495/(1.29579 - 0.35004*Math.log10(waist+hip-neck) + 0.22100*Math.log10(h)) - 450;
+  }
+  out.textContent = isFinite(bf) && bf>0 ? `Estimated body fat: ${bf.toFixed(1)}%` : 'Check your measurements — waist (plus hip, for women) should be larger than neck.';
+}
+
+function health_heartZones(){
+  document.getElementById('workbench').innerHTML = `
+    <h2>Heart Rate Zones</h2><p class="desc">Training zones based on estimated max heart rate (220 − age).</p>
+    <div class="row"><div class="col"><label class="field-label">AGE</label><input type="number" id="hrAge" value="30"></div></div>
+    <div class="btn-row"><button class="btn" onclick="health_runHeartZones()">Calculate zones</button></div>
+    <div class="output-box" id="hrOut">Result will appear here.</div>
+  `;
+}
+function health_runHeartZones(){
+  const age = parseFloat(document.getElementById('hrAge').value);
+  const out = document.getElementById('hrOut');
+  if(!age){ out.textContent='Enter your age.'; return; }
+  const max = Math.round(220-age);
+  const zones = [
+    ['Zone 1 · Warm-up',0.5,0.6],['Zone 2 · Fat burn',0.6,0.7],['Zone 3 · Aerobic',0.7,0.8],
+    ['Zone 4 · Anaerobic',0.8,0.9],['Zone 5 · Max effort',0.9,1.0],
+  ];
+  out.textContent = `Estimated max heart rate: ${max} bpm\n\n` + zones.map(([name,lo,hi])=>`${name}: ${Math.round(max*lo)}–${Math.round(max*hi)} bpm`).join('\n');
+}
+
+function health_dashboard(){
+  const today = health_today();
+  const water = lsGet('dth_water_'+today, 0);
+  const steps = lsGet('dth_steps_'+today, 0);
+  const stepGoal = lsGet('dth_stepgoal', 8000);
+  const walklog = lsGet('dth_walklog', []);
+  const lastWalk = walklog.length? walklog[walklog.length-1] : null;
+  const sleeplog = lsGet('dth_sleeplog', []);
+  const lastSleep = sleeplog.length? sleeplog[sleeplog.length-1] : null;
+  const meds = lsGet('dth_meds', []);
+  const pct = stepGoal ? Math.min(100,(steps/stepGoal*100)) : 0;
+  document.getElementById('workbench').innerHTML = `
+    <h2>Health Dashboard</h2><p class="desc">A quick snapshot pulled from your other Health tools, all stored right in this browser.</p>
+    <div class="output-box" style="margin-bottom:8px;"><strong>Water today:</strong> ${water} glasses</div>
+    <div class="output-box" style="margin-bottom:8px;"><strong>Steps today:</strong> ${steps} / ${stepGoal} (${pct.toFixed(0)}%)</div>
+    <div class="output-box" style="margin-bottom:8px;"><strong>Last walk logged:</strong> ${lastWalk? `${esc(lastWalk.date)}: ${lastWalk.steps} steps, ${lastWalk.dist} km` : 'No entries yet.'}</div>
+    <div class="output-box" style="margin-bottom:8px;"><strong>Last sleep logged:</strong> ${lastSleep? `${esc(lastSleep.date)}: ${esc(lastSleep.bed)} → ${esc(lastSleep.wake)} (${lastSleep.hours}h)` : 'No entries yet.'}</div>
+    <div class="output-box"><strong>Medicine reminders:</strong> ${meds.length? meds.map(m=>esc(m.name)+' at '+esc(m.time)).join(', ') : 'None set.'}</div>
+  `;
 }
 
 /* ================================================================
@@ -2472,6 +2755,132 @@ function money_runBillSplit(){
   document.getElementById('bsOut').textContent = `Total with tip: ${withTip.toFixed(2)}\nEach person pays: ${(withTip/people).toFixed(2)}`;
 }
 
+function money_tax(){
+  document.getElementById('workbench').innerHTML = `
+    <h2>Tax Calculator</h2><p class="desc">Estimate income tax under India's simplified new-regime slabs. For guidance only — not tax advice.</p>
+    <div class="row"><div class="col"><label class="field-label">ANNUAL TAXABLE INCOME</label><input type="number" id="taxIncome" value="1000000"></div></div>
+    <div class="btn-row"><button class="btn" onclick="money_runTax()">Calculate</button></div>
+    <div class="output-box" id="taxOut">Result will appear here.</div>
+  `;
+}
+function money_runTax(){
+  const income = parseFloat(document.getElementById('taxIncome').value)||0;
+  const brackets = [[300000,0],[400000,0.05],[300000,0.10],[200000,0.15],[300000,0.20],[Infinity,0.30]];
+  let remaining = income, tax = 0;
+  for(const [size,rate] of brackets){
+    if(remaining<=0) break;
+    const amt = Math.min(remaining,size);
+    tax += amt*rate;
+    remaining -= amt;
+  }
+  const cess = tax*0.04;
+  const total = tax+cess;
+  document.getElementById('taxOut').textContent = `Estimated tax: ₹${tax.toFixed(0)}\nHealth & education cess (4%): ₹${cess.toFixed(0)}\nTotal payable: ₹${total.toFixed(0)}\nEffective rate: ${(income? total/income*100 : 0).toFixed(1)}%`;
+}
+
+function money_savingsGoal(){
+  document.getElementById('workbench').innerHTML = `
+    <h2>Savings Goal Planner</h2><p class="desc">See how long it'll take to hit a savings target.</p>
+    <div class="row">
+      <div class="col"><label class="field-label">GOAL AMOUNT</label><input type="number" id="sgGoal" value="100000"></div>
+      <div class="col"><label class="field-label">CURRENT SAVINGS</label><input type="number" id="sgCurrent" value="10000"></div>
+    </div>
+    <div class="row">
+      <div class="col"><label class="field-label">MONTHLY CONTRIBUTION</label><input type="number" id="sgMonthly" value="5000"></div>
+      <div class="col"><label class="field-label">ANNUAL RETURN % (OPTIONAL)</label><input type="number" id="sgReturn" value="0" step="0.1"></div>
+    </div>
+    <div class="btn-row"><button class="btn" onclick="money_runSavingsGoal()">Calculate</button></div>
+    <div class="output-box" id="sgOut">Result will appear here.</div>
+  `;
+}
+function money_runSavingsGoal(){
+  const goal = parseFloat(document.getElementById('sgGoal').value)||0;
+  let bal = parseFloat(document.getElementById('sgCurrent').value)||0;
+  const monthly = parseFloat(document.getElementById('sgMonthly').value)||0;
+  const r = (parseFloat(document.getElementById('sgReturn').value)||0)/12/100;
+  const out = document.getElementById('sgOut');
+  if(bal>=goal){ out.textContent = "You've already reached this goal!"; return; }
+  if(monthly<=0 && r<=0){ out.textContent = 'Add a monthly contribution or an expected return rate.'; return; }
+  let months=0;
+  while(bal<goal && months<1200){ bal = bal*(1+r) + monthly; months++; }
+  if(months>=1200){ out.textContent = "This would take more than 100 years at this rate — try increasing contributions."; return; }
+  const years = Math.floor(months/12), rem = months%12;
+  out.textContent = `Time to reach goal: ${months} months (${years}y ${rem}m)\nProjected balance then: ${bal.toFixed(2)}`;
+}
+
+function money_recurringExpenses(){
+  document.getElementById('workbench').innerHTML = `
+    <h2>Recurring Expense Tracker</h2><p class="desc">Track subscriptions and recurring bills, and see your total monthly cost.</p>
+    <div class="row">
+      <div class="col"><label class="field-label">NAME</label><input type="text" id="recName" placeholder="e.g. Netflix"></div>
+      <div class="col"><label class="field-label">AMOUNT</label><input type="number" id="recAmt" placeholder="0"></div>
+      <div class="col"><label class="field-label">FREQUENCY</label><select id="recFreq"><option value="monthly">Monthly</option><option value="yearly">Yearly</option><option value="weekly">Weekly</option></select></div>
+    </div>
+    <div class="btn-row"><button class="btn" onclick="money_addRecurring()">Add</button></div>
+    <div id="recOut"></div>
+  `;
+  money_renderRecurring();
+}
+function money_addRecurring(){
+  const items = lsGet('dth_recurring', []);
+  const name = document.getElementById('recName').value.trim();
+  const amt = parseFloat(document.getElementById('recAmt').value)||0;
+  const freq = document.getElementById('recFreq').value;
+  if(!name) return;
+  items.push({name, amt, freq});
+  lsSet('dth_recurring', items);
+  money_renderRecurring();
+}
+function money_toMonthly(it){ return it.freq==='yearly'? it.amt/12 : it.freq==='weekly'? it.amt*4.33 : it.amt; }
+function money_renderRecurring(){
+  const items = lsGet('dth_recurring', []);
+  const total = items.reduce((s,it)=>s+money_toMonthly(it),0);
+  const holder = document.getElementById('recOut');
+  if(!holder) return;
+  holder.innerHTML = `
+    <div class="output-box">${items.length? items.map((it,i)=>`${esc(it.name)} — ${it.amt}/${it.freq} (≈${money_toMonthly(it).toFixed(2)}/mo) <button class="btn secondary" style="padding:1px 8px;margin-left:8px;" onclick="money_delRecurring(${i})">×</button>`).join('<br>') : 'No recurring items yet.'}</div>
+    <div class="output-meta"><strong>Total: ≈${total.toFixed(2)}/month</strong><span></span></div>
+  `;
+}
+function money_delRecurring(i){ const items=lsGet('dth_recurring',[]); items.splice(i,1); lsSet('dth_recurring',items); money_renderRecurring(); }
+
+function money_investmentReturn(){
+  document.getElementById('workbench').innerHTML = `
+    <h2>Investment Return Calculator</h2><p class="desc">Project a lump-sum investment's future value, or work out the CAGR between two values.</p>
+    <div class="row">
+      <div class="col"><label class="field-label">INITIAL INVESTMENT</label><input type="number" id="invP" value="100000"></div>
+      <div class="col"><label class="field-label">EXPECTED ANNUAL RETURN %</label><input type="number" id="invR" value="10" step="0.1"></div>
+      <div class="col"><label class="field-label">YEARS</label><input type="number" id="invY" value="10"></div>
+    </div>
+    <div class="btn-row"><button class="btn" onclick="money_runInvestment()">Project future value</button></div>
+    <div class="output-box" id="invOut">Result will appear here.</div>
+    <p class="desc" style="margin-top:16px;">Or work out CAGR from an actual start and end value:</p>
+    <div class="row">
+      <div class="col"><label class="field-label">START VALUE</label><input type="number" id="cagrStart" value="100000"></div>
+      <div class="col"><label class="field-label">END VALUE</label><input type="number" id="cagrEnd" value="200000"></div>
+      <div class="col"><label class="field-label">YEARS</label><input type="number" id="cagrY" value="5"></div>
+    </div>
+    <div class="btn-row"><button class="btn secondary" onclick="money_runCagr()">Calculate CAGR</button></div>
+    <div class="output-box" id="cagrOut">Result will appear here.</div>
+  `;
+}
+function money_runInvestment(){
+  const P = parseFloat(document.getElementById('invP').value)||0;
+  const r = (parseFloat(document.getElementById('invR').value)||0)/100;
+  const y = parseFloat(document.getElementById('invY').value)||0;
+  const fv = P*Math.pow(1+r,y);
+  document.getElementById('invOut').textContent = `Future value: ${fv.toFixed(2)}\nTotal gain: ${(fv-P).toFixed(2)}`;
+}
+function money_runCagr(){
+  const s = parseFloat(document.getElementById('cagrStart').value)||0;
+  const e = parseFloat(document.getElementById('cagrEnd').value)||0;
+  const y = parseFloat(document.getElementById('cagrY').value)||0;
+  const out = document.getElementById('cagrOut');
+  if(s<=0||y<=0){ out.textContent='Enter a positive start value and years.'; return; }
+  const cagr = (Math.pow(e/s,1/y)-1)*100;
+  out.textContent = `CAGR: ${cagr.toFixed(2)}% per year`;
+}
+
 /* ================================================================
    MODULE 5 — PRODUCTIVITY
    ================================================================ */
@@ -2732,6 +3141,220 @@ function prod_reminderLoop(){
     });
     if(changed){ lsSet('dth_reminders', rems); prod_renderReminders(); }
   }, 15000);
+}
+
+function prod_richNotes(){
+  const html = lsGet('dth_richnotes','');
+  document.getElementById('workbench').innerHTML = `
+    <h2>Rich Text Notes</h2><p class="desc">Formatted notes — bold, italic, lists — saved automatically in your browser.</p>
+    <div class="btn-row" style="margin-bottom:8px;">
+      <button class="btn secondary" onclick="document.execCommand('bold')"><b>B</b></button>
+      <button class="btn secondary" onclick="document.execCommand('italic')"><i>I</i></button>
+      <button class="btn secondary" onclick="document.execCommand('underline')"><u>U</u></button>
+      <button class="btn secondary" onclick="document.execCommand('insertUnorderedList')">• List</button>
+      <button class="btn secondary" onclick="document.execCommand('insertOrderedList')">1. List</button>
+    </div>
+    <div id="richNotesArea" contenteditable="true" style="margin-top:18px;background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:16px;font-family:var(--inter);font-size:14px;white-space:normal;word-break:normal;min-height:220px;color:var(--text);text-align:left;" oninput="lsSet('dth_richnotes', this.innerHTML)">${html}</div>
+  `;
+}
+
+function prod_kanbanData(){ return lsGet('dth_kanban', {todo:[],doing:[],done:[]}); }
+function prod_kanban(){
+  document.getElementById('workbench').innerHTML = `
+    <h2>Kanban Board</h2><p class="desc">Move tasks across To Do → In Progress → Done with the arrow buttons.</p>
+    <div class="row">
+      <div class="col"><input type="text" id="kanbanInput" placeholder="New card…"></div>
+      <div class="col" style="flex:0 0 140px;"><button class="btn" onclick="prod_addKanbanCard()">Add to To Do</button></div>
+    </div>
+    <div id="kanbanBoard" style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:14px;"></div>
+  `;
+  prod_renderKanban();
+}
+function prod_addKanbanCard(){
+  const data = prod_kanbanData();
+  const text = document.getElementById('kanbanInput').value.trim();
+  if(!text) return;
+  data.todo.push(text);
+  lsSet('dth_kanban', data);
+  prod_renderKanban();
+}
+function prod_renderKanban(){
+  const data = prod_kanbanData();
+  const holder = document.getElementById('kanbanBoard');
+  if(!holder) return;
+  const cols = [['todo','To Do'],['doing','In Progress'],['done','Done']];
+  holder.innerHTML = cols.map(([key,label],ci)=>`
+    <div>
+      <div class="field-label">${label.toUpperCase()} (${data[key].length})</div>
+      ${data[key].length ? data[key].map((card,i)=>`<div class="output-box" style="margin-bottom:8px;font-size:13px;">
+        ${esc(card)}
+        <div style="margin-top:6px;display:flex;gap:4px;">
+          ${ci>0? `<button class="btn secondary" style="padding:1px 8px;" onclick="prod_moveKanban('${key}',${i},-1)">←</button>`:''}
+          ${ci<2? `<button class="btn secondary" style="padding:1px 8px;" onclick="prod_moveKanban('${key}',${i},1)">→</button>`:''}
+          <button class="btn secondary" style="padding:1px 8px;" onclick="prod_delKanban('${key}',${i})">×</button>
+        </div>
+      </div>`).join('') : '<p style="color:var(--muted);font-size:12px;">Empty</p>'}
+    </div>`).join('');
+}
+function prod_moveKanban(key, i, dir){
+  const data = prod_kanbanData();
+  const cols = ['todo','doing','done'];
+  const ci = cols.indexOf(key);
+  const target = cols[ci+dir];
+  if(!target) return;
+  const card = data[key].splice(i,1)[0];
+  data[target].push(card);
+  lsSet('dth_kanban', data);
+  prod_renderKanban();
+}
+function prod_delKanban(key,i){ const data=prod_kanbanData(); data[key].splice(i,1); lsSet('dth_kanban',data); prod_renderKanban(); }
+
+function prod_periodKey(freq){
+  const d = new Date();
+  if(freq==='weekly'){
+    const first = new Date(d.getFullYear(),0,1);
+    const week = Math.ceil((((d-first)/86400000)+first.getDay()+1)/7);
+    return d.getFullYear()+'-W'+week;
+  }
+  return d.toISOString().slice(0,10);
+}
+function prod_recurringTasks(){
+  document.getElementById('workbench').innerHTML = `
+    <h2>Recurring Tasks</h2><p class="desc">Tasks that repeat daily or weekly — check them off each cycle.</p>
+    <div class="row">
+      <div class="col"><label class="field-label">TASK</label><input type="text" id="rtInput" placeholder="e.g. Water the plants"></div>
+      <div class="col"><label class="field-label">REPEATS</label><select id="rtFreq"><option value="daily">Daily</option><option value="weekly">Weekly</option></select></div>
+    </div>
+    <div class="btn-row"><button class="btn" onclick="prod_addRecurringTask()">Add</button></div>
+    <div id="rtOut"></div>
+  `;
+  prod_renderRecurringTasks();
+}
+function prod_addRecurringTask(){
+  const tasks = lsGet('dth_recurring_tasks', []);
+  const text = document.getElementById('rtInput').value.trim();
+  const freq = document.getElementById('rtFreq').value;
+  if(!text) return;
+  tasks.push({text, freq, lastDone:''});
+  lsSet('dth_recurring_tasks', tasks);
+  prod_renderRecurringTasks();
+}
+function prod_renderRecurringTasks(){
+  const tasks = lsGet('dth_recurring_tasks', []);
+  const holder = document.getElementById('rtOut');
+  if(!holder) return;
+  holder.innerHTML = tasks.length? tasks.map((t,i)=>{
+    const key = prod_periodKey(t.freq);
+    const done = t.lastDone===key;
+    return `<label style="display:block;margin-bottom:6px;">
+      <input type="checkbox" ${done?'checked':''} onchange="prod_toggleRecurringTask(${i})">
+      <span style="${done?'text-decoration:line-through;color:var(--muted);':''}">${esc(t.text)} (${t.freq})</span>
+      <button class="btn secondary" style="padding:1px 8px;margin-left:6px;" onclick="prod_delRecurringTask(${i})">×</button>
+    </label>`;
+  }).join('') : 'No recurring tasks yet.';
+}
+function prod_toggleRecurringTask(i){
+  const tasks = lsGet('dth_recurring_tasks', []);
+  const key = prod_periodKey(tasks[i].freq);
+  tasks[i].lastDone = tasks[i].lastDone===key ? '' : key;
+  lsSet('dth_recurring_tasks', tasks);
+  prod_renderRecurringTasks();
+}
+function prod_delRecurringTask(i){ const tasks=lsGet('dth_recurring_tasks',[]); tasks.splice(i,1); lsSet('dth_recurring_tasks',tasks); prod_renderRecurringTasks(); }
+
+let focusInterval=null, focusSeconds=30*60;
+function prod_focusMode(){
+  document.getElementById('workbench').innerHTML = `
+    <h2>Focus Mode</h2><p class="desc">Pick one task, start a distraction-free countdown, and go.</p>
+    <div class="row"><div class="col"><label class="field-label">FOCUSING ON</label><input type="text" id="focusTask" placeholder="e.g. Write the report" value="${esc(lsGet('dth_focus_task',''))}" oninput="lsSet('dth_focus_task', this.value)"></div></div>
+    <div class="row"><div class="col"><label class="field-label">MINUTES</label><input type="number" id="focusMinutes" value="30" min="1"></div></div>
+    <div class="output-box" id="focusOut" style="font-size:32px;text-align:center;">${prod_fmtPomo(focusSeconds)}</div>
+    <div class="btn-row" style="justify-content:center;">
+      <button class="btn" onclick="prod_focusStart()">Start</button>
+      <button class="btn secondary" onclick="prod_focusPause()">Pause</button>
+      <button class="btn secondary" onclick="prod_focusReset()">Reset</button>
+    </div>
+  `;
+}
+function prod_focusStart(){
+  if(focusInterval) return;
+  const mins = parseFloat(document.getElementById('focusMinutes').value)||30;
+  if(focusSeconds<=0 || focusSeconds>mins*60) focusSeconds = mins*60;
+  focusInterval = setInterval(()=>{
+    focusSeconds--;
+    const out = document.getElementById('focusOut');
+    if(out) out.textContent = prod_fmtPomo(Math.max(0,focusSeconds));
+    if(focusSeconds<=0){ clearInterval(focusInterval); focusInterval=null; toast('Focus session complete!'); }
+  },1000);
+}
+function prod_focusPause(){ clearInterval(focusInterval); focusInterval=null; }
+function prod_focusReset(){
+  clearInterval(focusInterval); focusInterval=null;
+  focusSeconds = (parseFloat(document.getElementById('focusMinutes').value)||30)*60;
+  const out = document.getElementById('focusOut');
+  if(out) out.textContent = prod_fmtPomo(focusSeconds);
+}
+
+function prod_exportImport(){
+  document.getElementById('workbench').innerHTML = `
+    <h2>Export / Import</h2><p class="desc">Back up all of this site's saved data (notes, lists, trackers) to a file, or restore from one.</p>
+    <div class="btn-row"><button class="btn" onclick="prod_exportData()">Export all data (.json)</button></div>
+    <div class="row" style="margin-top:14px;"><div class="col"><label class="field-label">RESTORE FROM FILE</label><input type="file" id="importFile" accept=".json"></div></div>
+    <div class="btn-row"><button class="btn secondary" onclick="prod_importData()">Import & overwrite</button></div>
+    <div class="output-box" id="exportOut">Exports include everything saved in this browser for this site.</div>
+  `;
+}
+function prod_exportData(){
+  const data = {};
+  for(let i=0;i<localStorage.length;i++){
+    const key = localStorage.key(i);
+    if(key && key.startsWith('dth_')) data[key] = localStorage.getItem(key);
+  }
+  const blob = new Blob([JSON.stringify(data,null,2)], {type:'application/json'});
+  pdf_downloadBlob(blob, 'dailytools-backup.json');
+  document.getElementById('exportOut').textContent = `Exported ${Object.keys(data).length} saved item(s) — download started.`;
+}
+async function prod_importData(){
+  const f = document.getElementById('importFile').files[0];
+  const out = document.getElementById('exportOut');
+  if(!f){ out.textContent = 'Choose a backup file first.'; return; }
+  try{
+    const text = await f.text();
+    const data = JSON.parse(text);
+    Object.keys(data).forEach(key=>{ if(key.startsWith('dth_')) localStorage.setItem(key, data[key]); });
+    out.textContent = `Imported ${Object.keys(data).length} item(s). Reopen a tool to see the restored data.`;
+  }catch(e){ out.textContent = "Could not read that file — make sure it's a backup exported from here."; }
+}
+
+function prod_syncBackup(){
+  document.getElementById('workbench').innerHTML = `
+    <h2>Sync Backup</h2><p class="desc">Generate a backup code you can copy and paste into DailyTools Hub on another device to bring your data along. There's no cloud account — this is a manual copy/paste transfer, done entirely in your browser.</p>
+    <div class="btn-row"><button class="btn" onclick="prod_generateSyncCode()">Generate backup code</button></div>
+    <textarea id="syncCodeOut" style="min-height:100px;" readonly placeholder="Your backup code will appear here."></textarea>
+    <div class="btn-row" style="margin-top:8px;"><button class="btn secondary" onclick="copyText(document.getElementById('syncCodeOut').value)">Copy code</button></div>
+    <div class="row" style="margin-top:16px;"><div class="col"><label class="field-label">PASTE A BACKUP CODE TO RESTORE</label><textarea id="syncCodeIn" style="min-height:100px;" placeholder="Paste code here…"></textarea></div></div>
+    <div class="btn-row"><button class="btn secondary" onclick="prod_restoreSyncCode()">Restore from code</button></div>
+    <div class="output-box" id="syncOut">Nothing restored yet.</div>
+  `;
+}
+function prod_generateSyncCode(){
+  const data = {};
+  for(let i=0;i<localStorage.length;i++){
+    const key = localStorage.key(i);
+    if(key && key.startsWith('dth_')) data[key] = localStorage.getItem(key);
+  }
+  const code = btoa(unescape(encodeURIComponent(JSON.stringify(data))));
+  document.getElementById('syncCodeOut').value = code;
+}
+function prod_restoreSyncCode(){
+  const code = document.getElementById('syncCodeIn').value.trim();
+  const out = document.getElementById('syncOut');
+  if(!code){ out.textContent = 'Paste a backup code first.'; return; }
+  try{
+    const data = JSON.parse(decodeURIComponent(escape(atob(code))));
+    Object.keys(data).forEach(key=>{ if(key.startsWith('dth_')) localStorage.setItem(key, data[key]); });
+    out.textContent = `Restored ${Object.keys(data).length} item(s). Reopen a tool to see the restored data.`;
+  }catch(e){ out.textContent = 'That code looks invalid or corrupted.'; }
 }
 
 /* ================================================================
@@ -3658,42 +4281,53 @@ function file_runTextConvert(type){
    REGISTRY — wires every live module's tools to its render function
    ================================================================ */
 const moduleToolRenderers = {
-  2: { tools: ["Merge PDF","Split PDF","Compress PDF","PDF to Image","Image to PDF","Rotate PDF","Extract Pages","Protect PDF","Unlock PDF"],
+  2: { tools: ["Merge PDF","Split PDF","Compress PDF","PDF to Image","Image to PDF","Rotate PDF","Extract Pages","Protect PDF","Unlock PDF","eSign PDF","OCR (Image → Text)","Page Numbers","PDF Repair","PDF Watermark","PDF Redaction"],
        renderers: {
          "Merge PDF": pdf_merge, "Split PDF": pdf_split, "Compress PDF": pdf_compress, "PDF to Image": pdf_toImage,
          "Image to PDF": pdf_imageToPdf, "Rotate PDF": pdf_rotate, "Extract Pages": pdf_extractPages,
-         "Protect PDF": pdf_protect, "Unlock PDF": pdf_unlock,
+         "Protect PDF": pdf_protect, "Unlock PDF": pdf_unlock, "eSign PDF": pdf_esign, "OCR (Image → Text)": pdf_ocr,
+         "Page Numbers": pdf_pageNumbers, "PDF Repair": pdf_repair, "PDF Watermark": pdf_watermark, "PDF Redaction": pdf_redact,
        }},
-  3: { tools: ["Compress Image","Resize Image","Crop Image","Background Remover","Convert PNG↔JPG↔WebP","Watermark Image","Blur Faces","Screenshot Editor"],
+  3: { tools: ["Compress Image","Resize Image","Crop Image","Background Remover","Convert PNG↔JPG↔WebP","Watermark Image","Blur Faces","Screenshot Editor","AI Upscaler","HEIC ↔ JPG","Image Metadata Viewer/Remover","Batch Resize","Color Palette Extractor"],
        renderers: {
          "Compress Image": img_compress, "Resize Image": img_resize, "Crop Image": img_crop,
          "Background Remover": img_bgRemover, "Convert PNG↔JPG↔WebP": img_convert, "Watermark Image": img_watermark,
          "Blur Faces": img_blurFaces, "Screenshot Editor": img_screenshotEditor,
+         "AI Upscaler": img_aiUpscaler, "HEIC ↔ JPG": img_heicConvert, "Image Metadata Viewer/Remover": img_metadata,
+         "Batch Resize": img_batchResize, "Color Palette Extractor": img_colorPalette,
        }},
-  4: { tools: ["Expense Tracker","Income Tracker","Monthly Budget","EMI Calculator","Loan Calculator","SIP Calculator","GST Calculator","Discount Calculator","Profit Calculator","Currency Converter","Tip Calculator","Bill Splitter"],
+  4: { tools: ["Expense Tracker","Income Tracker","Monthly Budget","EMI Calculator","Loan Calculator","SIP Calculator","GST Calculator","Discount Calculator","Profit Calculator","Currency Converter","Tip Calculator","Bill Splitter","Tax Calculator","Savings Goal Planner","Net Worth Tracker","Recurring Expense Tracker","Investment Return Calculator"],
        renderers: {
          "Expense Tracker": money_expenseTracker, "Income Tracker": money_incomeTracker, "Monthly Budget": money_budget,
          "EMI Calculator": money_emi, "Loan Calculator": money_loan, "SIP Calculator": money_sip, "GST Calculator": money_gst,
          "Discount Calculator": money_discount, "Profit Calculator": money_profit, "Currency Converter": money_currencyConverter,
          "Tip Calculator": money_tip, "Bill Splitter": money_billSplit,
+         "Tax Calculator": money_tax, "Savings Goal Planner": money_savingsGoal, "Net Worth Tracker": fin_netWorth,
+         "Recurring Expense Tracker": money_recurringExpenses, "Investment Return Calculator": money_investmentReturn,
        }},
-  5: { tools: ["Notes","Checklist","To-do List","Habit Tracker","Pomodoro Timer","Daily Planner","Weekly Planner","Goal Tracker","Calendar","Reminder System"],
+  5: { tools: ["Notes","Checklist","To-do List","Habit Tracker","Pomodoro Timer","Daily Planner","Weekly Planner","Goal Tracker","Calendar","Reminder System","Rich Text Notes","Kanban Board","Recurring Tasks","Focus Mode","Export/Import","Sync Backup"],
        renderers: {
          "Notes": prod_notes, "Checklist": prod_checklist, "To-do List": prod_todo, "Habit Tracker": prod_habits,
          "Pomodoro Timer": prod_pomodoro, "Daily Planner": prod_dailyPlanner, "Weekly Planner": prod_weeklyPlanner,
          "Goal Tracker": prod_goals, "Calendar": prod_calendar, "Reminder System": prod_reminders,
+         "Rich Text Notes": prod_richNotes, "Kanban Board": prod_kanban, "Recurring Tasks": prod_recurringTasks,
+         "Focus Mode": prod_focusMode, "Export/Import": prod_exportImport, "Sync Backup": prod_syncBackup,
        }},
-  6: { tools: ["BMI Calculator","Water Intake Calculator","Calories Calculator","Walking Tracker","Medicine Reminder","Sleep Tracker","Step Goal Tracker"],
+  6: { tools: ["BMI Calculator","Water Intake Calculator","Calories Calculator","Walking Tracker","Medicine Reminder","Sleep Tracker","Step Goal Tracker","Macro Calculator","Ideal Weight Calculator","Body Fat Estimate","Heart Rate Zones","Health Dashboard"],
        renderers: {
          "BMI Calculator": health_bmi, "Water Intake Calculator": health_water, "Calories Calculator": health_calories,
          "Walking Tracker": health_walking, "Medicine Reminder": health_medicine, "Sleep Tracker": health_sleep,
          "Step Goal Tracker": health_stepGoal,
+         "Macro Calculator": health_macro, "Ideal Weight Calculator": health_idealWeight, "Body Fat Estimate": health_bodyFat,
+         "Heart Rate Zones": health_heartZones, "Health Dashboard": health_dashboard,
        }},
-  7: { tools: ["Age Calculator","Date Difference","Countdown Timer","Stopwatch","World Clock","Meeting Time Planner","Time Zone Converter"],
+  7: { tools: ["Age Calculator","Date Difference","Countdown Timer","Stopwatch","World Clock","Meeting Time Planner","Time Zone Converter","Business Days Calculator","Working Hours Calculator","Shift Planner","Birthday Reminder"],
        renderers: {
          "Age Calculator": time_ageCalc, "Date Difference": time_dateDiff, "Countdown Timer": time_countdown,
          "Stopwatch": time_stopwatch, "World Clock": time_worldClock, "Meeting Time Planner": time_meetingPlanner,
-         "Time Zone Converter": time_tzConverter,
+         "Time Zone Converter": time_tzConverter, "Business Days Calculator": time_businessDays,
+         "Working Hours Calculator": time_workingHours, "Shift Planner": time_shiftPlanner,
+         "Birthday Reminder": time_birthdayReminder,
        }},
   10:{ tools: ["JSON Formatter","SQL Formatter","HTML Formatter","CSS Minifier","JS Minifier","Color Picker","Regex Tester"],
        renderers: {
@@ -3730,17 +4364,20 @@ const moduleToolRenderers = {
          "Net Worth Tracker": fin_netWorth, "Debt Payoff Planner": fin_debtPayoff, "Investment Tracker": fin_investments,
          "Retirement Calculator": fin_retirement,
        }},
-  8:{ tools: ["Grammar Checker","AI Rewrite","Email Generator","Resume Builder","Cover Letter Builder","AI Reply Generator","Social Caption Generator"],
+  8:{ tools: ["Grammar Checker","AI Rewrite","Email Generator","Resume Builder","Cover Letter Builder","AI Reply Generator","Social Caption Generator","AI Summarizer","Paraphraser","Email Templates","Blog Title Generator","Text Translator"],
        renderers: {
          "Grammar Checker": write_grammar, "AI Rewrite": write_rewrite, "Email Generator": write_email,
          "Resume Builder": write_resume, "Cover Letter Builder": write_coverletter, "AI Reply Generator": write_aiReply,
-         "Social Caption Generator": write_caption,
+         "Social Caption Generator": write_caption, "AI Summarizer": write_summarizer, "Paraphraser": write_paraphraser,
+         "Email Templates": write_emailTemplates, "Blog Title Generator": write_blogTitles, "Text Translator": write_translator,
        }},
-  9:{ tools: ["Invoice Generator","Quotation Generator","GST Invoice","Inventory Tracker","Client CRM","Attendance Tracker","Profit Dashboard"],
+  9:{ tools: ["Invoice Generator","Quotation Generator","GST Invoice","Inventory Tracker","Client CRM","Attendance Tracker","Profit Dashboard","PDF Invoice Export","Client History","Inventory Alerts","Sales Dashboard","Barcode Labels"],
        renderers: {
          "Invoice Generator": biz_invoice, "Quotation Generator": biz_quotation, "GST Invoice": biz_gstInvoice,
          "Inventory Tracker": biz_inventory, "Client CRM": biz_crm, "Attendance Tracker": biz_attendance,
-         "Profit Dashboard": biz_profitDashboard,
+         "Profit Dashboard": biz_profitDashboard, "PDF Invoice Export": biz_pdfInvoiceExport,
+         "Client History": biz_clientHistory, "Inventory Alerts": biz_inventoryAlerts,
+         "Sales Dashboard": biz_salesDashboard, "Barcode Labels": biz_barcodeLabels,
        }},
   12:{ tools: ["MP3 Cutter","Audio Compressor","Voice Recorder","Text to Speech","Speech to Text"],
        renderers: {
@@ -4079,6 +4716,468 @@ async function pdf_runUnlock(){
     pdf_downloadBlob(blob, f.name.replace(/\.locked$/i,'') || 'unlocked.pdf');
     out.textContent = 'Decrypted — download started.';
   }catch(e){ out.textContent = 'Could not decrypt: '+e.message; }
+}
+
+function pdf_watermark(){
+  document.getElementById('workbench').innerHTML = `
+    <h2>PDF Watermark</h2><p class="desc">Stamp a diagonal text watermark across every page — handy for marking drafts, confidential copies, or proof-of-ownership.</p>
+    <input type="file" id="wmInput" accept="application/pdf">
+    <label class="field-label" style="margin-top:12px;">WATERMARK TEXT</label>
+    <input type="text" id="wmText" placeholder="e.g. CONFIDENTIAL" value="CONFIDENTIAL">
+    <div class="row" style="margin-top:12px;">
+      <div class="col"><label class="field-label">FONT SIZE</label><input type="number" id="wmSize" value="48" min="8" max="200"></div>
+      <div class="col"><label class="field-label">OPACITY: <span id="wmOpVal">30</span>%</label><input type="range" id="wmOpacity" min="5" max="100" value="30" oninput="document.getElementById('wmOpVal').textContent=this.value"></div>
+      <div class="col"><label class="field-label">ROTATION (°)</label><input type="number" id="wmRotate" value="45" min="-90" max="90"></div>
+    </div>
+    <label class="field-label" style="margin-top:12px;">COLOR</label><br>
+    <input type="color" id="wmColor" value="#ff0000">
+    <div class="btn-row" style="margin-top:14px;"><button class="btn" onclick="pdf_runWatermark()">Add watermark &amp; download</button></div>
+    <div class="output-box" id="wmOut">Result will appear here.</div>
+  `;
+}
+async function pdf_runWatermark(){
+  const f = document.getElementById('wmInput').files[0];
+  const text = document.getElementById('wmText').value.trim();
+  const out = document.getElementById('wmOut');
+  if(!f){ out.textContent='Choose a PDF file.'; return; }
+  if(!text){ out.textContent='Enter watermark text.'; return; }
+  if(libGuard(['PDFLib'], out)) return;
+  out.textContent = 'Stamping…';
+  try{
+    const size = parseInt(document.getElementById('wmSize').value,10)||48;
+    const opacity = parseInt(document.getElementById('wmOpacity').value,10)/100;
+    const rotate = parseInt(document.getElementById('wmRotate').value,10)||0;
+    const hex = document.getElementById('wmColor').value;
+    const r = parseInt(hex.slice(1,3),16)/255, g = parseInt(hex.slice(3,5),16)/255, b = parseInt(hex.slice(5,7),16)/255;
+    const bytes = await f.arrayBuffer();
+    const doc = await PDFLib.PDFDocument.load(bytes);
+    const font = await doc.embedFont(PDFLib.StandardFonts.HelveticaBold);
+    doc.getPages().forEach(page=>{
+      const { width, height } = page.getSize();
+      const textWidth = font.widthOfTextAtSize(text, size);
+      page.drawText(text, {
+        x: width/2 - textWidth/2,
+        y: height/2,
+        size, font,
+        color: PDFLib.rgb(r,g,b),
+        opacity,
+        rotate: PDFLib.degrees(rotate),
+      });
+    });
+    const newBytes = await doc.save();
+    pdf_downloadBlob(new Blob([newBytes], {type:'application/pdf'}), 'watermarked.pdf');
+    out.textContent = 'Watermark added to every page — download started.';
+  }catch(e){ out.textContent = 'Could not add watermark: '+e.message; }
+}
+
+function pdf_pageNumbers(){
+  document.getElementById('workbench').innerHTML = `
+    <h2>Page Numbers</h2><p class="desc">Add page numbers to every page of a PDF.</p>
+    <input type="file" id="pnInput" accept="application/pdf">
+    <div class="row" style="margin-top:12px;">
+      <div class="col"><label class="field-label">POSITION</label>
+        <select id="pnPosition">
+          <option value="bottom-center">Bottom center</option>
+          <option value="bottom-right">Bottom right</option>
+          <option value="bottom-left">Bottom left</option>
+          <option value="top-center">Top center</option>
+          <option value="top-right">Top right</option>
+          <option value="top-left">Top left</option>
+        </select>
+      </div>
+      <div class="col"><label class="field-label">START AT</label><input type="number" id="pnStart" value="1" min="0"></div>
+      <div class="col"><label class="field-label">FONT SIZE</label><input type="number" id="pnSize" value="11" min="6" max="40"></div>
+    </div>
+    <label class="field-label" style="margin-top:12px;">FORMAT</label>
+    <input type="text" id="pnFormat" value="Page {n} of {total}" placeholder="Page {n} of {total}">
+    <p class="desc" style="margin-top:6px;">Use <code>{n}</code> for the page number and <code>{total}</code> for the total page count.</p>
+    <div class="btn-row" style="margin-top:14px;"><button class="btn" onclick="pdf_runPageNumbers()">Add numbers &amp; download</button></div>
+    <div class="output-box" id="pnOut">Result will appear here.</div>
+  `;
+}
+async function pdf_runPageNumbers(){
+  const f = document.getElementById('pnInput').files[0];
+  const out = document.getElementById('pnOut');
+  if(!f){ out.textContent='Choose a PDF file.'; return; }
+  if(libGuard(['PDFLib'], out)) return;
+  out.textContent = 'Numbering pages…';
+  try{
+    const position = document.getElementById('pnPosition').value;
+    const start = parseInt(document.getElementById('pnStart').value,10)||0;
+    const size = parseInt(document.getElementById('pnSize').value,10)||11;
+    const format = document.getElementById('pnFormat').value || 'Page {n} of {total}';
+    const bytes = await f.arrayBuffer();
+    const doc = await PDFLib.PDFDocument.load(bytes);
+    const font = await doc.embedFont(PDFLib.StandardFonts.Helvetica);
+    const pages = doc.getPages();
+    const total = pages.length;
+    pages.forEach((page, i)=>{
+      const n = start + i;
+      const label = format.replace(/{n}/g, n).replace(/{total}/g, total);
+      const { width, height } = page.getSize();
+      const textWidth = font.widthOfTextAtSize(label, size);
+      const margin = 28;
+      let x;
+      if(position.includes('center')) x = width/2 - textWidth/2;
+      else if(position.includes('right')) x = width - textWidth - margin;
+      else x = margin;
+      const y = position.startsWith('top') ? height - margin : margin - size*0.3;
+      page.drawText(label, { x, y, size, font, color: PDFLib.rgb(0,0,0) });
+    });
+    const newBytes = await doc.save();
+    pdf_downloadBlob(new Blob([newBytes], {type:'application/pdf'}), 'numbered.pdf');
+    out.textContent = `Added page numbers to ${total} page(s) — download started.`;
+  }catch(e){ out.textContent = 'Could not add page numbers: '+e.message; }
+}
+
+let esignCanvasCtx = null, esignDrawing = false;
+function pdf_esign(){
+  document.getElementById('workbench').innerHTML = `
+    <h2>eSign PDF</h2><p class="desc">Draw your signature below, then place it on a page of your PDF.</p>
+    <label class="field-label">DRAW YOUR SIGNATURE</label>
+    <div class="canvas-wrap" style="border:1px dashed #999; display:inline-block; padding:0;">
+      <canvas id="esignPad" width="400" height="150" style="touch-action:none; background:#fff; cursor:crosshair; display:block;"></canvas>
+    </div>
+    <div class="btn-row" style="margin-top:8px;"><button class="btn secondary" onclick="pdf_esignClear()">Clear signature</button></div>
+    <input type="file" id="esignInput" accept="application/pdf" style="margin-top:14px;">
+    <div class="row" style="margin-top:12px;">
+      <div class="col"><label class="field-label">PAGE NUMBER</label><input type="number" id="esignPage" value="1" min="1"></div>
+      <div class="col"><label class="field-label">POSITION</label>
+        <select id="esignPosition">
+          <option value="bottom-right">Bottom right</option>
+          <option value="bottom-left">Bottom left</option>
+          <option value="bottom-center">Bottom center</option>
+          <option value="top-right">Top right</option>
+          <option value="top-left">Top left</option>
+          <option value="center">Center</option>
+        </select>
+      </div>
+      <div class="col"><label class="field-label">WIDTH (PT)</label><input type="number" id="esignWidth" value="150" min="40" max="500"></div>
+    </div>
+    <div class="btn-row" style="margin-top:14px;"><button class="btn" onclick="pdf_runEsign()">Sign &amp; download</button></div>
+    <div class="output-box" id="esignOut">Result will appear here.</div>
+  `;
+  const canvas = document.getElementById('esignPad');
+  esignCanvasCtx = canvas.getContext('2d');
+  esignCanvasCtx.lineWidth = 2.5; esignCanvasCtx.lineCap = 'round'; esignCanvasCtx.strokeStyle = '#111';
+  esignCanvasCtx.fillStyle = '#fff'; esignCanvasCtx.fillRect(0,0,canvas.width,canvas.height);
+  function pos(e){
+    const rect = canvas.getBoundingClientRect();
+    const cx = (e.touches ? e.touches[0].clientX : e.clientX) - rect.left;
+    const cy = (e.touches ? e.touches[0].clientY : e.clientY) - rect.top;
+    return { x: cx*(canvas.width/rect.width), y: cy*(canvas.height/rect.height) };
+  }
+  function start(e){ esignDrawing = true; const p = pos(e); esignCanvasCtx.beginPath(); esignCanvasCtx.moveTo(p.x,p.y); e.preventDefault(); }
+  function move(e){ if(!esignDrawing) return; const p = pos(e); esignCanvasCtx.lineTo(p.x,p.y); esignCanvasCtx.stroke(); e.preventDefault(); }
+  function end(){ esignDrawing = false; }
+  canvas.addEventListener('mousedown', start);
+  canvas.addEventListener('mousemove', move);
+  window.addEventListener('mouseup', end);
+  canvas.addEventListener('touchstart', start, {passive:false});
+  canvas.addEventListener('touchmove', move, {passive:false});
+  canvas.addEventListener('touchend', end);
+}
+function pdf_esignClear(){
+  const canvas = document.getElementById('esignPad');
+  esignCanvasCtx.fillStyle = '#fff'; esignCanvasCtx.fillRect(0,0,canvas.width,canvas.height);
+}
+async function pdf_runEsign(){
+  const f = document.getElementById('esignInput').files[0];
+  const out = document.getElementById('esignOut');
+  if(!f){ out.textContent = 'Choose a PDF file.'; return; }
+  if(libGuard(['PDFLib'], out)) return;
+  const canvas = document.getElementById('esignPad');
+  out.textContent = 'Placing signature…';
+  try{
+    const sigDataUrl = canvas.toDataURL('image/png');
+    const sigBytes = await (await fetch(sigDataUrl)).arrayBuffer();
+    const pdfBytes = await f.arrayBuffer();
+    const doc = await PDFLib.PDFDocument.load(pdfBytes);
+    const pageNum = Math.max(1, parseInt(document.getElementById('esignPage').value,10)||1);
+    const pages = doc.getPages();
+    if(pageNum > pages.length){ out.textContent = `This PDF only has ${pages.length} page(s).`; return; }
+    const page = pages[pageNum-1];
+    const sigImage = await doc.embedPng(sigBytes);
+    const targetW = parseInt(document.getElementById('esignWidth').value,10)||150;
+    const scale = targetW / sigImage.width;
+    const targetH = sigImage.height*scale;
+    const { width, height } = page.getSize();
+    const position = document.getElementById('esignPosition').value;
+    const margin = 24;
+    let x, y;
+    if(position==='bottom-right'){ x=width-targetW-margin; y=margin; }
+    else if(position==='bottom-left'){ x=margin; y=margin; }
+    else if(position==='bottom-center'){ x=width/2-targetW/2; y=margin; }
+    else if(position==='top-right'){ x=width-targetW-margin; y=height-targetH-margin; }
+    else if(position==='top-left'){ x=margin; y=height-targetH-margin; }
+    else { x=width/2-targetW/2; y=height/2-targetH/2; }
+    page.drawImage(sigImage, { x, y, width: targetW, height: targetH });
+    const newBytes = await doc.save();
+    pdf_downloadBlob(new Blob([newBytes], {type:'application/pdf'}), 'signed.pdf');
+    out.textContent = `Signature placed on page ${pageNum} — download started.`;
+  }catch(e){ out.textContent = 'Could not sign: '+e.message; }
+}
+
+function pdf_ocr(){
+  document.getElementById('workbench').innerHTML = `
+    <h2>OCR (Image → Text)</h2><p class="desc">Extract text from a photo or scan using on-device OCR. First use downloads a small language pack (a few MB, cached after that).</p>
+    <input type="file" id="ocrInput" accept="image/*">
+    <label class="field-label" style="margin-top:12px;">LANGUAGE</label>
+    <select id="ocrLang">
+      <option value="eng">English</option>
+      <option value="hin">Hindi</option>
+      <option value="tam">Tamil</option>
+      <option value="spa">Spanish</option>
+      <option value="fra">French</option>
+      <option value="deu">German</option>
+      <option value="ara">Arabic</option>
+      <option value="chi_sim">Chinese (Simplified)</option>
+    </select>
+    <div class="btn-row" style="margin-top:14px;"><button class="btn" onclick="pdf_runOcr()">Extract text</button></div>
+    <div class="output-box" id="ocrOut">Result will appear here.</div>
+    <div class="btn-row" id="ocrDlRow" style="display:none; margin-top:10px;">
+      <button class="btn secondary" onclick="pdf_ocrCopy()">Copy text</button>
+      <button class="btn secondary" onclick="pdf_ocrDownload()">Download .txt</button>
+    </div>
+  `;
+}
+let pdf_ocrText = '';
+async function pdf_runOcr(){
+  const f = document.getElementById('ocrInput').files[0];
+  const out = document.getElementById('ocrOut');
+  const dlRow = document.getElementById('ocrDlRow');
+  dlRow.style.display = 'none';
+  if(!f){ out.textContent = 'Choose an image.'; return; }
+  const lang = document.getElementById('ocrLang').value;
+  out.textContent = 'Loading OCR engine (first time only)…';
+  try{
+    if(typeof Tesseract === 'undefined'){
+      await loadScript('https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js');
+    }
+    out.textContent = 'Reading text — this can take a moment…';
+    const { data } = await Tesseract.recognize(f, lang, {
+      logger: m=>{ if(m.status==='recognizing text'){ out.textContent = `Reading text… ${Math.round(m.progress*100)}%`; } }
+    });
+    pdf_ocrText = (data.text||'').trim();
+    out.textContent = pdf_ocrText || 'No text detected in this image.';
+    if(pdf_ocrText) dlRow.style.display = 'flex';
+  }catch(e){ out.textContent = 'Could not read text: '+e.message; }
+}
+function pdf_ocrCopy(){
+  navigator.clipboard.writeText(pdf_ocrText);
+  const out = document.getElementById('ocrOut');
+  const prev = out.textContent; out.textContent = 'Copied to clipboard.';
+  setTimeout(()=>{ out.textContent = prev; }, 1200);
+}
+function pdf_ocrDownload(){
+  pdf_downloadBlob(new Blob([pdf_ocrText], {type:'text/plain'}), 'extracted-text.txt');
+}
+
+function pdf_repair(){
+  document.getElementById('workbench').innerHTML = `
+    <h2>PDF Repair</h2><p class="desc">Attempts to fix a PDF that won't open properly or shows as corrupted. Tries a quick structural repair first; if the file is too damaged for that, falls back to rebuilding it page-by-page from rendered images (this "deep repair" flattens text to images, so text won't be selectable afterward, but the pages become viewable and printable again).</p>
+    <input type="file" id="repairInput" accept="application/pdf">
+    <div class="btn-row" style="margin-top:14px;"><button class="btn" onclick="pdf_runRepair()">Repair &amp; download</button></div>
+    <div class="output-box" id="repairOut">Result will appear here.</div>
+  `;
+}
+async function pdf_runRepair(){
+  const f = document.getElementById('repairInput').files[0];
+  const out = document.getElementById('repairOut');
+  if(!f){ out.textContent = 'Choose a PDF file.'; return; }
+  if(libGuard(['PDFLib'], out)) return;
+  out.textContent = 'Attempting quick repair…';
+  const bytes = await f.arrayBuffer();
+  try{
+    const doc = await PDFLib.PDFDocument.load(bytes, { ignoreEncryption:true, throwOnInvalidObject:false, updateMetadata:false });
+    const newBytes = await doc.save({ useObjectStreams:true });
+    pdf_downloadBlob(new Blob([newBytes], {type:'application/pdf'}), 'repaired.pdf');
+    out.textContent = `Quick repair succeeded (${doc.getPageCount()} page(s)) — download started.`;
+    return;
+  }catch(e){
+    out.textContent = 'Quick repair failed, trying deep repair (rebuilding from rendered pages)…';
+  }
+  try{
+    if(libGuard(['pdfjsLib'], out)) return;
+    const srcDoc = await pdfjsLib.getDocument({data: bytes.slice(0)}).promise;
+    const newDoc = await PDFLib.PDFDocument.create();
+    for(let i=1;i<=srcDoc.numPages;i++){
+      out.textContent = `Rebuilding page ${i} of ${srcDoc.numPages}…`;
+      const page = await srcDoc.getPage(i);
+      const viewport = page.getViewport({scale:2});
+      const canvas = document.createElement('canvas');
+      canvas.width = viewport.width; canvas.height = viewport.height;
+      await page.render({canvasContext: canvas.getContext('2d'), viewport}).promise;
+      const pngBytes = await (await fetch(canvas.toDataURL('image/png'))).arrayBuffer();
+      const pngImage = await newDoc.embedPng(pngBytes);
+      const newPage = newDoc.addPage([viewport.width/2, viewport.height/2]);
+      newPage.drawImage(pngImage, { x:0, y:0, width: viewport.width/2, height: viewport.height/2 });
+    }
+    const finalBytes = await newDoc.save();
+    pdf_downloadBlob(new Blob([finalBytes], {type:'application/pdf'}), 'repaired.pdf');
+    out.textContent = `Deep repair complete — rebuilt ${srcDoc.numPages} page(s) from rendered images. Download started.`;
+  }catch(e2){
+    out.textContent = 'Could not repair this file: '+e2.message+'. The PDF may be too badly damaged to recover in-browser.';
+  }
+}
+
+let pdf_redactState = { bytes:null, doc:null, pageIndex:1, scale:1, boxes: [] };
+function pdf_redact(){
+  document.getElementById('workbench').innerHTML = `
+    <h2>PDF Redaction</h2><p class="desc">Permanently blacks out sensitive areas on a page. The redacted page is rebuilt as a flattened image, so the covered content is truly removed — not just hidden — from that page. Other pages are left untouched.</p>
+    <input type="file" id="redactInput" accept="application/pdf" onchange="pdf_redactLoadFile(this.files[0])">
+    <div class="row" style="margin-top:12px;">
+      <div class="col"><label class="field-label">PAGE NUMBER</label><input type="number" id="redactPage" value="1" min="1"></div>
+      <div class="col" style="align-self:flex-end;"><button class="btn secondary" onclick="pdf_redactLoadPage()">Load page</button></div>
+    </div>
+    <p class="desc" style="margin-top:8px;">Drag the black box over the area to redact, adjust with the fields below, then click "Add box" for each area (you can add more than one per page).</p>
+    <div style="position:relative; display:inline-block; margin-top:10px;" id="redactStage"></div>
+    <div class="row" style="margin-top:12px;">
+      <div class="col"><label class="field-label">X</label><input type="number" id="redactX" value="20" oninput="pdf_syncRedactBox()"></div>
+      <div class="col"><label class="field-label">Y</label><input type="number" id="redactY" value="20" oninput="pdf_syncRedactBox()"></div>
+      <div class="col"><label class="field-label">WIDTH</label><input type="number" id="redactW" value="150" oninput="pdf_syncRedactBox()"></div>
+      <div class="col"><label class="field-label">HEIGHT</label><input type="number" id="redactH" value="40" oninput="pdf_syncRedactBox()"></div>
+    </div>
+    <div class="btn-row" style="margin-top:10px;">
+      <button class="btn secondary" onclick="pdf_addRedactBox()">+ Add box</button>
+      <button class="btn" onclick="pdf_runRedact()">Apply redactions &amp; download</button>
+    </div>
+    <div id="redactBoxList" style="margin-top:10px; font-size:13px;">Choose a PDF and load a page to begin.</div>
+    <div class="output-box" id="redactOut">Result will appear here.</div>
+  `;
+}
+async function pdf_redactLoadFile(f){
+  const out = document.getElementById('redactOut');
+  if(!f) return;
+  if(libGuard(['pdfjsLib'], out)) return;
+  out.textContent = 'Loading PDF…';
+  const bytes = await f.arrayBuffer();
+  pdf_redactState.bytes = bytes;
+  pdf_redactState.boxes = [];
+  try{
+    pdf_redactState.doc = await pdfjsLib.getDocument({data: bytes.slice(0)}).promise;
+    out.textContent = `Loaded — ${pdf_redactState.doc.numPages} page(s). Click "Load page" to preview.`;
+    await pdf_redactLoadPage();
+  }catch(e){ out.textContent = 'Could not open PDF: '+e.message; }
+}
+async function pdf_redactLoadPage(){
+  const out = document.getElementById('redactOut');
+  if(!pdf_redactState.doc){ out.textContent = 'Choose a PDF file first.'; return; }
+  const pageNum = Math.max(1, parseInt(document.getElementById('redactPage').value,10)||1);
+  if(pageNum > pdf_redactState.doc.numPages){ out.textContent = `This PDF only has ${pdf_redactState.doc.numPages} page(s).`; return; }
+  pdf_redactState.pageIndex = pageNum;
+  pdf_redactState.boxes = [];
+  const page = await pdf_redactState.doc.getPage(pageNum);
+  const viewport = page.getViewport({scale:1});
+  const displayW = Math.min(560, viewport.width);
+  const scale = displayW/viewport.width;
+  pdf_redactState.scale = scale;
+  const renderViewport = page.getViewport({scale});
+  const canvas = document.createElement('canvas');
+  canvas.width = renderViewport.width; canvas.height = renderViewport.height;
+  await page.render({canvasContext: canvas.getContext('2d'), viewport: renderViewport}).promise;
+  const stage = document.getElementById('redactStage');
+  stage.innerHTML = '';
+  canvas.style.display = 'block';
+  stage.appendChild(canvas);
+  const box = document.createElement('div');
+  box.id = 'redactBox';
+  box.style.position = 'absolute'; box.style.border = '2px solid #000'; box.style.background = 'rgba(0,0,0,0.55)'; box.style.cursor = 'move';
+  stage.appendChild(box);
+  document.getElementById('redactX').value = 20; document.getElementById('redactY').value = 20;
+  document.getElementById('redactW').value = Math.round(viewport.width*0.3); document.getElementById('redactH').value = Math.round(viewport.height*0.06);
+  pdf_syncRedactBox();
+  let dragging=false, startX=0, startY=0, origX=0, origY=0;
+  box.onmousedown = (e)=>{ dragging=true; startX=e.clientX; startY=e.clientY; origX=parseFloat(document.getElementById('redactX').value); origY=parseFloat(document.getElementById('redactY').value); };
+  document.onmousemove = (e)=>{
+    if(!dragging) return;
+    const dx=(e.clientX-startX)/pdf_redactState.scale, dy=(e.clientY-startY)/pdf_redactState.scale;
+    document.getElementById('redactX').value = Math.round(origX+dx);
+    document.getElementById('redactY').value = Math.round(origY+dy);
+    pdf_syncRedactBox();
+  };
+  document.onmouseup = ()=>{ dragging=false; };
+  pdf_renderRedactBoxes();
+  out.textContent = `Page ${pageNum} loaded. Position the box, then click "Add box".`;
+}
+function pdf_syncRedactBox(){
+  const box = document.getElementById('redactBox');
+  if(!box) return;
+  const sc = pdf_redactState.scale;
+  const x=parseFloat(document.getElementById('redactX').value)||0, y=parseFloat(document.getElementById('redactY').value)||0;
+  const w=parseFloat(document.getElementById('redactW').value)||0, h=parseFloat(document.getElementById('redactH').value)||0;
+  box.style.left=(x*sc)+'px'; box.style.top=(y*sc)+'px'; box.style.width=(w*sc)+'px'; box.style.height=(h*sc)+'px';
+}
+function pdf_addRedactBox(){
+  const x=parseFloat(document.getElementById('redactX').value)||0, y=parseFloat(document.getElementById('redactY').value)||0;
+  const w=parseFloat(document.getElementById('redactW').value)||0, h=parseFloat(document.getElementById('redactH').value)||0;
+  if(w<=0||h<=0) return;
+  pdf_redactState.boxes.push({x,y,w,h});
+  pdf_renderRedactBoxes();
+}
+function pdf_removeRedactBox(i){
+  pdf_redactState.boxes.splice(i,1);
+  pdf_renderRedactBoxes();
+}
+function pdf_renderRedactBoxes(){
+  const stage = document.getElementById('redactStage');
+  stage.querySelectorAll('.redact-marker').forEach(el=>el.remove());
+  const sc = pdf_redactState.scale;
+  pdf_redactState.boxes.forEach((b)=>{
+    const marker = document.createElement('div');
+    marker.className = 'redact-marker';
+    marker.style.position='absolute'; marker.style.left=(b.x*sc)+'px'; marker.style.top=(b.y*sc)+'px';
+    marker.style.width=(b.w*sc)+'px'; marker.style.height=(b.h*sc)+'px';
+    marker.style.background='rgba(0,0,0,0.85)'; marker.style.pointerEvents='none';
+    stage.appendChild(marker);
+  });
+  const list = document.getElementById('redactBoxList');
+  if(!list) return;
+  list.innerHTML = pdf_redactState.boxes.length
+    ? 'Boxes added: ' + pdf_redactState.boxes.map((b,i)=>`<span style="display:inline-block;margin:2px 6px 2px 0;padding:2px 8px;border:1px solid #999;border-radius:4px;">#${i+1} <a href="javascript:void(0)" onclick="pdf_removeRedactBox(${i})">✕</a></span>`).join('')
+    : 'No boxes added yet for this page.';
+}
+async function pdf_runRedact(){
+  const out = document.getElementById('redactOut');
+  if(!pdf_redactState.doc || !pdf_redactState.bytes){ out.textContent = 'Choose a PDF file first.'; return; }
+  if(!pdf_redactState.boxes.length){ out.textContent = 'Add at least one redaction box.'; return; }
+  if(libGuard(['PDFLib'], out)) return;
+  out.textContent = 'Applying redactions…';
+  try{
+    const renderScale = 2;
+    const page = await pdf_redactState.doc.getPage(pdf_redactState.pageIndex);
+    const viewport = page.getViewport({scale: renderScale});
+    const canvas = document.createElement('canvas');
+    canvas.width = viewport.width; canvas.height = viewport.height;
+    const ctx = canvas.getContext('2d');
+    await page.render({canvasContext: ctx, viewport}).promise;
+    ctx.fillStyle = '#000';
+    pdf_redactState.boxes.forEach(b=>{
+      ctx.fillRect(b.x*renderScale, b.y*renderScale, b.w*renderScale, b.h*renderScale);
+    });
+    const pngBytes = await (await fetch(canvas.toDataURL('image/png'))).arrayBuffer();
+
+    const srcDoc = await PDFLib.PDFDocument.load(pdf_redactState.bytes);
+    const newDoc = await PDFLib.PDFDocument.create();
+    const pageCount = srcDoc.getPageCount();
+    const targetIndex = pdf_redactState.pageIndex - 1;
+    const otherIndices = []; for(let i=0;i<pageCount;i++){ if(i!==targetIndex) otherIndices.push(i); }
+    const copiedOthers = otherIndices.length ? await newDoc.copyPages(srcDoc, otherIndices) : [];
+    let otherCursor = 0;
+    const origSize = srcDoc.getPages()[targetIndex].getSize();
+    for(let i=0;i<pageCount;i++){
+      if(i===targetIndex){
+        const pngImage = await newDoc.embedPng(pngBytes);
+        const newPage = newDoc.addPage([origSize.width, origSize.height]);
+        newPage.drawImage(pngImage, { x:0, y:0, width: origSize.width, height: origSize.height });
+      } else {
+        newDoc.addPage(copiedOthers[otherCursor++]);
+      }
+    }
+    const finalBytes = await newDoc.save();
+    pdf_downloadBlob(new Blob([finalBytes], {type:'application/pdf'}), 'redacted.pdf');
+    out.textContent = `Redacted page ${pdf_redactState.pageIndex} (${pdf_redactState.boxes.length} area(s)) — download started.`;
+  }catch(e){ out.textContent = 'Could not apply redaction: '+e.message; }
 }
 
 /* ================================================================
@@ -4490,6 +5589,171 @@ function img_downloadEditor(){
   canvas.toBlob(blob=>pdf_downloadBlob(blob, 'annotated.png'), 'image/png');
 }
 
+function img_aiUpscaler(){
+  document.getElementById('workbench').innerHTML = `
+    <h2>AI Upscaler</h2><p class="desc">Enlarges an image using smooth multi-step interpolation and sharpening — a fast, fully offline upscale (not a neural super-resolution model).</p>
+    <input type="file" id="upFile" accept="image/*">
+    <div class="row" style="margin-top:12px;"><div class="col"><label class="field-label">SCALE</label>
+      <select id="upScale"><option value="2">2×</option><option value="3">3×</option><option value="4">4×</option></select>
+    </div></div>
+    <div class="btn-row"><button class="btn" onclick="img_runUpscale()">Upscale & download</button></div>
+    <div class="output-box" id="upOut">Result will appear here.</div>
+  `;
+}
+async function img_runUpscale(){
+  const f = document.getElementById('upFile').files[0];
+  const out = document.getElementById('upOut');
+  if(!f){ out.textContent='Choose an image.'; return; }
+  out.textContent = 'Upscaling…';
+  const img = await img_loadToCanvas(f);
+  const scale = parseInt(document.getElementById('upScale').value,10);
+  let canvas = document.createElement('canvas');
+  canvas.width = img.width; canvas.height = img.height;
+  canvas.getContext('2d').drawImage(img,0,0);
+  let curW = img.width, curH = img.height;
+  const targetW = img.width*scale, targetH = img.height*scale;
+  while(curW < targetW){
+    const nextW = Math.min(targetW, Math.round(curW*1.5));
+    const nextH = Math.min(targetH, Math.round(curH*1.5));
+    const next = document.createElement('canvas');
+    next.width = nextW; next.height = nextH;
+    const ctx = next.getContext('2d');
+    ctx.imageSmoothingEnabled = true; ctx.imageSmoothingQuality = 'high';
+    ctx.drawImage(canvas, 0,0,nextW,nextH);
+    canvas = next; curW = nextW; curH = nextH;
+  }
+  canvas.toBlob(blob=>{ pdf_downloadBlob(blob, 'upscaled.png'); out.textContent = `Upscaled to ${curW} × ${curH}px — download started.`; }, 'image/png');
+}
+
+function img_heicConvert(){
+  document.getElementById('workbench').innerHTML = `
+    <h2>HEIC ↔ JPG</h2><p class="desc">Convert an iPhone HEIC photo to JPG. Browsers can't encode HEIC, so JPG → HEIC isn't possible here — only HEIC → JPG.</p>
+    <input type="file" id="heicFile" accept=".heic,.heif,image/heic,image/heif">
+    <div class="btn-row"><button class="btn" onclick="img_runHeicConvert()">Convert to JPG</button></div>
+    <div class="output-box" id="heicOut">Result will appear here.</div>
+  `;
+}
+async function img_runHeicConvert(){
+  const f = document.getElementById('heicFile').files[0];
+  const out = document.getElementById('heicOut');
+  if(!f){ out.textContent='Choose a HEIC file.'; return; }
+  out.textContent = 'Loading converter…';
+  try{
+    if(typeof heic2any === 'undefined') await loadScript('https://cdn.jsdelivr.net/npm/heic2any@0.0.4/dist/heic2any.min.js');
+    const blob = await heic2any({blob:f, toType:'image/jpeg', quality:0.9});
+    pdf_downloadBlob(blob, (f.name.replace(/\.(heic|heif)$/i,'')||'converted')+'.jpg');
+    out.textContent = 'Converted — download started.';
+  }catch(e){
+    out.textContent = 'Could not convert this file: '+e.message;
+  }
+}
+
+function img_metadata(){
+  document.getElementById('workbench').innerHTML = `
+    <h2>Image Metadata Viewer/Remover</h2><p class="desc">View EXIF data (camera, GPS, date) hidden in a photo, or strip it all out for privacy.</p>
+    <input type="file" id="metaFile" accept="image/*">
+    <div class="btn-row"><button class="btn" onclick="img_viewMetadata()">View metadata</button><button class="btn secondary" onclick="img_stripMetadata()">Remove metadata & download</button></div>
+    <div class="output-box" id="metaOut">Result will appear here.</div>
+  `;
+}
+async function img_viewMetadata(){
+  const f = document.getElementById('metaFile').files[0];
+  const out = document.getElementById('metaOut');
+  if(!f){ out.textContent='Choose an image.'; return; }
+  out.textContent = 'Reading metadata…';
+  try{
+    if(typeof exifr === 'undefined') await loadScript('https://cdn.jsdelivr.net/npm/exifr@7.1.3/dist/full.umd.min.js');
+    const data = await exifr.parse(f);
+    if(!data){ out.textContent = 'No EXIF metadata found in this image.'; return; }
+    const lines = Object.entries(data).slice(0,25).map(([k,v])=>`${k}: ${typeof v==='object' && v!==null ? JSON.stringify(v) : v}`);
+    out.textContent = lines.length? lines.join('\n') : 'No EXIF metadata found in this image.';
+  }catch(e){ out.textContent = 'No EXIF metadata found, or this format is not supported.'; }
+}
+async function img_stripMetadata(){
+  const f = document.getElementById('metaFile').files[0];
+  const out = document.getElementById('metaOut');
+  if(!f){ out.textContent='Choose an image.'; return; }
+  const img = await img_loadToCanvas(f);
+  const canvas = document.createElement('canvas');
+  canvas.width = img.width; canvas.height = img.height;
+  canvas.getContext('2d').drawImage(img,0,0);
+  canvas.toBlob(blob=>{ pdf_downloadBlob(blob, 'no-metadata.jpg'); out.textContent = 'Re-encoded without metadata — download started.'; }, 'image/jpeg', 0.92);
+}
+
+function img_batchResize(){
+  document.getElementById('workbench').innerHTML = `
+    <h2>Batch Resize</h2><p class="desc">Resize multiple images at once to a max width, then download as a ZIP.</p>
+    <input type="file" id="batchFiles" accept="image/*" multiple>
+    <div class="row" style="margin-top:12px;"><div class="col"><label class="field-label">MAX WIDTH (PX)</label><input type="number" id="batchMaxW" value="1280"></div></div>
+    <div class="btn-row"><button class="btn" onclick="img_runBatchResize()">Resize all & download ZIP</button></div>
+    <div class="output-box" id="batchOut">Choose images to begin.</div>
+  `;
+}
+async function img_runBatchResize(){
+  const files = Array.from(document.getElementById('batchFiles').files||[]);
+  const out = document.getElementById('batchOut');
+  if(!files.length){ out.textContent='Choose one or more images.'; return; }
+  if(libGuard(['JSZip'], out)) return;
+  const maxW = parseInt(document.getElementById('batchMaxW').value,10)||1280;
+  out.textContent = 'Resizing '+files.length+' image(s)…';
+  const zip = new JSZip();
+  for(const f of files){
+    try{
+      const img = await img_loadToCanvas(f);
+      const scale = Math.min(1, maxW/img.width);
+      const w = Math.max(1,Math.round(img.width*scale)), h = Math.max(1,Math.round(img.height*scale));
+      const canvas = document.createElement('canvas');
+      canvas.width = w; canvas.height = h;
+      canvas.getContext('2d').drawImage(img,0,0,w,h);
+      const blob = await new Promise(res=>canvas.toBlob(res,'image/jpeg',0.9));
+      zip.file((f.name.replace(/\.[^.]+$/,'')||'image')+'-resized.jpg', blob);
+    }catch(e){ /* skip files that fail to load */ }
+  }
+  const zipBlob = await zip.generateAsync({type:'blob'});
+  pdf_downloadBlob(zipBlob, 'batch-resized.zip');
+  out.textContent = `Resized ${files.length} image(s) — ZIP download started.`;
+}
+
+function img_colorPalette(){
+  document.getElementById('workbench').innerHTML = `
+    <h2>Color Palette Extractor</h2><p class="desc">Pull the dominant colors out of a photo — click a swatch to copy its hex code.</p>
+    <input type="file" id="paletteFile" accept="image/*" onchange="img_runPalette(this.files[0])">
+    <div class="output-box" id="paletteOut">Choose an image to extract its palette.</div>
+    <div id="paletteSwatches" style="display:flex;flex-wrap:wrap;gap:10px;margin-top:12px;"></div>
+  `;
+}
+async function img_runPalette(f){
+  const out = document.getElementById('paletteOut');
+  const holder = document.getElementById('paletteSwatches');
+  if(!f) return;
+  out.textContent = 'Analyzing colors…';
+  holder.innerHTML = '';
+  const img = await img_loadToCanvas(f);
+  const canvas = document.createElement('canvas');
+  const scale = Math.min(1, 150/Math.max(img.width,img.height));
+  canvas.width = Math.max(1,Math.round(img.width*scale));
+  canvas.height = Math.max(1,Math.round(img.height*scale));
+  const ctx = canvas.getContext('2d');
+  ctx.drawImage(img,0,0,canvas.width,canvas.height);
+  const data = ctx.getImageData(0,0,canvas.width,canvas.height).data;
+  const buckets = {};
+  for(let i=0;i<data.length;i+=4){
+    const r = Math.min(255,Math.round(data[i]/32)*32), g = Math.min(255,Math.round(data[i+1]/32)*32), b = Math.min(255,Math.round(data[i+2]/32)*32);
+    const key = r+','+g+','+b;
+    buckets[key] = (buckets[key]||0)+1;
+  }
+  const sorted = Object.entries(buckets).sort((a,b)=>b[1]-a[1]).slice(0,8);
+  out.textContent = `Top ${sorted.length} colors (click to copy hex):`;
+  holder.innerHTML = sorted.map(([rgb])=>{
+    const [r,g,b] = rgb.split(',').map(Number);
+    const hex = '#'+[r,g,b].map(v=>v.toString(16).padStart(2,'0')).join('');
+    return `<div style="text-align:center;cursor:pointer;" onclick="copyText('${hex}')">
+      <div style="width:60px;height:60px;border-radius:8px;background:${hex};border:1px solid var(--line);"></div>
+      <div style="font-family:var(--mono);font-size:11px;margin-top:4px;">${hex}</div>
+    </div>`;
+  }).join('');
+}
+
 /* ================================================================
    FLOATING CHAT / FEATURE-REQUEST WIDGET  (available on every page)
    ================================================================ */
@@ -4881,6 +6145,145 @@ function write_runCaption(){
   document.getElementById('capOut').textContent = picks.map((c,i)=>`${i+1}. ${c}\n   ${tags}`).join('\n\n');
 }
 
+function write_summarizer(){
+  document.getElementById('workbench').innerHTML = `
+    <h2>AI Summarizer</h2>
+    <p class="desc">AI-summarized when a key is set; otherwise a genuine offline extractive summarizer (picks the most representative sentences) — kept here for your writing workflow.</p>
+    ${ai_settingsHtml()}
+    <textarea id="wsInput" placeholder="Paste an article, email thread, or notes…" style="min-height:180px;"></textarea>
+    <div class="row" style="margin-top:12px;"><div class="col"><label class="field-label">LENGTH</label><select id="wsLen"><option value="3">Short (3 sentences)</option><option value="6">Medium (6 sentences)</option></select></div></div>
+    <div class="btn-row"><button class="btn" onclick="write_runSummarizer()">Summarize</button></div>
+    <div class="output-box" id="wsOut">Result will appear here.</div>
+  `;
+}
+async function write_runSummarizer(){
+  const text = document.getElementById('wsInput').value.trim();
+  const n = parseInt(document.getElementById('wsLen').value,10);
+  const out = document.getElementById('wsOut');
+  if(!text){ out.textContent='Paste some text first.'; return; }
+  if(ai_keySet()){
+    out.textContent = 'Asking AI…';
+    try{ out.textContent = await ai_callOpenAI(`Summarize the text in about ${n} sentences.`, text); }
+    catch(e){ out.textContent = 'AI request failed: '+e.message; }
+    return;
+  }
+  out.textContent = ai_extractiveSummarize(text, n) + '\n\n(Offline extractive summary. Add your OpenAI key above for a true AI-written summary.)';
+}
+
+const PARAPHRASE_SWAPS = {important:'key', use:'utilize', help:'assist', show:'demonstrate', big:'substantial',
+  good:'solid', bad:'poor', fast:'rapid', start:'begin', end:'conclude', buy:'purchase', get:'obtain',
+  make:'create', need:'require', also:'additionally', but:'however', so:'therefore', very:'quite'};
+function write_paraphraser(){
+  document.getElementById('workbench').innerHTML = `
+    <h2>Paraphraser</h2>
+    <p class="desc">Rephrase text while keeping the meaning. Uses real AI if you add a key below; otherwise a lightweight offline synonym-swap.</p>
+    ${ai_settingsHtml()}
+    <textarea id="paraInput" placeholder="Paste text to paraphrase…"></textarea>
+    <div class="btn-row" style="margin-top:12px;"><button class="btn" onclick="write_runParaphrase()">Paraphrase</button></div>
+    <div class="output-box" id="paraOut">Result will appear here.</div>
+  `;
+}
+async function write_runParaphrase(){
+  const text = document.getElementById('paraInput').value.trim();
+  const out = document.getElementById('paraOut');
+  if(!text){ out.textContent='Paste some text first.'; return; }
+  if(ai_keySet()){
+    out.textContent = 'Asking AI…';
+    try{ out.textContent = await ai_callOpenAI('Paraphrase the given text, keeping the original meaning but changing the wording and sentence structure. Return only the paraphrased text.', text); }
+    catch(e){ out.textContent = 'AI request failed: '+e.message; }
+    return;
+  }
+  let result = text;
+  Object.keys(PARAPHRASE_SWAPS).forEach(w=>{
+    const re = new RegExp('\\b'+w+'\\b','gi');
+    result = result.replace(re, m=> m[0]===m[0].toUpperCase() ? PARAPHRASE_SWAPS[w][0].toUpperCase()+PARAPHRASE_SWAPS[w].slice(1) : PARAPHRASE_SWAPS[w]);
+  });
+  out.textContent = result + '\n\n(Offline mode: basic synonym swap only. Add your OpenAI key above for a genuine AI paraphrase.)';
+}
+
+const EMAIL_TEMPLATE_LIBRARY = {
+  'Follow-up after meeting': "Subject: Great connecting today\n\nHi [Name],\n\nThanks for taking the time to meet today — I really enjoyed our conversation about [topic]. As discussed, I'll [next step].\n\nLet me know if anything else comes up in the meantime.\n\nBest,\n[Your name]",
+  'Payment reminder': "Subject: Friendly reminder — invoice #[number]\n\nHi [Name],\n\nJust a quick reminder that invoice #[number] for [amount] was due on [date]. Could you let me know the status when you get a chance?\n\nThanks so much,\n[Your name]",
+  'Meeting request': "Subject: Quick meeting this week?\n\nHi [Name],\n\nWould you have 20-30 minutes this week to discuss [topic]? I'm free [days/times] — happy to work around your schedule.\n\nLooking forward to it,\n[Your name]",
+  'Thank you for your business': "Subject: Thank you!\n\nHi [Name],\n\nThank you for choosing to work with us on [project]. It's been a pleasure, and we're looking forward to what's next.\n\nWarmly,\n[Your name]",
+  'Apology for delay': "Subject: Apologies for the delay\n\nHi [Name],\n\nI'm sorry for the delay in getting back to you on [topic]. [Brief reason]. Here's where things stand: [update].\n\nThanks for your patience,\n[Your name]",
+  'Welcome new client': "Subject: Welcome aboard!\n\nHi [Name],\n\nWelcome to [Company] — we're excited to start working together. Here's what to expect next: [next steps].\n\nReach out anytime with questions.\n\nBest,\n[Your name]",
+  'Out of office': "Subject: Out of office\n\nHi,\n\nThanks for your email. I'm out of office until [date] with limited access to email. For anything urgent, please contact [alternate contact].\n\nI'll respond as soon as I'm back.\n\nBest,\n[Your name]",
+  'Feedback request': "Subject: Quick favor — your feedback?\n\nHi [Name],\n\nWe'd love to hear your thoughts on [product/service]. Would you mind sharing a few minutes of feedback? [link/questions]\n\nThanks in advance,\n[Your name]",
+};
+function write_emailTemplates(){
+  const keys = Object.keys(EMAIL_TEMPLATE_LIBRARY);
+  document.getElementById('workbench').innerHTML = `
+    <h2>Email Templates</h2>
+    <p class="desc">A library of ready-to-use email templates — pick one, fill in the brackets, and send. Fully offline.</p>
+    <label class="field-label">TEMPLATE</label>
+    <select id="etPick" onchange="write_pickEmailTemplate()">
+      ${keys.map(k=>`<option>${esc(k)}</option>`).join('')}
+    </select>
+    <div class="output-box" id="etOut" style="margin-top:12px;">${esc(EMAIL_TEMPLATE_LIBRARY[keys[0]])}</div>
+    <div class="btn-row" style="margin-top:10px;"><button class="btn secondary" onclick="copyText(document.getElementById('etOut').textContent)">Copy</button></div>
+  `;
+}
+function write_pickEmailTemplate(){
+  const key = document.getElementById('etPick').value;
+  document.getElementById('etOut').textContent = EMAIL_TEMPLATE_LIBRARY[key] || '';
+}
+
+function write_blogTitles(){
+  document.getElementById('workbench').innerHTML = `
+    <h2>Blog Title Generator</h2>
+    <p class="desc">Enter a topic or keyword and get a batch of blog title ideas across proven formats. Fully offline.</p>
+    <label class="field-label">TOPIC / KEYWORD</label>
+    <input type="text" id="btTopic" placeholder="e.g. remote work productivity">
+    <div class="btn-row" style="margin-top:12px;"><button class="btn" onclick="write_runBlogTitles()">Generate titles</button></div>
+    <div class="output-box" id="btOut">Result will appear here.</div>
+  `;
+}
+function write_runBlogTitles(){
+  const topic = document.getElementById('btTopic').value.trim();
+  const out = document.getElementById('btOut');
+  if(!topic){ out.textContent='Enter a topic first.'; return; }
+  const cap = topic.charAt(0).toUpperCase()+topic.slice(1);
+  const n = Math.floor(Math.random()*6)+5;
+  const templates = [
+    `${n} Ways to Improve ${cap} Today`,
+    `The Ultimate Guide to ${cap}`,
+    `Why ${cap} Matters More Than You Think`,
+    `How to Master ${cap} in ${n} Steps`,
+    `${cap}: What Nobody Tells You`,
+    `${n} Mistakes to Avoid With ${cap}`,
+    `The Beginner's Guide to ${cap}`,
+    `${cap} 101: Everything You Need to Know`,
+    `Is ${cap} Worth It? Here's the Truth`,
+    `${n} ${cap} Tips That Actually Work`,
+  ];
+  const picks = templates.sort(()=>Math.random()-0.5).slice(0,6);
+  out.textContent = picks.map((t,i)=>`${i+1}. ${t}`).join('\n');
+}
+
+function write_translator(){
+  document.getElementById('workbench').innerHTML = `
+    <h2>Text Translator</h2>
+    <p class="desc">Translation genuinely needs a real model — this tool requires an OpenAI key, same engine as AI Translator in AI Tools, kept here for a writing-focused workflow.</p>
+    ${ai_settingsHtml()}
+    <textarea id="wtInput" placeholder="Text to translate…"></textarea>
+    <label class="field-label" style="margin-top:12px;">TARGET LANGUAGE</label>
+    <input type="text" id="wtLang" placeholder="e.g. Spanish, Tamil, Japanese">
+    <div class="btn-row" style="margin-top:12px;"><button class="btn" onclick="write_runTranslate()">Translate</button></div>
+    <div class="output-box" id="wtOut">Result will appear here.</div>
+  `;
+}
+async function write_runTranslate(){
+  const text = document.getElementById('wtInput').value.trim();
+  const lang = document.getElementById('wtLang').value.trim();
+  const out = document.getElementById('wtOut');
+  if(!text || !lang){ out.textContent='Enter text and a target language.'; return; }
+  if(!ai_keySet()){ out.textContent = 'Add your OpenAI API key above — translation needs a real model.'; return; }
+  out.textContent = 'Translating…';
+  try{ out.textContent = await ai_callOpenAI(`Translate the given text to ${lang}. Return only the translation, nothing else.`, text); }
+  catch(e){ out.textContent = 'AI request failed: '+e.message; }
+}
+
 /* ================================================================
    MODULE 9 — BUSINESS
    ================================================================ */
@@ -5149,6 +6552,217 @@ function biz_profitDashboard(){
     <div class="strength-bar" style="margin-top:12px;"><div class="strength-fill" style="width:${Math.max(0,pct)}%; background:${profit>=0?'var(--good)':'var(--danger)'};"></div></div>
     <p class="desc" style="margin-top:14px;">Add entries under <strong>Money → Expense Tracker / Income Tracker</strong> and come back here to see the updated picture.</p>
   `;
+}
+
+function biz_pdfInvoiceExport(){
+  const items = lsGet('dth_invoice_items', []);
+  document.getElementById('workbench').innerHTML = `
+    <h2>PDF Invoice Export</h2>
+    <p class="desc">Turns your Invoice Generator data into a real, downloadable PDF file (not just a print dialog) — powered by pdf-lib, entirely in your browser.</p>
+    ${items.length ? '' : '<div class="output-box">No invoice items found yet — add items under <strong>Invoice Generator</strong> first, then come back here.</div>'}
+    <div class="btn-row" style="margin-top:14px;"><button class="btn" onclick="biz_runPdfInvoiceExport()">Generate PDF</button></div>
+    <div class="output-box" id="pdfInvOut">Result will appear here.</div>
+  `;
+}
+async function biz_runPdfInvoiceExport(){
+  const out = document.getElementById('pdfInvOut');
+  const items = lsGet('dth_invoice_items', []);
+  if(!items.length){ out.textContent='No invoice items yet — add some under Invoice Generator first.'; return; }
+  if(libGuard(['PDFLib'], out)) return;
+  out.textContent = 'Building PDF…';
+  try{
+    const from = lsGet('dth_invoice_items_from','');
+    const to = lsGet('dth_invoice_items_to','');
+    const num = lsGet('dth_invoice_items_num','1001');
+    const date = lsGet('dth_invoice_items_date', new Date().toISOString().slice(0,10));
+    const taxPct = parseFloat(lsGet('dth_invoice_items_tax','18'))||0;
+    const notes = lsGet('dth_invoice_items_notes','');
+    const subtotal = items.reduce((s,it)=>s+it.qty*it.price,0);
+    const tax = subtotal*taxPct/100;
+    const total = subtotal+tax;
+    const doc = await PDFLib.PDFDocument.create();
+    const font = await doc.embedFont(PDFLib.StandardFonts.Helvetica);
+    const bold = await doc.embedFont(PDFLib.StandardFonts.HelveticaBold);
+    let page = doc.addPage([595,842]);
+    let y = 800;
+    page.drawText('Invoice #'+num, {x:50,y,size:20,font:bold}); y-=26;
+    page.drawText(String(date), {x:50,y,size:11,font,color:PDFLib.rgb(0.4,0.4,0.4)}); y-=30;
+    page.drawText('From: '+from, {x:50,y,size:11,font}); y-=16;
+    page.drawText('To: '+to, {x:50,y,size:11,font}); y-=30;
+    page.drawText('Description', {x:50,y,size:10,font:bold});
+    page.drawText('Qty', {x:300,y,size:10,font:bold});
+    page.drawText('Price', {x:360,y,size:10,font:bold});
+    page.drawText('Amount', {x:450,y,size:10,font:bold});
+    y-=14;
+    page.drawLine({start:{x:50,y:y+4},end:{x:545,y:y+4},thickness:1,color:PDFLib.rgb(0.8,0.8,0.8)});
+    items.forEach(it=>{
+      if(y<80){ page = doc.addPage([595,842]); y=800; }
+      page.drawText(String(it.desc).slice(0,42), {x:50,y,size:10,font});
+      page.drawText(String(it.qty), {x:300,y,size:10,font});
+      page.drawText(Number(it.price).toFixed(2), {x:360,y,size:10,font});
+      page.drawText((it.qty*it.price).toFixed(2), {x:450,y,size:10,font});
+      y-=18;
+    });
+    y-=10;
+    page.drawLine({start:{x:300,y:y+4},end:{x:545,y:y+4},thickness:1,color:PDFLib.rgb(0.8,0.8,0.8)});
+    page.drawText('Subtotal', {x:360,y,size:10,font}); page.drawText(subtotal.toFixed(2),{x:450,y,size:10,font}); y-=16;
+    page.drawText('Tax ('+taxPct+'%)', {x:360,y,size:10,font}); page.drawText(tax.toFixed(2),{x:450,y,size:10,font}); y-=16;
+    page.drawText('Total', {x:360,y,size:12,font:bold}); page.drawText(total.toFixed(2),{x:450,y,size:12,font:bold}); y-=24;
+    if(notes){ page.drawText(('Notes: '+notes).slice(0,95), {x:50,y,size:9,font,color:PDFLib.rgb(0.4,0.4,0.4)}); }
+    const bytes = await doc.save();
+    pdf_downloadBlob(new Blob([bytes],{type:'application/pdf'}), 'invoice-'+num+'.pdf');
+    out.textContent = 'PDF generated — download started.';
+  }catch(e){ out.textContent = 'Could not generate PDF: '+e.message; }
+}
+
+function biz_clientHistory(){
+  const clients = lsGet('dth_crm_clients', []);
+  document.getElementById('workbench').innerHTML = `
+    <h2>Client History</h2>
+    <p class="desc">Log calls, meetings, and notes against each client from your CRM — a running timeline per client.</p>
+    <div class="row">
+      <div class="col"><label class="field-label">CLIENT</label>
+        ${clients.length
+          ? `<select id="chClient">${clients.map(c=>`<option>${esc(c.name)}</option>`).join('')}</select>`
+          : `<input type="text" id="chClient" placeholder="Add clients in Client CRM first, or type a name">`}
+      </div>
+      <div class="col"><label class="field-label">DATE</label><input type="text" id="chDate" value="${new Date().toISOString().slice(0,10)}"></div>
+    </div>
+    <label class="field-label">NOTE</label>
+    <input type="text" id="chNote" placeholder="e.g. Called about renewal, follow up next month">
+    <div class="btn-row" style="margin-top:12px;"><button class="btn" onclick="biz_addHistory()">Add entry</button></div>
+    <div id="chList" style="margin-top:14px;"></div>
+  `;
+  biz_renderHistory();
+}
+function biz_addHistory(){
+  const client = document.getElementById('chClient').value.trim();
+  const date = document.getElementById('chDate').value.trim();
+  const note = document.getElementById('chNote').value.trim();
+  if(!client || !note) return;
+  const history = lsGet('dth_client_history', []);
+  history.unshift({client, date, note});
+  lsSet('dth_client_history', history);
+  document.getElementById('chNote').value='';
+  biz_renderHistory();
+}
+function biz_delHistory(i){ const h=lsGet('dth_client_history',[]); h.splice(i,1); lsSet('dth_client_history',h); biz_renderHistory(); }
+function biz_renderHistory(){
+  const holder = document.getElementById('chList');
+  if(!holder) return;
+  const history = lsGet('dth_client_history', []);
+  holder.innerHTML = history.length ? history.map((h,i)=>
+    `<div class="list-row"><span class="grow"><strong>${esc(h.client)}</strong> · ${esc(h.date)} — ${esc(h.note)}</span>
+     <button class="btn secondary" style="padding:2px 8px;" onclick="biz_delHistory(${i})">remove</button></div>`).join('')
+    : '<div class="output-box">No history yet — add an entry above.</div>';
+}
+
+function biz_inventoryAlerts(){
+  const items = lsGet('dth_inventory', []);
+  const low = items.filter(it=>it.qty<=it.reorder);
+  document.getElementById('workbench').innerHTML = `
+    <h2>Inventory Alerts</h2>
+    <p class="desc">Pulls straight from Inventory Tracker — a focused view of what's low or out of stock.</p>
+    <div class="output-box">${items.length ? `${low.length} of ${items.length} item(s) need reordering` : 'No inventory items yet — add some under Inventory Tracker first.'}</div>
+    <div id="alertList" style="margin-top:14px;"></div>
+    ${low.length ? '<div class="btn-row" style="margin-top:10px;"><button class="btn secondary" onclick="biz_copyAlerts()">Copy alert list</button></div>' : ''}
+  `;
+  const holder = document.getElementById('alertList');
+  holder.innerHTML = low.length ? low.map(it=>
+    `<div class="list-row"><span class="grow">${esc(it.name)} — ${it.qty} in stock <span class="tag-pill" style="color:var(--danger); border-color:var(--danger);">REORDER (level: ${it.reorder})</span></span></div>`
+  ).join('') : (items.length ? '<div class="output-box">Everything is above its reorder level. 🎉</div>' : '');
+}
+function biz_copyAlerts(){
+  const items = lsGet('dth_inventory', []);
+  const low = items.filter(it=>it.qty<=it.reorder);
+  const text = low.map(it=>`${it.name}: ${it.qty} in stock (reorder at ${it.reorder})`).join('\n');
+  copyText(text);
+}
+
+function biz_salesDashboard(){
+  document.getElementById('workbench').innerHTML = `
+    <h2>Sales Dashboard</h2>
+    <p class="desc">Log sales as they happen and see totals update instantly — kept separate from the Money module so your business numbers stay dedicated.</p>
+    <div class="row">
+      <div class="col"><label class="field-label">DATE</label><input type="text" id="sdDate" value="${new Date().toISOString().slice(0,10)}"></div>
+      <div class="col"><label class="field-label">CLIENT (OPTIONAL)</label><input type="text" id="sdClient" placeholder="e.g. Acme Corp"></div>
+      <div class="col"><label class="field-label">AMOUNT</label><input type="number" id="sdAmount" placeholder="0"></div>
+    </div>
+    <div class="btn-row"><button class="btn" onclick="biz_addSale()">Add sale</button><button class="btn secondary" onclick="biz_clearSales()">Clear all</button></div>
+    <div class="output-box" id="sdSummary"></div>
+    <div id="sdList" style="margin-top:14px;"></div>
+  `;
+  biz_renderSales();
+}
+function biz_addSale(){
+  const date = document.getElementById('sdDate').value.trim();
+  const client = document.getElementById('sdClient').value.trim();
+  const amount = parseFloat(document.getElementById('sdAmount').value);
+  if(!date || isNaN(amount)) return;
+  const sales = lsGet('dth_sales', []);
+  sales.unshift({date, client, amount});
+  lsSet('dth_sales', sales);
+  document.getElementById('sdClient').value=''; document.getElementById('sdAmount').value='';
+  biz_renderSales();
+}
+function biz_delSale(i){ const s=lsGet('dth_sales',[]); s.splice(i,1); lsSet('dth_sales',s); biz_renderSales(); }
+function biz_clearSales(){ lsSet('dth_sales', []); biz_renderSales(); }
+function biz_renderSales(){
+  const sales = lsGet('dth_sales', []);
+  const summary = document.getElementById('sdSummary');
+  const total = sales.reduce((s,x)=>s+x.amount,0);
+  const now = new Date();
+  const monthTotal = sales.filter(s=>{ const d=new Date(s.date); return !isNaN(d.getTime()) && d.getFullYear()===now.getFullYear() && d.getMonth()===now.getMonth(); }).reduce((s,x)=>s+x.amount,0);
+  const avg = sales.length ? total/sales.length : 0;
+  const byClient = {};
+  sales.forEach(s=>{ if(s.client){ byClient[s.client]=(byClient[s.client]||0)+s.amount; } });
+  const topClient = Object.keys(byClient).sort((a,b)=>byClient[b]-byClient[a])[0];
+  if(summary) summary.textContent = `Total revenue: ${total.toFixed(2)}\nThis month: ${monthTotal.toFixed(2)}\nSales logged: ${sales.length}\nAverage sale: ${avg.toFixed(2)}${topClient? '\nTop client: '+topClient+' ('+byClient[topClient].toFixed(2)+')' : ''}`;
+  const holder = document.getElementById('sdList');
+  if(holder) holder.innerHTML = sales.length ? sales.map((s,i)=>
+    `<div class="list-row"><span class="grow">${esc(s.date)}${s.client? ' · '+esc(s.client):''} — <strong>${Number(s.amount).toFixed(2)}</strong></span>
+     <button class="btn secondary" style="padding:2px 8px;" onclick="biz_delSale(${i})">remove</button></div>`).join('')
+    : '<div class="output-box">No sales logged yet.</div>';
+}
+
+function biz_barcodeLabels(){
+  document.getElementById('workbench').innerHTML = `
+    <h2>Barcode Labels</h2>
+    <p class="desc">Generate a printable sheet of CODE128 barcode labels for your products. One line per label: <code>Product Name | Code</code>.</p>
+    <textarea id="blInput" placeholder="Blue T-Shirt M | 123456789012&#10;Red Mug | 987654321000"></textarea>
+    <div class="btn-row" style="margin-top:12px;"><button class="btn" onclick="biz_runBarcodeLabels()">Generate labels</button></div>
+    <div class="output-box" id="blOut">Result will appear here.</div>
+    <div id="blPreview" style="display:none;"></div>
+  `;
+}
+function biz_runBarcodeLabels(){
+  const out = document.getElementById('blOut');
+  const lines = document.getElementById('blInput').value.split('\n').map(s=>s.trim()).filter(Boolean);
+  if(!lines.length){ out.textContent='Add at least one line: Product Name | Code.'; return; }
+  if(typeof JsBarcode === 'undefined'){ out.textContent = 'Barcode library failed to load — check your internet connection and refresh the page.'; return; }
+  const preview = document.getElementById('blPreview');
+  preview.innerHTML = '';
+  const labels = [];
+  lines.forEach((line,i)=>{
+    const parts = line.split('|').map(s=>s? s.trim() : '');
+    const name = parts[0] || '', code = parts[1] || parts[0] || '';
+    const svg = document.createElementNS('http://www.w3.org/2000/svg','svg');
+    svg.id = 'blSvg'+i;
+    preview.appendChild(svg);
+    try{
+      JsBarcode(svg, code || ' ', {format:'CODE128', lineColor:'#14171A', width:2, height:60, displayValue:true, background:'#ffffff', fontSize:12});
+      labels.push({name, svg: new XMLSerializer().serializeToString(svg)});
+    }catch(e){ /* skip invalid code */ }
+  });
+  if(!labels.length){ out.textContent='Could not generate any labels — check the codes entered.'; return; }
+  const html = `<div style="display:flex; flex-wrap:wrap; gap:16px;">
+    ${labels.map(l=>`<div style="border:1px solid #ccc; padding:10px; text-align:center; width:220px;">
+      ${l.name? '<div style="font-size:12px; margin-bottom:6px;">'+esc(l.name)+'</div>' : ''}
+      ${l.svg}
+    </div>`).join('')}
+  </div>`;
+  openPrintable('Barcode Labels', html);
+  out.textContent = `${labels.length} label(s) generated — opened in a printable window.`;
 }
 
 /* ================================================================
