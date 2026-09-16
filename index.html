@@ -8211,7 +8211,14 @@ async function video_ensureFfmpeg(onProgressMsg){
     await loadScript('https://cdn.jsdelivr.net/npm/@ffmpeg/ffmpeg@0.11.6/dist/ffmpeg.min.js');
   }
   if(!_ffmpegInstance){
-    _ffmpegInstance = FFmpeg.createFFmpeg({ log:false, corePath:'https://cdn.jsdelivr.net/npm/@ffmpeg/core@0.11.0/dist/ffmpeg-core.js' });
+    // Use the single-threaded core (core-st), not the default multi-threaded @ffmpeg/core.
+    // The multi-threaded core requires SharedArrayBuffer, which browsers only expose on
+    // pages served with Cross-Origin-Embedder-Policy/Cross-Origin-Opener-Policy headers.
+    // Most static hosts (GitHub Pages, plain Netlify/Vercel deploys, etc.) don't set those,
+    // so createFFmpeg().load() was throwing "SharedArrayBuffer is not defined" and every
+    // video tool (Compressor, Video to GIF, GIF to MP4) failed silently into its catch block.
+    // core-st runs single-threaded and works everywhere with no special headers required.
+    _ffmpegInstance = FFmpeg.createFFmpeg({ log:false, mainName:'main', corePath:'https://cdn.jsdelivr.net/npm/@ffmpeg/core-st@0.11.1/dist/ffmpeg-core.js' });
   }
   if(!_ffmpegInstance.isLoaded()){
     if(onProgressMsg) onProgressMsg('Loading video engine (~25MB, first time only)…');
